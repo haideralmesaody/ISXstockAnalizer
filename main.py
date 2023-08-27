@@ -1,3 +1,4 @@
+# Importing necessary libraries and modules
 # Standard Libraries
 import logging
 import os
@@ -9,19 +10,14 @@ from PyQt5.QtWidgets import QSplitter
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWidgets import (QApplication, QCheckBox, QHBoxLayout, QLabel,
-                             QLineEdit, QMainWindow, QPushButton, QSizePolicy,
+                             QLineEdit, QMainWindow, QPushButton, 
                              QSpinBox, QVBoxLayout, QWidget)
-from bs4 import BeautifulSoup
-import matplotlib.dates as mdates
+# Local Modules
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas, NavigationToolbar2QT
-from matplotlib.figure import Figure
 from mplfinance.original_flavor import candlestick_ohlc
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from selenium.common.exceptions import UnexpectedAlertPresentException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.webdriver import WebDriver as EdgeDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -34,20 +30,40 @@ from config import (
     TABLE_SELECTOR, WEBDRIVER_WAIT_TIME, DEFAULT_SMA_PERIOD,
     DEFAULT_ROW_COUNT, EXCEL_ENGINE
 )
+# Set up logging with provided configurations
+
 logging.basicConfig(**LOGGING_CONFIG)
 
-# Get the current directory
+# Get the current directory for potential file operations
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
 
 
 class MainWindow(QMainWindow):
-        # ------- Initialization and General Setup Methods --------
+        """
+        Main GUI window for the application.
+        It integrates data fetching, processing, and visualization.
+        """
+
         def __init__(self):
             super(MainWindow, self).__init__()
+            # Initialize UI components and data handler objects
+            self.initialize_ui_elements()
+            self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
+            self.data_processing = DataProcessing(self)
 
-            # Initialize the widgets
+            # Set up the UI layout
+            self.setup_ui()
+
+            # Connect button actions to their respective functions
+            self.connect_buttons()
+
+            # DataFrame to store the fetched stock data
+            self.df = None
+        def initialize_ui_elements(self):
+            """Initialize the basic UI elements for the main window."""
             self.ticker_input = QLineEdit()
+            self.ticker_input.setPlaceholderText("Enter ticker")
             self.rows_label = QLabel("Number of rows:")
             self.row_spin_box = QSpinBox()
             self.row_spin_box.setMinimum(1)
@@ -63,27 +79,30 @@ class MainWindow(QMainWindow):
             self.rsi_label = QLabel("RSI: -")
             self.stoch_label = QLabel("Stoch: -")
             self.rsi_state_label = QLabel()
-
-            # Initialize the data fetcher and data processing objects
-            self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
-            self.data_processing = DataProcessing(self)
-
-            # Initialize the user interface
-            self.setup_ui()
-
-            # Connect button signals to their respective slots
-            self.connect_buttons()
-
-            # Initialize DataFrame for data storage
-            self.df = None
-
         def setup_ui(self):
-            """Initialize the user interface layout."""
+            """Construct the main layout for the GUI."""
             main_layout = QHBoxLayout()
 
             # Create a QSplitter for horizontal splitting
             splitter = QSplitter()
+            # UI sections setup
+            self.setup_left_section(splitter)
+            self.setup_middle_section(splitter)
+            self.setup_right_section(splitter)    
 
+            # Add the splitter to the main layout
+            main_layout.addWidget(splitter)
+
+            # Set the initial sizes (in pixels) according to the percentages given
+            screen_width = self.width()  # Assuming this gives the width of the main window
+            splitter.setSizes([int(0.10 * screen_width), int(0.80 * screen_width), int(0.10 * screen_width)])
+
+            # Create a central widget with the main layout
+            central_widget = QWidget()
+            central_widget.setLayout(main_layout)
+            self.setCentralWidget(central_widget)
+        def setup_left_section(self, splitter):
+            """Construct the left section of the UI."""
             # 1. Left section: for ticker, buttons, and input boxes (10% of the screen)
             self.left_widget = QWidget()
             left_layout = QVBoxLayout()
@@ -102,22 +121,22 @@ class MainWindow(QMainWindow):
 
             # Add the start and save buttons
             self.start_button = QPushButton("Start")
-            self.start_button.clicked.connect(self.start_fetching_data)
             left_layout.addWidget(self.start_button)
 
             self.save_button = QPushButton("Save")
-            self.save_button.clicked.connect(self.save_data_to_excel)
             left_layout.addWidget(self.save_button)
             
             splitter.addWidget(self.left_widget)  # Add to splitter
-
+        def setup_middle_section(self, splitter):
+            """Construct the middle section for displaying the graph."""
             # 2. Middle section: for the graph (80% of the screen)
             middle_widget = QWidget()
             middle_layout = QVBoxLayout()
             middle_widget.setLayout(middle_layout)
             self.setup_web_view(middle_layout)
             splitter.addWidget(middle_widget)
-
+        def setup_right_section(self, splitter):
+            """Construct the right section for displaying status info."""
             # 3. Right section: for status (10% of the screen)
             self.right_widget = QWidget()
             right_layout = QVBoxLayout()
@@ -127,65 +146,47 @@ class MainWindow(QMainWindow):
             right_layout.addWidget(self.rsi_label)
             self.rsi_state_label.setToolTip("")
             right_layout.addWidget(self.stoch_label)
-            self.rsi_state_label = QLabel()
             right_layout.addWidget(self.rsi_state_label)  # Add to right layout directly
             
             splitter.addWidget(self.right_widget)
-
-            # Add the splitter to the main layout
-            main_layout.addWidget(splitter)
-
-            # Set the initial sizes (in pixels) according to the percentages given
-            screen_width = self.width()  # Assuming this gives the width of the main window
-            splitter.setSizes([int(0.10 * screen_width), int(0.80 * screen_width), int(0.10 * screen_width)])
-
-            # Create a central widget with the main layout
-            central_widget = QWidget()
-            central_widget.setLayout(main_layout)
-            self.setCentralWidget(central_widget)
-
         def connect_buttons(self):
             """Connect signals of buttons to their corresponding slots."""
             self.sma_checkbox.stateChanged.connect(self.data_processing.plot_candlestick_chart)
             self.sma_period_spinbox.valueChanged.connect(self.recalculate_and_plot)
             self.rsi_checkbox.stateChanged.connect(self.data_processing.plot_candlestick_chart)
             self.stoch_checkbox.stateChanged.connect(self.data_processing.plot_candlestick_chart)
+            self.start_button.clicked.connect(self.start_fetching_data)
+            self.save_button.clicked.connect(self.save_data_to_excel)
+
         # ------- UI Component Setup Methods --------
     
         def setup_top_layout(self, main_layout):
             """Set up the top layout containing input widgets."""
             top_layout = QHBoxLayout()
-            self.ticker_input = QLineEdit()
-            self.ticker_input.setPlaceholderText("Enter ticker")
+
             top_layout.addWidget(self.ticker_input)
 
             self.rows_label = QLabel("Number of rows:")
             top_layout.addWidget(self.rows_label)
 
-            self.row_spin_box = QSpinBox()
-            self.row_spin_box.setMinimum(1)
-            self.row_spin_box.setMaximum(1000)
-            self.row_spin_box.setValue(300)
+
             top_layout.addWidget(self.row_spin_box)
 
-            self.sma_checkbox = QCheckBox("Show SMA")
+            
             top_layout.addWidget(self.sma_checkbox)
 
             self.sma_period_label = QLabel("SMA Period:")
             top_layout.addWidget(self.sma_period_label)
             
-            self.sma_period_spinbox = QSpinBox()
-            self.sma_period_spinbox.setMinimum(1)
-            self.sma_period_spinbox.setMaximum(100)
-            self.sma_period_spinbox.setValue(10)
+
             top_layout.addWidget(self.sma_period_spinbox)
 
             # RSI Checkbox
-            self.rsi_checkbox = QCheckBox("Show RSI14")
+
             top_layout.addWidget(self.rsi_checkbox)
 
             # Stochastic Oscillator Checkbox
-            self.stoch_checkbox = QCheckBox("Show Stoch(9,6)")
+
             top_layout.addWidget(self.stoch_checkbox)
 
             main_layout.addLayout(top_layout)
