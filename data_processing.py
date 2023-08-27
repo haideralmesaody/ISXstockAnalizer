@@ -73,8 +73,25 @@ class DataProcessing:
             raw_html = fig.to_html(include_plotlyjs='cdn')
             self.main_window.web_view.setHtml(raw_html)
             self.main_window.web_view.update()
+            # After plotting the chart, update the labels with the latest values
+            # After plotting the chart, update the labels with the latest values
+            latest_row = self.main_window.df.iloc[-1]  # Get the last row of the dataframe
+
+            latest_rsi = latest_row['RSI14']  # Fetch the RSI14 value from the last row
+            if '%K' in self.main_window.df.columns and '%D' in self.main_window.df.columns:
+                latest_stoch_k = latest_row['%K']
+                latest_stoch_d = latest_row['%D']
+
+            self.main_window.rsi_label.setText(f"RSI: {latest_rsi:.2f}")
+            self.main_window.stoch_label.setText(f"Stoch K: {latest_stoch_k:.2f}, D: {latest_stoch_d:.2f}")
+            if 'RSI14' in self.main_window.df.columns:
+                latest_rsi = latest_row['RSI14']
+            print("Calling RSI interpreter")
+            state, description = self.interpret_rsi(latest_rsi)
+            self.main_window.rsi_state_label.setText(f"RSI State: {state}")
+            self.main_window.rsi_state_label.setToolTip(description)
         except Exception as e:
-            logging.error(f"An error occurred in plot_candlestick_chart: {str(e)}")
+            logging.error(f"An error occurred in plot_candlestick_chart: ")
 
     def update_chart_appearance(self):
             """Update the appearance of the chart."""
@@ -99,5 +116,17 @@ class DataProcessing:
                 print("Graph should be updated now.")
             except Exception as e:
                 logging.error(f"An error occurred in update_chart_appearance: {str(e)}")
-
+    def interpret_rsi(self, rsi_value):
+        print("RSI Interpreter is called")
+        if rsi_value < 30:
+            state = "Oversold"
+            description = "The asset might be undervalued and is a potential buying opportunity."
+        elif rsi_value > 70:
+            state = "Overbought"
+            description = "The asset might be overvalued and is a potential selling opportunity."
+        else:
+            state = "Neutral"
+            description = "The asset is neither overbought nor oversold. It's in a neutral state."
+        print(f"the state of the RSI is {state}")
+        return state, description
     # ... Add all other data processing and visualization methods ...

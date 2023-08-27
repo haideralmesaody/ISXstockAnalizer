@@ -4,7 +4,7 @@ import os
 import sys
 import time
 from datetime import datetime
-
+from PyQt5.QtWidgets import QSplitter
 # Third-party Libraries
 from PyQt5.QtCore import QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
@@ -45,12 +45,32 @@ class MainWindow(QMainWindow):
         # ------- Initialization and General Setup Methods --------
         def __init__(self):
             super(MainWindow, self).__init__()
-            # Initialize the user interface
+
+            # Initialize the widgets
+            self.ticker_input = QLineEdit()
+            self.rows_label = QLabel("Number of rows:")
+            self.row_spin_box = QSpinBox()
+            self.row_spin_box.setMinimum(1)
+            self.row_spin_box.setMaximum(1000)
+            self.row_spin_box.setValue(300)
+            self.sma_checkbox = QCheckBox("Show SMA")
+            self.rsi_checkbox = QCheckBox("Show RSI14")  # Initializing the rsi_checkbox
+            self.stoch_checkbox = QCheckBox("Show Stoch(9,6)")  # Initializing the stoch_checkbox
+            self.sma_period_spinbox = QSpinBox()
+            self.sma_period_spinbox.setMinimum(1)
+            self.sma_period_spinbox.setMaximum(100)
+            self.sma_period_spinbox.setValue(10)
+            self.rsi_label = QLabel("RSI: -")
+            self.stoch_label = QLabel("Stoch: -")
+            self.rsi_state_label = QLabel()
+
+            # Initialize the data fetcher and data processing objects
             self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
             self.data_processing = DataProcessing(self)
 
             # Initialize the user interface
             self.setup_ui()
+
             # Connect button signals to their respective slots
             self.connect_buttons()
 
@@ -59,22 +79,65 @@ class MainWindow(QMainWindow):
 
         def setup_ui(self):
             """Initialize the user interface layout."""
-            main_layout = QVBoxLayout()
+            main_layout = QHBoxLayout()
 
-            # Set up the top layout containing input widgets
-            self.setup_top_layout(main_layout)
+            # Create a QSplitter for horizontal splitting
+            splitter = QSplitter()
 
-            # Set up the layout for buttons
-            self.setup_buttons_layout(main_layout)
+            # 1. Left section: for ticker, buttons, and input boxes (10% of the screen)
+            self.left_widget = QWidget()
+            left_layout = QVBoxLayout()
+            self.left_widget.setLayout(left_layout)
+                    
+            # Add the ticker label and input
+            ticker_label = QLabel("Enter Ticker:")  # Adding a label for the ticker input
+            left_layout.addWidget(ticker_label)
+            left_layout.addWidget(self.ticker_input)
+            
+            left_layout.addWidget(self.rows_label)
+            left_layout.addWidget(self.row_spin_box)
+            left_layout.addWidget(self.sma_checkbox)
+            left_layout.addWidget(self.rsi_checkbox)  # Adding the RSI checkbox
+            left_layout.addWidget(self.stoch_checkbox)  # Adding the Stochastic Oscillator checkbox
 
-            # Set up the web view for displaying charts
-            self.setup_web_view(main_layout)
+            # Add the start and save buttons
+            self.start_button = QPushButton("Start")
+            self.start_button.clicked.connect(self.start_fetching_data)
+            left_layout.addWidget(self.start_button)
 
-            # Set up the status label
-            self.setup_status_label(main_layout)
+            self.save_button = QPushButton("Save")
+            self.save_button.clicked.connect(self.save_data_to_excel)
+            left_layout.addWidget(self.save_button)
+            
+            splitter.addWidget(self.left_widget)  # Add to splitter
 
-            # Set up the "Customize Appearance" button
-            self.setup_customize_button(main_layout)
+            # 2. Middle section: for the graph (80% of the screen)
+            middle_widget = QWidget()
+            middle_layout = QVBoxLayout()
+            middle_widget.setLayout(middle_layout)
+            self.setup_web_view(middle_layout)
+            splitter.addWidget(middle_widget)
+
+            # 3. Right section: for status (10% of the screen)
+            self.right_widget = QWidget()
+            right_layout = QVBoxLayout()
+            self.right_widget.setLayout(right_layout)
+                    
+            # Add items to the right layout
+            right_layout.addWidget(self.rsi_label)
+            self.rsi_state_label.setToolTip("")
+            right_layout.addWidget(self.stoch_label)
+            self.rsi_state_label = QLabel()
+            right_layout.addWidget(self.rsi_state_label)  # Add to right layout directly
+            
+            splitter.addWidget(self.right_widget)
+
+            # Add the splitter to the main layout
+            main_layout.addWidget(splitter)
+
+            # Set the initial sizes (in pixels) according to the percentages given
+            screen_width = self.width()  # Assuming this gives the width of the main window
+            splitter.setSizes([int(0.10 * screen_width), int(0.80 * screen_width), int(0.10 * screen_width)])
 
             # Create a central widget with the main layout
             central_widget = QWidget()
@@ -181,6 +244,12 @@ class MainWindow(QMainWindow):
                 print("NaN values in df:", self.df.isna().sum())
                 print("Columns in the DataFrame in MainWindow after data fetching:")
                 print(self.df.columns)
+                # Get the last date's RSI value and interpret its status
+                rsi_value = self.df['RSI14'].iloc[-1]
+                rsi_status, rsi_description = self.data_processing.interpret_rsi(rsi_value)
+                # Update the status label in the UI
+                self.rsi_status_label.setText(f"RSI ({rsi_value:.2f}): {rsi_status}")
+                self.rsi_status_label.setToolTip(rsi_description)
             except Exception as e:
                 logging.error(f"An error occurred in start_fetching_data: {str(e)}")
 

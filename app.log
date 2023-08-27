@@ -119,3 +119,134 @@ an instance of :class:`plotly.graph_objs.Candlestick`
 2023-08-27 14:42:34,308 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
 2023-08-27 15:04:52,471 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
 2023-08-27 15:09:04,182 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 15:34:43,115 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 15:56:20,785 - ERROR - An error occurred while processing ticker tasx: Message: javascript error: Cannot set properties of null (setting 'value')
+  (Session info: MicrosoftEdge=116.0.1938.54)
+Stacktrace:
+	GetHandleVerifier [0x00007FF797C4B292+61986]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BDC902+737698]
+	(No symbol) [0x00007FF7979BB86E]
+	(No symbol) [0x00007FF7979C0300]
+	(No symbol) [0x00007FF7979C2B29]
+	(No symbol) [0x00007FF797A3DE4F]
+	(No symbol) [0x00007FF797A2382A]
+	(No symbol) [0x00007FF7979F6F61]
+	(No symbol) [0x00007FF797A3CD41]
+	(No symbol) [0x00007FF797A23603]
+	(No symbol) [0x00007FF7979F5DEA]
+	(No symbol) [0x00007FF7979F50CB]
+	(No symbol) [0x00007FF7979F6574]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E18739+1225433]
+	(No symbol) [0x00007FF797A74804]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B30151+31217]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B28D29+1481]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E17314+1220276]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE58C8+21048]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE1894+4612]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE19C6+4918]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BD5D41+710113]
+	BaseThreadInitThunk [0x00007FF9C2807344+20]
+	RtlUserThreadStart [0x00007FF9C41026B1+33]
+
+2023-08-27 15:56:22,898 - ERROR - An error occurred in start_fetching_data: 'NoneType' object is not subscriptable
+2023-08-27 16:09:29,757 - ERROR - An error occurred in start_fetching_data: 'DataProcessing' object has no attribute 'interpret_rsi'
+2023-08-27 16:13:59,432 - ERROR - An error occurred in start_fetching_data: 'DataProcessing' object has no attribute 'interpret_rsi'
+2023-08-27 16:17:06,039 - ERROR - An error occurred in start_fetching_data: 'DataProcessing' object has no attribute 'interpret_rsi'
+2023-08-27 16:19:20,730 - ERROR - An error occurred while processing ticker tasx: Message: javascript error: Cannot set properties of null (setting 'value')
+  (Session info: MicrosoftEdge=116.0.1938.54)
+Stacktrace:
+	GetHandleVerifier [0x00007FF797C4B292+61986]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BDC902+737698]
+	(No symbol) [0x00007FF7979BB86E]
+	(No symbol) [0x00007FF7979C0300]
+	(No symbol) [0x00007FF7979C2B29]
+	(No symbol) [0x00007FF797A3DE4F]
+	(No symbol) [0x00007FF797A2382A]
+	(No symbol) [0x00007FF7979F6F61]
+	(No symbol) [0x00007FF797A3CD41]
+	(No symbol) [0x00007FF797A23603]
+	(No symbol) [0x00007FF7979F5DEA]
+	(No symbol) [0x00007FF7979F50CB]
+	(No symbol) [0x00007FF7979F6574]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E18739+1225433]
+	(No symbol) [0x00007FF797A74804]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B30151+31217]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B28D29+1481]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E17314+1220276]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE58C8+21048]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE1894+4612]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE19C6+4918]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BD5D41+710113]
+	BaseThreadInitThunk [0x00007FF9C2807344+20]
+	RtlUserThreadStart [0x00007FF9C41026B1+33]
+
+2023-08-27 16:19:22,846 - ERROR - An error occurred in start_fetching_data: 'NoneType' object is not subscriptable
+2023-08-27 16:22:54,600 - ERROR - An error occurred in start_fetching_data: 'MainWindow' object has no attribute 'rsi_status_label'
+2023-08-27 21:54:36,423 - ERROR - An error occurred in start_fetching_data: 'MainWindow' object has no attribute 'rsi_status_label'
+2023-08-27 22:12:56,530 - ERROR - An error occurred in start_fetching_data: 'MainWindow' object has no attribute 'rsi_status_label'
+2023-08-27 22:16:30,003 - ERROR - An error occurred in start_fetching_data: 'MainWindow' object has no attribute 'rsi_status_label'
+2023-08-27 22:20:00,662 - ERROR - An error occurred while processing ticker bnoi: Message: javascript error: Cannot set properties of null (setting 'value')
+  (Session info: MicrosoftEdge=116.0.1938.54)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77FBAB292+61986]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FB3C902+737698]
+	(No symbol) [0x00007FF77F91B86E]
+	(No symbol) [0x00007FF77F920300]
+	(No symbol) [0x00007FF77F922B29]
+	(No symbol) [0x00007FF77F99DE4F]
+	(No symbol) [0x00007FF77F98382A]
+	(No symbol) [0x00007FF77F956F61]
+	(No symbol) [0x00007FF77F99CD41]
+	(No symbol) [0x00007FF77F983603]
+	(No symbol) [0x00007FF77F955DEA]
+	(No symbol) [0x00007FF77F9550CB]
+	(No symbol) [0x00007FF77F956574]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF77FD78739+1225433]
+	(No symbol) [0x00007FF77F9D4804]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FA90151+31217]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FA88D29+1481]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF77FD77314+1220276]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF77FB458C8+21048]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF77FB41894+4612]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF77FB419C6+4918]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FB35D41+710113]
+	BaseThreadInitThunk [0x00007FF9C2807344+20]
+	RtlUserThreadStart [0x00007FF9C41026B1+33]
+
+2023-08-27 22:20:02,847 - ERROR - An error occurred in start_fetching_data: 'NoneType' object is not subscriptable
+2023-08-27 22:21:11,327 - ERROR - An error occurred in plot_candlestick_chart: 
+2023-08-27 22:21:12,148 - ERROR - An error occurred in plot_candlestick_chart: 
+2023-08-27 22:21:12,533 - ERROR - An error occurred in plot_candlestick_chart: 
+2023-08-27 22:21:12,931 - ERROR - An error occurred in plot_candlestick_chart: 
+2023-08-27 22:22:54,995 - ERROR - An error occurred in start_fetching_data: 'MainWindow' object has no attribute 'rsi_status_label'
+2023-08-27 22:24:15,819 - ERROR - An error occurred while processing ticker bnoi: Message: element not interactable
+  (Session info: MicrosoftEdge=116.0.1938.54)
+Stacktrace:
+	GetHandleVerifier [0x00007FF77FBAB292+61986]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FB3C902+737698]
+	(No symbol) [0x00007FF77F91B6A0]
+	(No symbol) [0x00007FF77F964572]
+	(No symbol) [0x00007FF77F957542]
+	(No symbol) [0x00007FF77F98382A]
+	(No symbol) [0x00007FF77F956F61]
+	(No symbol) [0x00007FF77F956E0D]
+	(No symbol) [0x00007FF77F983B60]
+	(No symbol) [0x00007FF77F956F61]
+	(No symbol) [0x00007FF77F99CD41]
+	(No symbol) [0x00007FF77F983603]
+	(No symbol) [0x00007FF77F955DEA]
+	(No symbol) [0x00007FF77F9550CB]
+	(No symbol) [0x00007FF77F956574]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF77FD78739+1225433]
+	(No symbol) [0x00007FF77F9D4804]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FA90151+31217]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FA88D29+1481]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF77FD77314+1220276]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF77FB458C8+21048]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF77FB41894+4612]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF77FB419C6+4918]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF77FB35D41+710113]
+	BaseThreadInitThunk [0x00007FF9C2807344+20]
+	RtlUserThreadStart [0x00007FF9C41026B1+33]
+
+2023-08-27 22:24:17,953 - ERROR - An error occurred in start_fetching_data: 'NoneType' object is not subscriptable
