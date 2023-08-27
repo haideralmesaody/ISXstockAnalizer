@@ -1,0 +1,121 @@
+2023-08-27 10:34:22,366 - ERROR - An error occurred in start_fetching_data: Message: no such alert
+  (Session info: MicrosoftEdge=116.0.1938.54)
+Stacktrace:
+	GetHandleVerifier [0x00007FF797C4B292+61986]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BDC902+737698]
+	(No symbol) [0x00007FF7979BB6A0]
+	(No symbol) [0x00007FF7979AC6B7]
+	(No symbol) [0x00007FF7979D864F]
+	(No symbol) [0x00007FF797A238AD]
+	(No symbol) [0x00007FF7979D8524]
+	(No symbol) [0x00007FF7979D8385]
+	(No symbol) [0x00007FF797A23603]
+	(No symbol) [0x00007FF7979F5DEA]
+	(No symbol) [0x00007FF7979F50CB]
+	(No symbol) [0x00007FF7979F6574]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E18739+1225433]
+	(No symbol) [0x00007FF797A74804]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B30151+31217]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B28D29+1481]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E17314+1220276]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE58C8+21048]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE1894+4612]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE19C6+4918]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BD5D41+710113]
+	BaseThreadInitThunk [0x00007FF9C2807344+20]
+	RtlUserThreadStart [0x00007FF9C41026B1+33]
+
+2023-08-27 10:36:01,189 - ERROR - An error occurred while processing ticker tasc: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: MicrosoftEdge=116.0.1938.54)
+Stacktrace:
+	GetHandleVerifier [0x00007FF797C4B292+61986]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BDC902+737698]
+	(No symbol) [0x00007FF7979BB86E]
+	(No symbol) [0x00007FF797992BEE]
+	(No symbol) [0x00007FF797A2777D]
+	(No symbol) [0x00007FF797A3C678]
+	(No symbol) [0x00007FF797A23603]
+	(No symbol) [0x00007FF7979F5DEA]
+	(No symbol) [0x00007FF7979F50CB]
+	(No symbol) [0x00007FF7979F6574]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E18739+1225433]
+	(No symbol) [0x00007FF797A74804]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B30151+31217]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B28D29+1481]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E17314+1220276]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE58C8+21048]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE1894+4612]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE19C6+4918]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BD5D41+710113]
+	BaseThreadInitThunk [0x00007FF9C2807344+20]
+	RtlUserThreadStart [0x00007FF9C41026B1+33]
+
+2023-08-27 10:36:03,334 - ERROR - An error occurred in plot_candlestick_chart: 'NoneType' object has no attribute 'empty'
+2023-08-27 10:36:03,335 - ERROR - An error occurred in start_fetching_data: 'NoneType' object has no attribute 'columns'
+2023-08-27 10:37:39,378 - ERROR - An error occurred while processing ticker bnoi: Message: 
+Stacktrace:
+	GetHandleVerifier [0x00007FF797C4B292+61986]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BDC902+737698]
+	(No symbol) [0x00007FF7979BB86E]
+	(No symbol) [0x00007FF797A03216]
+	(No symbol) [0x00007FF797A03327]
+	(No symbol) [0x00007FF797A3FBF7]
+	(No symbol) [0x00007FF797A2386F]
+	(No symbol) [0x00007FF7979F6F61]
+	(No symbol) [0x00007FF797A3CD41]
+	(No symbol) [0x00007FF797A23603]
+	(No symbol) [0x00007FF7979F5DEA]
+	(No symbol) [0x00007FF7979F50CB]
+	(No symbol) [0x00007FF7979F6574]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E18739+1225433]
+	(No symbol) [0x00007FF797A74804]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B30151+31217]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797B28D29+1481]
+	Microsoft::Applications::Events::ILogManager::DispatchEventBroadcast [0x00007FF797E17314+1220276]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE58C8+21048]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE1894+4612]
+	Microsoft::Applications::Events::ILogConfiguration::operator* [0x00007FF797BE19C6+4918]
+	Microsoft::Applications::Events::EventProperty::~EventProperty [0x00007FF797BD5D41+710113]
+	BaseThreadInitThunk [0x00007FF9C2807344+20]
+	RtlUserThreadStart [0x00007FF9C41026B1+33]
+
+2023-08-27 10:37:41,585 - ERROR - An error occurred in plot_candlestick_chart: 'NoneType' object has no attribute 'empty'
+2023-08-27 10:37:41,586 - ERROR - An error occurred in start_fetching_data: 'NoneType' object has no attribute 'columns'
+2023-08-27 11:04:39,881 - ERROR - An error occurred in start_fetching_data: 'DataFetcher' object has no attribute 'calculate_stochastic_oscillator'
+2023-08-27 11:04:54,617 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 11:10:34,588 - ERROR - An error occurred in start_fetching_data: 'DataFetcher' object has no attribute 'calculate_stochastic_oscillator'
+2023-08-27 11:10:39,193 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 11:11:49,620 - ERROR - An error occurred in start_fetching_data: 'DataFetcher' object has no attribute 'calculate_stochastic_oscillator'
+2023-08-27 11:12:49,581 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 11:24:34,591 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 11:43:02,984 - ERROR - An error occurred in plot_candlestick_chart: cannot access local variable 'yaxis2_range' where it is not associated with a value
+2023-08-27 11:44:18,777 - ERROR - An error occurred in plot_candlestick_chart: cannot access local variable 'yaxis2_range' where it is not associated with a value
+2023-08-27 11:44:42,608 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 11:48:04,391 - ERROR - An error occurred in plot_candlestick_chart: cannot access local variable 'yaxis2_range' where it is not associated with a value
+2023-08-27 12:14:35,410 - ERROR - An error occurred in plot_candlestick_chart: The first argument to the plotly.graph_objs.Candlestick
+constructor must be a dict or
+an instance of :class:`plotly.graph_objs.Candlestick`
+2023-08-27 12:50:36,435 - ERROR - An error occurred in plot_candlestick_chart: The first argument to the plotly.graph_objs.Candlestick
+constructor must be a dict or
+an instance of :class:`plotly.graph_objs.Candlestick`
+2023-08-27 12:50:43,722 - ERROR - An error occurred in plot_candlestick_chart: The first argument to the plotly.graph_objs.Candlestick
+constructor must be a dict or
+an instance of :class:`plotly.graph_objs.Candlestick`
+2023-08-27 12:50:45,992 - ERROR - An error occurred in plot_candlestick_chart: The first argument to the plotly.graph_objs.Candlestick
+constructor must be a dict or
+an instance of :class:`plotly.graph_objs.Candlestick`
+2023-08-27 12:50:47,104 - ERROR - An error occurred in plot_candlestick_chart: The first argument to the plotly.graph_objs.Candlestick
+constructor must be a dict or
+an instance of :class:`plotly.graph_objs.Candlestick`
+2023-08-27 12:50:48,114 - ERROR - An error occurred in plot_candlestick_chart: The first argument to the plotly.graph_objs.Candlestick
+constructor must be a dict or
+an instance of :class:`plotly.graph_objs.Candlestick`
+2023-08-27 12:55:36,230 - ERROR - An error occurred in plot_candlestick_chart: The first argument to the plotly.graph_objs.Candlestick
+constructor must be a dict or
+an instance of :class:`plotly.graph_objs.Candlestick`
+2023-08-27 13:29:34,783 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 14:05:53,856 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 14:42:34,308 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 15:04:52,471 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
+2023-08-27 15:09:04,182 - ERROR - An error occurred in save_data_to_excel: "['Stoch_K', 'Stoch_D'] not in index"
