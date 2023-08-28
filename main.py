@@ -27,7 +27,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from data_fetcher import DataFetcher
 from data_processing import DataProcessing
-
+from PyQt5.QtCore import Qt
 # Configure logging
 from config import (
     LOGGING_CONFIG, EDGE_DRIVER_PATH, BASE_URL, DEFAULT_DATE,
@@ -63,20 +63,41 @@ class MainWindow(QMainWindow):
             self.rsi_label = QLabel("RSI: -")
             self.stoch_label = QLabel("Stoch: -")
             self.rsi_state_label = QLabel()
-
+            self.rsi_status_label = QLabel(self)
+            
             # Initialize the data fetcher and data processing objects
             self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
             self.data_processing = DataProcessing(self)
+            # Grouping related elements
+            input_layout = QVBoxLayout()
+            input_layout.addWidget(QLabel("Enter Stock Ticker:"))
+            input_layout.addWidget(self.ticker_input)
+            input_layout.addWidget(self.rows_label)
+            input_layout.addWidget(self.row_spin_box)
 
+            # Ensure consistent spacing and alignment
+            input_layout.setSpacing(10)  # consistent spacing between elements
+            input_layout.setAlignment(Qt.AlignTop)  # top-aligned
             # Initialize the user interface
             self.setup_ui()
-
+            self.setup_status_label(self.right_layout)
             # Connect button signals to their respective slots
             self.connect_buttons()
 
             # Initialize DataFrame for data storage
             self.df = None
+        def fetch_data_button_clicked(self):
+            # Show a loading message or spinner
+            self.status_label.setText("Fetching data...")
+            QApplication.processEvents()  # update GUI immediately
 
+            # ... fetching data ...
+
+            # Update the status after fetching
+            if data_was_fetched_successfully:  # you'd need to determine this based on your logic
+                self.status_label.setText("Data fetched successfully!")
+            else:
+                self.status_label.setText("Failed to fetch data. Please try again.")
         def setup_ui(self):
             """Initialize the user interface layout."""
             main_layout = QHBoxLayout()
@@ -120,15 +141,16 @@ class MainWindow(QMainWindow):
 
             # 3. Right section: for status (10% of the screen)
             self.right_widget = QWidget()
-            right_layout = QVBoxLayout()
-            self.right_widget.setLayout(right_layout)
+            self.right_layout = QVBoxLayout() 
+            self.right_widget.setLayout(self.right_layout)
                     
             # Add items to the right layout
-            right_layout.addWidget(self.rsi_label)
+            self.right_layout.addWidget(self.rsi_label)
             self.rsi_state_label.setToolTip("")
-            right_layout.addWidget(self.stoch_label)
             self.rsi_state_label = QLabel()
-            right_layout.addWidget(self.rsi_state_label)  # Add to right layout directly
+            self.right_layout.addWidget(self.rsi_state_label)  # Add to right layout directly
+            self.right_layout.addWidget(self.stoch_label)
+
             
             splitter.addWidget(self.right_widget)
 
@@ -168,7 +190,7 @@ class MainWindow(QMainWindow):
             self.row_spin_box.setValue(300)
             top_layout.addWidget(self.row_spin_box)
 
-            self.sma_checkbox = QCheckBox("Show SMA")
+            self.sma_checkbox = QCheckBox("Show Simple Moving Average")
             top_layout.addWidget(self.sma_checkbox)
 
             self.sma_period_label = QLabel("SMA Period:")
@@ -181,7 +203,7 @@ class MainWindow(QMainWindow):
             top_layout.addWidget(self.sma_period_spinbox)
 
             # RSI Checkbox
-            self.rsi_checkbox = QCheckBox("Show RSI14")
+            self.rsi_checkbox = QCheckBox("Show Relative Strength Index")
             top_layout.addWidget(self.rsi_checkbox)
 
             # Stochastic Oscillator Checkbox
@@ -252,6 +274,7 @@ class MainWindow(QMainWindow):
                 self.rsi_status_label.setToolTip(rsi_description)
             except Exception as e:
                 logging.error(f"An error occurred in start_fetching_data: {str(e)}")
+                self.statusBar().showMessage("An error occurred. Check the log for details.")
 
         
 
@@ -264,6 +287,7 @@ class MainWindow(QMainWindow):
                     self.data_processing.plot_candlestick_chart()  # Plot the updated chart
             except Exception as e:
                 logging.error(f"An error occurred in recalculate_and_plot: {str(e)}")
+                self.statusBar().showMessage("An error occurred. Check the log for details.")
 
          # ------- Chart Plotting and Visualization Methods --------
 
@@ -324,7 +348,7 @@ class MainWindow(QMainWindow):
                     with pd.ExcelWriter(filename, engine='openpyxl') as writer:
                         self.df.to_excel(writer, sheet_name='Sheet1', index=False) # This already includes all columns, including RSI14
                         print("Saving Stoch data to Excel...")
-                        stoch_df = self.df[['Date', 'Stoch_K', 'Stoch_D']]
+                        stoch_df = self.df[['Date', '%K', '%D']]
                         print("First few rows of Stoch data to be saved:")
                         print(stoch_df.head())
                         self.df[['Date', 'High', 'Low', 'Close']].to_excel(writer, sheet_name='Sheet2', index=False)
@@ -332,13 +356,14 @@ class MainWindow(QMainWindow):
                         self.df[['Volume', 'Open', 'High', 'Low', 'Close']].to_excel(writer, sheet_name='Sheet4', index=False)
                         sma_df = self.df[['Date', 'High', 'Low', 'Close','SMA','SMA50', 'SMA200']]
                         sma_df.to_excel(writer, sheet_name='SMA', index=False)
-                        stoch_df = self.df[['Date', 'Stoch_K', 'Stoch_D']] # Assuming Stoch_K and Stoch_D as column names for Stochastic Oscillator
+                        stoch_df = self.df[['Date', '%K', '%D']] # Assuming Stoch_K and Stoch_D as column names for Stochastic Oscillator
                         stoch_df.to_excel(writer, sheet_name='Stoch(9,6)', index=False)
                     self.status_label.setText("Data saved successfully.")
                 else:
                     self.status_label.setText("No data available to save.")
             except Exception as e:
                 logging.error(f"An error occurred in save_data_to_excel: {str(e)}") 
+                self.statusBar().showMessage("An error occurred. Check the log for details.")
    
 
 

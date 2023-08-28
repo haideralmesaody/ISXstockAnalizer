@@ -6,6 +6,10 @@ LOGGING_CONFIG = {
     'level': 'ERROR',
     'format': '%(asctime)s - %(levelname)s - %(message)s'
 }
+import logging
+from config import LOGGING_CONFIG
+
+logging.basicConfig(**LOGGING_CONFIG)
 current_directory = os.path.dirname(os.path.abspath(__file__))
 # Edge Driver Configuration
 EDGE_DRIVER_PATH = os.path.join(current_directory, 'msedgedriver.exe')
