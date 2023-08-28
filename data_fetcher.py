@@ -11,13 +11,11 @@ from selenium.webdriver.edge.webdriver import WebDriver as EdgeDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoAlertPresentException
-from selenium.common.exceptions import NoSuchElementException
 from config import (
     LOGGING_CONFIG, EDGE_DRIVER_PATH, BASE_URL, DEFAULT_DATE,
     TABLE_SELECTOR, WEBDRIVER_WAIT_TIME, DEFAULT_SMA_PERIOD,
     DEFAULT_ROW_COUNT, EXCEL_ENGINE
 )
-logging.basicConfig(**LOGGING_CONFIG)
 class DataFetcher:
     def __init__(self, driver_path):
         self.driver_path = driver_path
@@ -107,8 +105,6 @@ class DataFetcher:
 
                     # After accepting the alert, return to the same location in the code
                     return self.fetch_data(ticker, desired_rows)
-                except NoSuchElementException:
-                    logging.warning("The web element was not found.")
                 except Exception as e:
                     # Log the error
                     logging.error(f"An error occurred while processing ticker {ticker}: {str(e)}")
