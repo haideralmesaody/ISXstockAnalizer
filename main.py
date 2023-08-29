@@ -46,6 +46,14 @@ class MainWindow(QMainWindow):
         def __init__(self):
             super(MainWindow, self).__init__()
             self.status_label = QLabel(self)
+            # Initialize the user interface
+            self.setup_ui()
+            # Connect button signals to their respective slots
+            self.connect_buttons()
+            # Initialize DataFrame for data storage
+            self.df = None
+
+        def setup_ui(self):
             # Initialize the widgets
             self.ticker_input = QLineEdit()
             self.rows_label = QLabel("Number of rows:")
@@ -58,27 +66,19 @@ class MainWindow(QMainWindow):
             self.stoch_checkbox = QCheckBox("Show Stoch(9,6)")  # Initializing the stoch_checkbox
             self.sma_period_spinbox = QSpinBox()
             self.sma_period_spinbox.setMinimum(1)
-            self.sma_period_spinbox.setMaximum(100)
+            self.sma_period_spinbox.setMaximum(200)
             self.sma_period_spinbox.setValue(10)
             self.rsi_label = QLabel("RSI: -")
             self.stoch_label = QLabel("Stoch: -")
             self.rsi_state_label = QLabel()
             self.rsi_status_label = QLabel(self)
-
+            self.recommendation_label = QLabel(self)
             # Initialize the data fetcher and data processing objects
             self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
             self.data_processing = DataProcessing(self)
-
-            # Initialize the user interface
-            self.setup_ui()
-
-            # Connect button signals to their respective slots
-            self.connect_buttons()
-
-            # Initialize DataFrame for data storage
-            self.df = None
-
-        def setup_ui(self):
+            self.rsi_state_label = QLabel()
+            
+            
             """Initialize the user interface layout."""
             main_layout = QHBoxLayout()
 
@@ -127,10 +127,11 @@ class MainWindow(QMainWindow):
             # Add items to the right layout
             right_layout.addWidget(self.rsi_label)
             self.rsi_state_label.setToolTip("")
-            right_layout.addWidget(self.stoch_label)
-            self.rsi_state_label = QLabel()
             right_layout.addWidget(self.rsi_state_label)  # Add to right layout directly
+            right_layout.addWidget(self.recommendation_label)
+            right_layout.addWidget(self.stoch_label)
             
+
             splitter.addWidget(self.right_widget)
 
             # Add the splitter to the main layout
@@ -138,7 +139,7 @@ class MainWindow(QMainWindow):
 
             # Set the initial sizes (in pixels) according to the percentages given
             screen_width = self.width()  # Assuming this gives the width of the main window
-            splitter.setSizes([int(0.10 * screen_width), int(0.80 * screen_width), int(0.10 * screen_width)])
+            splitter.setSizes([int(0.05 * screen_width), int(0.80 * screen_width), int(0.15 * screen_width)])
 
             # Create a central widget with the main layout
             central_widget = QWidget()
@@ -253,11 +254,7 @@ class MainWindow(QMainWindow):
                 self.rsi_status_label.setToolTip(rsi_description)
             except Exception as e:
                 logging.error(f"An error occurred in start_fetching_data: {str(e)}")
-                self.statusBar().showMessage("An error occurred. Check the log for details.")
-
-        
-
-        
+                self.statusBar().showMessage("An error occurred. Check the log for details.")   
 
         def recalculate_and_plot(self):
             try:
@@ -269,10 +266,7 @@ class MainWindow(QMainWindow):
                 self.statusBar().showMessage("An error occurred. Check the log for details.")
 
          # ------- Chart Plotting and Visualization Methods --------
-
-
-        
-
+      
         def enable_chart_interactions(self):
             fig = go.Figure(data=[go.Candlestick(x=self.df['Date'],
                                                 open=self.df['Open'],
@@ -291,6 +285,7 @@ class MainWindow(QMainWindow):
 
             raw_html = fig.to_html(include_plotlyjs='cdn')
             self.web_view.setHtml(raw_html)
+            
         def enable_data_point_highlight(self):
             fig = go.Figure(data=[go.Candlestick(x=self.df['Date'],
                                                 open=self.df['Open'],
