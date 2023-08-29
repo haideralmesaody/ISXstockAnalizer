@@ -102,18 +102,17 @@ class DataFetcher:
                     # Handle the alert and accept it
                     alert = driver.switch_to.alert
                     alert.accept()
-
-                    # After accepting the alert, return to the same location in the code
+                    logging.warning("Alert accepted and retrying data fetching.")
                     return self.fetch_data(ticker, desired_rows)
+
                 except Exception as e:
-                    # Log the error
-                    logging.error(f"An error occurred while processing ticker {ticker}: {str(e)}")
-                    # Closing the driver
-                    if 'driver' in locals():
-                        driver.quit()
-                    print(f"An error occurred while processing {ticker}: {str(e)}")
-                    return None
-                
+                    logging.error(f"An error occurred while processing ticker {ticker}: {str(e)}", exc_info=True)  # Log full stack trace
+                    return None  # Explicitly return None
+                        
+                finally:
+                    if driver:
+                        driver.quit()  # Ensure that the driver is closed
+                            
 
     def calculate_sma(self, data_frame, sma_period):
                 """Calculate simple moving averages."""
