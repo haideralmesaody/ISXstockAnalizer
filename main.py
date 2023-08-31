@@ -28,145 +28,172 @@ from selenium.webdriver.support.ui import WebDriverWait
 from data_fetcher import DataFetcher
 from data_processing import DataProcessing
 from PyQt5 import QtWidgets
+import traceback
 # Configure logging
 from config import (
     LOGGING_CONFIG, EDGE_DRIVER_PATH, BASE_URL, DEFAULT_DATE,
     TABLE_SELECTOR, WEBDRIVER_WAIT_TIME, DEFAULT_SMA_PERIOD,
     DEFAULT_ROW_COUNT, EXCEL_ENGINE
 )
-logging.basicConfig(**LOGGING_CONFIG)
+def setup_logging():
+    logging.basicConfig(**LOGGING_CONFIG)
 
+from LoggerFunction import Logger
+from config import DEBUG
 # Get the current directory
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
 class App:
     def __init__(self, main_logic):
-        print("App: Initializing...")
+        self.logger = Logger(DEBUG)  # Initialize the logger
+        self.logger.log_or_print("App: Initializing...", level="INFO", module="App")
+        
         self.main_logic = main_logic
         self.setup_ui()
-        print("App: Initialized.")
+        
+        self.logger.log_or_print("App: Initialized.", level="INFO", module="App")
 
     def run(self):
+        self.logger.log_or_print("App: Running GUI.", level="INFO", module="App")
         self.gui.show()
 
 class MainGUI(QMainWindow):
         def __init__(self, main_logic=None):
-            super(MainGUI, self).__init__()
-            self.main_logic = main_logic
+            try:
+                self.some_var = None  # Initialize all class variables here
+                self.logger = Logger(DEBUG)  # Initialize the logger
+                self.logger.log_or_print("MainGUI: Initializing...", level="DEBUG", module="MainGUI")
+                
+                super(MainGUI, self).__init__()
+                self.main_logic = main_logic
+                
+                # Rest of your existing code here...
+                self.initialize()  # If you're calling this method in __init__, for example
+                
+                self.logger.log_or_print("MainGUI: Initialized.", level="DEBUG", module="MainGUI")
+                self.initialize()
+            except Exception as e:
+                
+                logger.log_or_print(f"An unexpected error occurred in main: {str(e)}. Stack Trace: {traceback.format_exc()}", level="ERROR", module="Main")
+                raise  # re-raise the exception for higher-level handling
 
         def initialize(self):
-            print("MainGUI: Initializing UI...")
-            self.setup_ui()
-            self.connect_buttons()
-            
-            print("MainGUI: UI Initialized.")
+            self.logger.log_or_print("MainGUI: Initializing...", level="INFO", module="MainGUI")
+            self.logger.log_or_print("MainGUI: About to initialize UI.", level="DEBUG", module="MainGUI")
+            try:
+                self.logger.log_or_print("About to call setup_ui...", level="DEBUG", module="MainGUI")
+                self.setup_ui()
+                self.logger.log_or_print("Successfully called setup_ui.", level="DEBUG", module="MainGUI")
+                self.logger.log_or_print("About to call connect_buttons...", level="DEBUG", module="MainGUI")
+                self.connect_buttons()
+                self.logger.log_or_print("Successfully called connect_buttons.", level="DEBUG", module="MainGUI")
+                self.logger.log_or_print("MainGUI: UI Initialized.", level="INFO", module="MainGUI")
+            except Exception as e:
+                self.logger.log_or_print(f"An unexpected error occurred in initialize: {str(e)}", level="ERROR", module="MainGUI")
+                self.statusBar().showMessage("An unexpected error occurred. Check the log for details.")
             
         def setup_ui(self):
-            # Initialize the widgets
-            print("MainGUI: Setting up UI...")
-            self.status_label = QLabel(self)
+            # Log the UI setup initialization
+            self.logger.log_or_print("MainGUI: Setting up UI...", level="INFO", module="MainGUI")
 
-            self.ticker_input = QLineEdit()
-            self.rows_label = QLabel("Number of rows:")
-            self.row_spin_box = QSpinBox()
-            self.row_spin_box.setMinimum(1)
-            self.row_spin_box.setMaximum(1000)
-            self.row_spin_box.setValue(300)
-            self.sma_checkbox = QCheckBox("Show SMA")
-            self.rsi_checkbox = QCheckBox("Show RSI14")  # Initializing the rsi_checkbox
-            self.stoch_checkbox = QCheckBox("Show Stoch(9,6)")  # Initializing the stoch_checkbox
-            self.sma_period_spinbox = QSpinBox()
-            self.sma_period_spinbox.setMinimum(1)
-            self.sma_period_spinbox.setMaximum(200)
-            self.sma_period_spinbox.setValue(10)
-            self.rsi_label = QLabel("RSI: -")
-            self.stoch_label = QLabel("Stoch: -")
-            self.rsi_state_label = QLabel(self)
-            self.rsi_status_label = QLabel(self)
-            self.RSIDivergeRecommendation_label = QLabel(self)
-            # Initialize the data fetcher and data processing objects
-            self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
-            self.data_processing = DataProcessing(self)
-            self.rsi_state_label = QLabel("RSI Status: -")
-            self.RSIDivergeRecommendation_label = QLabel("RSI Divergance Detection: -")
-            
-            
-            """Initialize the user interface layout."""
-            main_layout = QHBoxLayout()
-
-            # Create a QSplitter for horizontal splitting
-            splitter = QSplitter()
-
-            # 1. Left section: for ticker, buttons, and input boxes (10% of the screen)
-            self.left_widget = QWidget()
-            left_layout = QVBoxLayout()
-            self.left_widget.setLayout(left_layout)
-                    
-            # Add the ticker label and input
-            ticker_label = QLabel("Enter Ticker:")  # Adding a label for the ticker input
-            left_layout.addWidget(ticker_label)
-            left_layout.addWidget(self.ticker_input)
-            
-            left_layout.addWidget(self.rows_label)
-            left_layout.addWidget(self.row_spin_box)
-            left_layout.addWidget(self.sma_checkbox)
-            left_layout.addWidget(self.rsi_checkbox)  # Adding the RSI checkbox
-            left_layout.addWidget(self.stoch_checkbox)  # Adding the Stochastic Oscillator checkbox
-
-            # Add the start and save buttons
-            self.start_button = QPushButton("Start")
             try:
+                # Initialize the widgets
+                self.status_label = QLabel(self)
+                self.ticker_input = QLineEdit()
+                self.rows_label = QLabel("Number of rows:")
+                self.row_spin_box = QSpinBox()
+                self.row_spin_box.setMinimum(1)
+                self.row_spin_box.setMaximum(1000)
+                self.row_spin_box.setValue(300)
+                self.sma_checkbox = QCheckBox("Show SMA")
+                self.rsi_checkbox = QCheckBox("Show RSI14")
+                self.stoch_checkbox = QCheckBox("Show Stoch(9,6)")
+                self.sma_period_spinbox = QSpinBox()
+                self.sma_period_spinbox.setMinimum(1)
+                self.sma_period_spinbox.setMaximum(200)
+                self.sma_period_spinbox.setValue(10)
+                self.rsi_label = QLabel("RSI: -")
+                self.stoch_label = QLabel("Stoch: -")
+                self.rsi_state_label = QLabel(self)
+                self.rsi_status_label = QLabel(self)
+                self.RSIDivergeRecommendation_label = QLabel(self)
+
+                # Initialize Data Fetcher and Processor
+                self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
+                self.data_processing = DataProcessing(self)
+
+                # Initialize the user interface layout
+                main_layout = QHBoxLayout()
+
+                # Create a QSplitter for horizontal splitting
+                splitter = QSplitter()
+
+                # 1. Left section: for ticker, buttons, and input boxes
+                self.left_widget = QWidget()
+                left_layout = QVBoxLayout()
+                self.left_widget.setLayout(left_layout)
+
+                # Add the ticker label and input
+                ticker_label = QLabel("Enter Ticker:")
+                left_layout.addWidget(ticker_label)
+                left_layout.addWidget(self.ticker_input)
+
+                # Add the rest of the widgets to the left layout
+                left_layout.addWidget(self.rows_label)
+                left_layout.addWidget(self.row_spin_box)
+                left_layout.addWidget(self.sma_checkbox)
+                left_layout.addWidget(self.rsi_checkbox)
+                left_layout.addWidget(self.stoch_checkbox)
+
+                # Add start and save buttons
+                self.start_button = QPushButton("Start")
                 self.start_button.clicked.connect(self.main_logic.start_fetching_data)
-            except AttributeError as e:
-                logging.error(f"AttributeError in setup_ui: {e}")
-                raise
-            left_layout.addWidget(self.start_button)
+                left_layout.addWidget(self.start_button)
 
-            self.save_button = QPushButton("Save")
-            try:
+                self.save_button = QPushButton("Save")
+                #self.save_button.clicked.connect(self.show_save_message)
                 self.save_button.clicked.connect(self.main_logic.save_data_to_excel)
-            except AttributeError as e:
-                logging.error(f"AttributeError in setup_ui: {e}")
+                left_layout.addWidget(self.save_button)
+
+                splitter.addWidget(self.left_widget)
+
+                # 2. Middle section: for the graph (80% of the screen)
+                middle_widget = QWidget()
+                middle_layout = QVBoxLayout()
+                middle_widget.setLayout(middle_layout)
+                # Assuming setup_web_view is defined
+                self.setup_web_view(middle_layout)
+                splitter.addWidget(middle_widget)
+
+                # 3. Right section: for status (10% of the screen)
+                self.right_widget = QWidget()
+                right_layout = QVBoxLayout()
+                self.right_widget.setLayout(right_layout)
+
+                # Add items to the right layout
+                right_layout.addWidget(self.rsi_label)
+                self.rsi_state_label.setToolTip("")
+                right_layout.addWidget(self.rsi_state_label)
+                right_layout.addWidget(self.RSIDivergeRecommendation_label)
+                right_layout.addWidget(self.stoch_label)
+
+                splitter.addWidget(self.right_widget)
+
+                # Add the splitter to the main layout
+                main_layout.addWidget(splitter)
+
+                # Set the initial sizes (in pixels) according to the percentages given
+                screen_width = self.width()  # Assuming this gives the width of the main window
+                splitter.setSizes([int(0.05 * screen_width), int(0.80 * screen_width), int(0.15 * screen_width)])
+
+                # Create a central widget with the main layout
+                central_widget = QWidget()
+                central_widget.setLayout(main_layout)
+                self.setCentralWidget(central_widget)
+                
+            except Exception as e:
+                self.logger.log_or_print(f"An unexpected error occurred in setup_ui: {str(e)}", level="ERROR", module="MainGUI")
                 raise
-            left_layout.addWidget(self.save_button)
-            
-            splitter.addWidget(self.left_widget)  # Add to splitter
-
-            # 2. Middle section: for the graph (80% of the screen)
-            middle_widget = QWidget()
-            middle_layout = QVBoxLayout()
-            middle_widget.setLayout(middle_layout)
-            self.setup_web_view(middle_layout)
-            splitter.addWidget(middle_widget)
-
-            # 3. Right section: for status (10% of the screen)
-            self.right_widget = QWidget()
-            right_layout = QVBoxLayout()
-            self.right_widget.setLayout(right_layout)
-                    
-            # Add items to the right layout
-            right_layout.addWidget(self.rsi_label)
-            self.rsi_state_label.setToolTip("")
-
-            right_layout.addWidget(self.rsi_state_label)  # Existing
-            right_layout.addWidget(self.RSIDivergeRecommendation_label)  # New
-            right_layout.addWidget(self.stoch_label)
-            
-
-            splitter.addWidget(self.right_widget)
-
-            # Add the splitter to the main layout
-            main_layout.addWidget(splitter)
-
-            # Set the initial sizes (in pixels) according to the percentages given
-            screen_width = self.width()  # Assuming this gives the width of the main window
-            splitter.setSizes([int(0.05 * screen_width), int(0.80 * screen_width), int(0.15 * screen_width)])
-
-            # Create a central widget with the main layout
-            central_widget = QWidget()
-            central_widget.setLayout(main_layout)
-            self.setCentralWidget(central_widget)
-            print("MainGUI: UI setup complete.")
 
         def connect_buttons(self):
             print("MainGUI: Connecting buttons...")
@@ -267,14 +294,22 @@ class MainGUI(QMainWindow):
    
 class MainLogic:
         def __init__(self, gui_instance=None):
-            print("MainLogic: Initializing...")
-            logging.debug("MainLogic initialized.")
-            self.gui = gui_instance
-            print("MainLogic: Initialized.")
-        def start_fetching_data(self):
-            print("MainLogic: Starting data fetching...")
-            logging.debug(f"GUI instance in start_fetching_data: {self.gui}")
             try:
+                self.logger = Logger(DEBUG)  # Initialize the logger
+                self.logger.log_or_print("MainLogic: Initializing...", level="DEBUG", module="MainLogic")
+                
+                self.gui = gui_instance
+                # Any other initialization code you have
+                
+                self.logger.log_or_print("MainLogic: Initialized.", level="DEBUG", module="MainLogic")
+            except Exception as e:
+                self.logger.log_or_print(f"An unexpected error occurred in MainLogic __init__: {str(e)}", level="ERROR", module="MainLogic")
+                raise
+        def start_fetching_data(self):
+            self.logger.log_or_print("MainLogic: Starting data fetching...", level="DEBUG", module="MainLogic")
+            self.logger.log_or_print(f"MainLogic: GUI instance in start_fetching_data: {self.gui}", level="DEBUG", module="MainLogic")
+            try:
+                self.logger.log_or_print("MainLogic: About to fetch data.", level="DEBUG", module="MainLogic")
                 data_fetcher = self.gui.data_fetcher
                 ticker = self.gui.ticker_input.text().strip()
                 desired_rows = self.gui.row_spin_box.value()
@@ -291,7 +326,7 @@ class MainLogic:
                     self.df = data_fetcher.fetch_data(ticker, desired_rows)
                     self.update_gui_dataframe()
                     print(f"MainLogic: Fetched data, DataFrame shape: {self.df.shape}, DataFrame columns: {self.df.columns}")
-                    # Calculate Stochastic Oscillator
+                    # Calculate the stochastic oscillator values and store them in the DataFrame
                     self.df = data_fetcher.calculate_stochastic_oscillator(self.df)
                     # After calculating Stochastic Oscillator and before plotting
                     self.df['%K'] = self.df['%K'].clip(lower=0, upper=100)
@@ -328,13 +363,13 @@ class MainLogic:
                     self.gui.rsi_status_label.setToolTip(rsi_description)  
                   
             except AttributeError as e:
-                logging.error(f"AttributeError in start_fetching_data: {e}")
+                self.logger.log_or_print(f"AttributeError in start_fetching_data: {e}. GUI Instance: {self.gui}", level="ERROR", module="MainLogic")
                 self.gui.statusBar().showMessage("An error occurred. Check the log for details.")
             except ValueError as e:
-                logging.error(f"ValueError in start_fetching_data: {e}")
+                self.logger.log_or_print(f"ValueError in start_fetching_data: {e}. GUI Instance: {self.gui}", level="ERROR", module="MainLogic")
                 self.gui.statusBar().showMessage(str(e))
             except Exception as e:
-                logging.error(f"An unexpected error occurred in start_fetching_data: {e}")
+                self.logger.log_or_print(f"An unexpected error occurred in start_fetching_data: {e}. GUI Instance: {self.gui}", level="ERROR", module="MainLogic")
                 self.gui.statusBar().showMessage("An unexpected error occurred. Check the log for details.")
             print("MainLogic: Data fetching complete.")  
         def update_gui_dataframe(self):
@@ -397,10 +432,10 @@ class MainLogic:
         def save_data_to_excel(self):
             """Save data to Excel file."""
             try:
-                print("save_data_to_excel: Method invoked.")  # Entry point
+                self.logger.log_or_print("save_data_to_excel: Method invoked.", level="INFO", module="save_data_to_excel")
                 if self.df is not None:
-                    print("save_data_to_excel: DataFrame is not None.")  # Check if DataFrame exists
-                    
+                    self.logger.log_or_print("save_data_to_excel: DataFrame is not None.", level="INFO", module="save_data_to_excel")
+
                     # Get the current datetime
                     now = datetime.now()
                     print(f"save_data_to_excel: Current datetime is {now}.")  # Log current datetime
@@ -414,7 +449,8 @@ class MainLogic:
                     
                     with pd.ExcelWriter(filename, engine=EXCEL_ENGINE) as writer:
                         self.df.to_excel(writer, sheet_name='Sheet1', index=False)  # This already includes all columns, including RSI14
-                    print("save_data_to_excel: Data successfully written to Excel.")  # Successful write to Excel
+                        self.logger.log_or_print("Data successfully written to Excel.", level="INFO", module="MainLogic")
+                    
                     
                     self.gui.status_label.setText("Data saved successfully.")
                 else:
@@ -432,23 +468,29 @@ def link_gui_and_logic(gui, logic):
 
 if __name__ == "__main__":
     try:
-        print("Main: Starting application...")
+        logger = Logger(DEBUG)
+        logger.log_or_print("Main: Starting application...", level="DEBUG", module="Main")
+        
         app = QtWidgets.QApplication(sys.argv)
 
-        # Initialize MainGUI and MainLogic
         logic = MainLogic()
+        logger.log_or_print("Main: Created MainLogic instance.", level="DEBUG", module="Main")
+
         gui = MainGUI(main_logic=logic)
+        logger.log_or_print("Main: Created MainGUI instance.", level="DEBUG", module="Main")
 
-        # Link the two
         link_gui_and_logic(gui, logic)
+        logger.log_or_print("Main: Linked GUI and Logic.", level="DEBUG", module="Main")
 
-        # Initialize the UI
         gui.initialize()
+        logger.log_or_print("Main: Initialized GUI.", level="DEBUG", module="Main")
 
         gui.show()
+        logger.log_or_print("Main: Displayed GUI.", level="DEBUG", module="Main")
+
         sys.exit(app.exec_())
-        print("Main: Application started.")
+        logger.log_or_print("Main: Application started.", level="DEBUG", module="Main")
     except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
-        print("Main: An error occurred.")
+        
+        logger.log_or_print(f"An unexpected error occurred in main: {str(e)}. Stack Trace: {traceback.format_exc()}", level="ERROR", module="Main")
         sys.exit(1)

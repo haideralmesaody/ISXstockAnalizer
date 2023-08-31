@@ -16,24 +16,31 @@ from config import (
     TABLE_SELECTOR, WEBDRIVER_WAIT_TIME, DEFAULT_SMA_PERIOD,
     DEFAULT_ROW_COUNT, EXCEL_ENGINE
 )
+from LoggerFunction import Logger  # Import your Logger class
 class DataFetcher:
     def __init__(self, driver_path):
         self.driver_path = driver_path
+        self.logger = Logger()
 
     def fetch_data(self, ticker, desired_rows):
                 """Fetch and process data from the website."""
                 try:
+                    self.logger.log_or_print("Attempting to allocate Selenium WebDriver resource...", level="INFO")
                     URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
 
                     # Initialize Edge driver
                     driver_service = Service(EDGE_DRIVER_PATH)
                     driver = EdgeDriver(service=driver_service)
+                    self.logger.log_or_print("Successfully allocated Selenium WebDriver resource.", level="INFO")
+
                     driver.get(URL)
                     # Check for the presence of an alert and dismiss it
                     try:
                         alert = driver.switch_to.alert
                         alert.dismiss()
+                        self.logger.log_or_print("Alert found and dismissed.", level="INFO")
                     except NoAlertPresentException:
+                        self.logger.log_or_print("No alert was present.", level="INFO")
                         pass  # No alert was present
                     # Adjust the value of the input field
                     driver.execute_script('document.querySelector("#fromDate").value = "1/1/2010";')
@@ -47,7 +54,7 @@ class DataFetcher:
                     # Wait for a couple of seconds after pressing the button
                     time.sleep(2)
                     # Wait for table to load
-                    print("Waiting for table to load...")
+                    self.logger.log_or_print("Waiting for table to load...", level="INFO")
                     WebDriverWait(driver, WEBDRIVER_WAIT_TIME).until(EC.presence_of_element_located((By.CSS_SELECTOR, "#dispTable")))
 
                     # Initialize DataFrame
@@ -58,7 +65,7 @@ class DataFetcher:
                     sma_period = DEFAULT_SMA_PERIOD  # Example period for SMA
                     page_num = 1
                     while len(df) < desired_rows:
-                        print(f"Scraping page {page_num}...")
+                        self.logger.log_or_print(f"Scraping page {page_num}...", level="INFO")
                         table_html = driver.execute_script('return document.querySelector("#dispTable").outerHTML;')
                         soup = BeautifulSoup(table_html, 'html.parser')
                         table = soup.find('table')
@@ -97,27 +104,29 @@ class DataFetcher:
                     
                     df['RSI14'] = self.calculate_rsi(df)
                     df = self.calculate_stochastic_oscillator(df)
+                    self.logger.log_or_print(f"Data fetching completed. {len(df)} rows fetched.", level="INFO")
                     return df  # Return the DataFrame
                 except UnexpectedAlertPresentException:
-                    # Handle the alert and accept it
                     alert = driver.switch_to.alert
                     alert.accept()
-                    logging.warning("Alert accepted and retrying data fetching.")
+                    self.logger.log_or_print("Alert accepted and retrying data fetching.", level="WARNING")
                     return self.fetch_data(ticker, desired_rows)
 
                 except Exception as e:
-                    logging.error(f"An error occurred while processing ticker {ticker}: {str(e)}", exc_info=True)  # Log full stack trace
-                    return None  # Explicitly return None
-                        
+                    self.logger.log_or_print(f"An error occurred while processing ticker {ticker}", level="ERROR", exc_info=True)
+                    return None
+
                 finally:
                     if driver:
-                        driver.quit()  # Ensure that the driver is closed
+                        self.logger.log_or_print("Attempting to release Selenium WebDriver resource...", level="INFO")
+                        driver.quit()
+                        self.logger.log_or_print("Successfully released Selenium WebDriver resource.", level="INFO")
                             
 
     def calculate_sma(self, data_frame, sma_period):
                 """Calculate simple moving averages."""
                 try:
-
+                    self.logger.log_or_print("Starting SMA calculation...", level="INFO")
                     # Ensure the data_frame is sorted in ascending order by date
                     data_frame = data_frame.sort_values(by='Date', ascending=True)
 
@@ -125,11 +134,13 @@ class DataFetcher:
                     data_frame['SMA'] = data_frame['Close'].rolling(window=sma_period).mean()
                     data_frame['SMA50'] = data_frame['Close'].rolling(window=50).mean()
                     data_frame['SMA200'] = data_frame['Close'].rolling(window=200).mean()
+                    self.logger.log_or_print("SMA calculation completed successfully.", level="INFO")
                     return data_frame
                 except Exception as e:
-                    logging.error(f"An error occurred in calculate_sma: {str(e)}")
+                    self.logger.log_or_print(f"An error occurred in calculate_sma: {str(e)}", level="ERROR", exc_info=True)
     def calculate_rsi(self, data_frame, period=14):
                 try:
+                    self.logger.log_or_print("Starting RSI calculation...", level="INFO")
                     delta = data_frame['Close'].diff()
                     
                     # Separate the gains and losses into their own series
@@ -145,28 +156,30 @@ class DataFetcher:
                     
                     # Calculate RSI
                     rsi = 100 - (100 / (1 + rs))
-                    
+                    self.logger.log_or_print("RSI calculation completed successfully.", level="INFO")
                     return rsi
                 except Exception as e:
-                    logging.error(f"An error occurred in calculate_rsi: {str(e)}")
+                    self.logger.log_or_print(f"An error occurred in calculate_rsi: {str(e)}", level="ERROR", exc_info=True)
                     return None        # ... (rest of the method)
     def calculate_stochastic_oscillator(self, df, k_period=9, d_period=6):
-        """
-        Calculate the stochastic oscillator for a given dataframe.
-        """
-        # Calculate %K
-        df['Lowest Low'] = df['Low'].rolling(window=k_period).min()
-        df['Highest High'] = df['High'].rolling(window=k_period).max()
-        df['%K'] = (df['Close'] - df['Lowest Low']) * 100 / (df['Highest High'] - df['Lowest Low'])
+        try:
+            self.logger.log_or_print("Starting Stochastic Oscillator calculation...", level="INFO")
 
-        # Calculate %D
-        df['%D'] = df['%K'].rolling(window=d_period).mean()
+            # Calculate %K
+            df['Lowest Low'] = df['Low'].rolling(window=k_period).min()
+            df['Highest High'] = df['High'].rolling(window=k_period).max()
+            df['%K'] = (df['Close'] - df['Lowest Low']) * 100 / (df['Highest High'] - df['Lowest Low'])
 
-        # Drop temporary columns
-        df.drop(['Lowest Low', 'Highest High'], axis=1, inplace=True)
-        print("Columns in the DataFrame after Stoch calculation:")
-        print(df.columns)
+            # Calculate %D
+            df['%D'] = df['%K'].rolling(window=d_period).mean()
 
-        print("First few rows of Stochastic Oscillator values:")
-        print(df[['Date', '%K', '%D']].head())
-        return df
+            self.logger.log_or_print("Calculated %K and %D for Stochastic Oscillator.", level="INFO")
+
+            # Drop temporary columns
+            df.drop(['Lowest Low', 'Highest High'], axis=1, inplace=True)
+
+            self.logger.log_or_print("Stochastic Oscillator calculation completed successfully.", level="INFO")
+            return df
+        except Exception as e:
+            self.logger.log_or_print(f"An error occurred in calculate_stochastic_oscillator: {str(e)}", level="ERROR", exc_info=True)
+            return None
