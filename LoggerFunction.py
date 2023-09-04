@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 import uuid
-from config import DEBUG  # Import your DEBUG flag from your config
+from app_config import DEBUG  # Import your DEBUG flag from your config
 
 class Logger:
     _instance = None
@@ -32,30 +32,41 @@ class Logger:
         return cls._instance
 
     def log_or_print(self, msg: str, level: str = "INFO", exc_info: bool = False, module: str = None):
-        logger = logging.getLogger('main_logger')
-        log_method = getattr(logger, level.lower(), None)
+        try:
+            logger = logging.getLogger('main_logger')
+            log_method = getattr(logger, level.lower(), None)
 
-        if log_method is None:
-            msg = f"Unsupported log level: {level}"
-            logger.error(msg)
-            raise ValueError(msg)
+            if log_method is None:
+                msg = f"Unsupported log level: {level}"
+                logger.error(msg)
+                raise ValueError(msg)
 
-        # Generate a unique ID for this log entry
-        log_id = str(uuid.uuid4())
+            # Generate a unique ID for this log entry
+            log_id = str(uuid.uuid4())
 
-        if len(msg) > 1000:
-            truncated_msg = msg[:1000] + '...'  # Truncate the message
-            self.full_logger.log(log_method.level, f"{log_id} - {msg}")  # Log the full message in the second log file
-        else:
-            truncated_msg = msg
+            # Get the log level value
+            log_level_value = logging.getLevelName(level.upper())
 
-        if module:
-            truncated_msg = f"{module} - {truncated_msg}"
+            if len(msg) > 1000:
+                truncated_msg = msg[:1000] + '...'  # Truncate the message
+                self.full_logger.log(log_level_value, f"{log_id} - {msg}")  # Log the full message in the second log file
+            else:
+                truncated_msg = msg
 
-        log_method(f"{log_id} - {truncated_msg}", exc_info=exc_info)
+            if module:
+                truncated_msg = f"{module} - {truncated_msg}"
 
-        if self.debug:
-            print(f"{level.upper()} - {truncated_msg}")
+            log_method(f"{log_id} - {truncated_msg}", exc_info=exc_info)
+
+            if self.debug:
+                print(f"{level.upper()} - {truncated_msg}")
+
+        except Exception as e:
+            # Handle unexpected errors gracefully
+            error_msg = f"Error occurred in log_or_print: {e}"
+            logger.error(error_msg)
+            if self.debug:
+                print(f"ERROR - {error_msg}")
 
 if __name__ == "__main__":
     logger = Logger(debug=True)
