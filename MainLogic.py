@@ -8,6 +8,7 @@ from datetime import datetime
 import os
 from data_calculator import DataCalculator
 from file_manager import FileManager
+from PyQt5.QtCore import pyqtSlot
 # Get the current directory
 current_directory = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,7 +36,7 @@ class MainLogic(QObject):
         self.indicator_values_updated_signal.connect(self.update_gui_labels_with_indicator_values)
         self.file_manager = FileManager()
         self.gui.save_data_signal.connect(self.save_data_slot)
-        save_data_signal = pyqtSignal()
+        self.gui.generate_report_signal.connect(self.generate_report_slot)
         # Initialize and setup DataFetcher
         self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
         self.data_fetcher.data_frame_ready_signal.connect(self.process_fetched_data)
@@ -188,3 +189,19 @@ class MainLogic(QObject):
             self.logger.log_or_print("MainLogic: DataFrame is None, cannot update chart.", level="WARNING", module="MainLogic")
     def update_gui_labels_with_indicator_values(self, latest_values):
         self.gui.update_indicator_labels(latest_values)
+    @pyqtSlot()
+    def generate_report_slot(self):
+        try:
+            # Fetch the latest dataframe
+            df = self.get_latest_dataframe()
+            if df is not None and self.current_ticker is not None:
+                # Generate the report using FileManager
+                success = self.file_manager.generate_report(df, self.current_ticker)
+                if success:
+                    self.logger.log_or_print(f"MainLogic: Report generated successfully for {self.current_ticker}.", level="INFO", module="MainLogic")
+                else:
+                    self.logger.log_or_print(f"MainLogic: Failed to generate report for {self.current_ticker}.", level="ERROR", module="MainLogic")
+            else:
+                self.logger.log_or_print(f"MainLogic: No data available to generate report.", level="WARNING", module="MainLogic")
+        except Exception as e:
+            self.logger.log_or_print(f"MainLogic: Error while generating report: {str(e)}", level="ERROR", module="MainLogic")

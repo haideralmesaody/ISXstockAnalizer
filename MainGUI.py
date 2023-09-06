@@ -48,6 +48,7 @@ class MainGUI(QMainWindow):
     save_data_signal = pyqtSignal()
     indicator_checkbox_changed_signal = pyqtSignal(list)
     indicator_values_updated_signal = pyqtSignal(dict)
+    generate_report_signal = pyqtSignal()
     def __init__(self, data_processing=None):
         super(MainGUI, self).__init__()
 
@@ -65,6 +66,7 @@ class MainGUI(QMainWindow):
             # Connect signals
             self.start_button.clicked.connect(self.emit_fetch_data_signal)
             self.save_button.clicked.connect(self.emit_save_data_signal)
+            self.generate_report_button.clicked.connect(self.emit_generate_report_signal)
             
             self.sma_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
             self.rsi_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
@@ -149,6 +151,8 @@ class MainGUI(QMainWindow):
             self.stoch_label = QLabel("Stoch: -")
             self.start_button = QPushButton("Start")
             self.save_button = QPushButton("Save")
+            self.generate_report_button = QPushButton("Generate Report")
+
             # Initialize Data Fetcher and Processor
 
             self.rsi_interpretation_text.setReadOnly(True)
@@ -179,6 +183,7 @@ class MainGUI(QMainWindow):
             left_layout.addWidget(self.stoch_checkbox)
             left_layout.addWidget(self.start_button)               
             left_layout.addWidget(self.save_button)
+            left_layout.addWidget(self.generate_report_button)
             self.splitter.addWidget(self.left_widget)
 
             # Middle section
@@ -556,3 +561,10 @@ class MainGUI(QMainWindow):
         self.rsi_25_label.setText(f"RSI_25: {values.get('RSI_25', '-')}")
         if 'StochK' in values and 'StochD' in values:
             self.stoch_label.setText(f"Stoch(K): {values['StochK']:.2f}, Stoch(D): {values['StochD']:.2f}")
+    def emit_generate_report_signal(self):
+        try:
+            self.logger.log_or_print("MainGUI: generate_report_signal triggered.", level="DEBUG", module="MainGUI")    
+            self.generate_report_signal.emit()
+            self.logger.log_or_print("MainGUI: generate_report_signal emitted.", level="DEBUG", module="MainGUI")
+        except Exception as e:
+            self.logger.log_or_print(f"An error occurred in generate_report_signal: {str(e)}", level="ERROR", module="MainLogic")

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Report for {ticker_name}</title>
+    <link href="report_style.css" rel="stylesheet"/>
+</head>
+<body>
+<main>
+    <header>
+        <div class="report-header">
+            <div>
+                <h1>Stock Report for {ticker_name}</h1>
+                <h2 class="report-date">Date: {report_date}</h2>
+            </div>
+            <img src="Logo.png" alt="Your Logo" class="header-logo">
+        </div>
+    </header>
+    <section class="stock-data">
+        <div class="table-container">
+            {table}
+        </div>
+    </section>
+        <section class="indicator-section">
+        <button class="collapsible">SMA Indicators and Description</button>
+        <div class="collapsible-content">
+            <div class="sma-values">
+                <p><strong>SMA10:</strong> {sma10_value}</p>
+                <p><strong>SMA50:</strong> {sma50_value}</p>
+                <p><strong>SMA200:</strong> {sma200_value}</p>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Flag Name</th>
+                        <th scope="col">Flag Value</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Golden Cross</td>
+                        <td><span class="green">{golden_cross_flag}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Death Cross</td>
+                        <td><span class="red">{death_cross_flag}</span></td>
+                    </tr>
+                    <tr>
+                        <td>Price Cross SMA10 Up</td>
+                        <td>{price_cross_sma10_up_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Cross SMA10 Down</td>
+                        <td>{price_cross_sma10_down_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Cross SMA50 Up</td>
+                        <td>{price_cross_sma50_up_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Cross SMA50 Down</td>
+                        <td>{price_cross_sma50_down_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Cross SMA200 Up</td>
+                        <td>{price_cross_sma200_up_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Cross SMA200 Down</td>
+                        <td>{price_cross_sma200_down_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>SMA10 Cross SMA200 Up</td>
+                        <td>{sma10_cross_sma200_up_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>SMA10 Cross SMA200 Down</td>
+                        <td>{sma10_cross_sma200_down_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>SMA10 Up</td>
+                        <td>{sma10_up_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>SMA50 Up</td>
+                        <td>{sma50_up_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>SMA200 Up</td>
+                        <td>{sma200_up_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>SMA10 Above SMA50</td>
+                        <td>{sma10_above_sma50_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>SMA50 Above SMA200</td>
+                        <td>{sma50_above_sma200_flag}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Distance from SMA10</td>
+                        <td>{Price_Distance_SMA10}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Distance from SMA50</td>
+                        <td>{Price_Distance_SMA50}</td>
+                    </tr>
+                    <tr>
+                        <td>Price Distance from SMA200</td>
+                        <td>{Price_Distance_SMA200}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <article class="description-box">
+                <h3>Golden Death Cross Description:</h3>
+                <p>{golden_death_cross_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Price SMA10 Crossover Description:</h3>
+                <p>{price_sma10_crossover_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Price Crossover Description:</h3>
+                <p>{price_crossover_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Price SMA200 Crossover Description:</h3>
+                <p>{price_sma200_crossover_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>SMA10 SMA200 Crossover Description:</h3>
+                <p>{sma10_sma200_crossover_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>SMA Slopes Description:</h3>
+                <p>{sma_slopes_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Price Distance SMA10 Description:</h3>
+                <p>{price_distance_sma10_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Price Distance SMA50 Description:</h3>
+                <p>{price_distance_sma50_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Price Distance SMA200 Description:</h3>
+                <p>{price_distance_sma200_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>SMA Relationship 10-50 Description:</h3>
+                <p>{sma_relationship_10_50_desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>SMA Relationship 50-200 Description:</h3>
+                <p>{sma_relationship_50_200_desc}</p>
+            </article>
+        </div>
+       
+        <button class="collapsible">RSI_9 Indicator and Description</button>
+        <div class="collapsible-content">
+            <div class="indicator-values">
+                <p><strong>RSI_9 Value:</strong> {RSI_9}</p>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Flag Name</th>
+                            <th scope="col">Flag Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Overbought</td>
+                            <td>{RSI_9_Overbought_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Oversold</td>
+                            <td>{RSI_9_Oversold_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Neutral</td>
+                            <td>{RSI_9_Neutral_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Bearish Divergence</td>
+                            <td>{RSI_9_Bearish_Divergence_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Bullish Divergence</td>
+                            <td>{RSI_9_Bullish_Divergence_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Swing Failure (Buy)</td>
+                            <td>{RSI_9_Swing_Failure_Buy_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Swing Failure (Sell)</td>
+                            <td>{RSI_9_Swing_Failure_Sell_Flag}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <article class="description-box">
+                <h3>Overbought & Oversold Description:</h3>
+                <p>{RSI_9_Overbought_Oversold_Desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Divergence Description:</h3>
+                <p>{RSI_9_Divergence_Desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Swings Description:</h3>
+                <p>{RSI_9_Swings_Desc}</p>
+            </article>
+        </div>
+
+        <button class="collapsible">RSI_14 Indicator and Description</button>
+        <div class="collapsible-content">
+            <div class="indicator-values">
+                <p><strong>RSI_14 Value:</strong> {RSI_14}</p>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Flag Name</th>
+                            <th scope="col">Flag Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Overbought</td>
+                            <td>{RSI_14_Overbought_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Oversold</td>
+                            <td>{RSI_14_Oversold_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Neutral</td>
+                            <td>{RSI_14_Neutral_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Bearish Divergence</td>
+                            <td>{RSI_14_Bearish_Divergence_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Bullish Divergence</td>
+                            <td>{RSI_14_Bullish_Divergence_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Swing Failure (Buy)</td>
+                            <td>{RSI_14_Swing_Failure_Buy_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Swing Failure (Sell)</td>
+                            <td>{RSI_14_Swing_Failure_Sell_Flag}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <article class="description-box">
+                <h3>Overbought & Oversold Description:</h3>
+                <p>{RSI_14_Overbought_Oversold_Desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Divergence Description:</h3>
+                <p>{RSI_14_Divergence_Desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Swings Description:</h3>
+                <p>{RSI_14_Swings_Desc}</p>
+            </article>
+        </div>
+       
+
+        <button class="collapsible">RSI_25 Indicator and Description</button>
+        <div class="collapsible-content">
+            <div class="indicator-values">
+                <p><strong>RSI_14 Value:</strong> {RSI_25}</p>
+            </div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Flag Name</th>
+                            <th scope="col">Flag Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Overbought</td>
+                            <td>{RSI_25_Overbought_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Oversold</td>
+                            <td>{RSI_25_Oversold_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Neutral</td>
+                            <td>{RSI_25_Neutral_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Bearish Divergence</td>
+                            <td>{RSI_25_Bearish_Divergence_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Bullish Divergence</td>
+                            <td>{RSI_25_Bullish_Divergence_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Swing Failure (Buy)</td>
+                            <td>{RSI_25_Swing_Failure_Buy_Flag}</td>
+                        </tr>
+                        <tr>
+                            <td>Swing Failure (Sell)</td>
+                            <td>{RSI_25_Swing_Failure_Sell_Flag}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <article class="description-box">
+                <h3>Overbought & Oversold Description:</h3>
+                <p>{RSI_25_Overbought_Oversold_Desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Divergence Description:</h3>
+                <p>{RSI_25_Divergence_Desc}</p>
+            </article>
+            <article class="description-box">
+                <h3>Swings Description:</h3>
+                <p>{RSI_25_Swings_Desc}</p>
+            </article>
+        </div>
+        <button class="collapsible">STOCHk_9_6_3 Indicator and Description</button>
+<div class="collapsible-content">
+
+    <!-- Indicator Values -->
+    <div class="indicator-values">
+        <p><strong>STOCHk_9_6_3 Value:</strong> {STOCHk_9_6_3}</p>
+        <p><strong>STOCHd_9_6_3 Value:</strong> {STOCHd_9_6_3}</p>
+    </div>
+
+    <!-- Table for Flags -->
+    <div class="table-container">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th scope="col">Flag Name</th>
+                    <th scope="col">Flag Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Overbought</td>
+                    <td>{STOCH_9_6_3_Overbought_Flag}</td>
+                </tr>
+                <tr>
+                    <td>Oversold</td>
+                    <td>{STOCH_9_6_3_Oversold_Flag}</td>
+                </tr>
+                <tr>
+                    <td>Bullish Crossover</td>
+                    <td>{STOCH_9_6_3_Bullish_Crossover_Flag}</td>
+                </tr>
+                <tr>
+                    <td>Bearish Crossover</td>
+                    <td>{STOCH_9_6_3_Bearish_Crossover_Flag}</td>
+                </tr>
+                <tr>
+                    <td>Bullish Divergence</td>
+                    <td>{STOCH_9_6_3_Bullish_Divergence_Flag}</td>
+                </tr>
+                <tr>
+                    <td>Bearish Divergence</td>
+                    <td>{STOCH_9_6_3_Bearish_Divergence_Flag}</td>
+                </tr>
+                <tr>
+                    <td>Midpoint Cross Up</td>
+                    <td>{STOCH_9_6_3_Midpoint_Cross_Up_Flag}</td>
+                </tr>
+                <tr>
+                    <td>Midpoint Cross Down</td>
+                    <td>{STOCH_9_6_3_Midpoint_Cross_Down_Flag}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Description Articles -->
+    <article class="description-box">
+        <h3>Overbought & Oversold Description:</h3>
+        <p>{STOCH_9_6_3_Overbought/Oversold_Desc}</p>
+    </article>
+    <article class="description-box">
+        <h3>Divergence Description:</h3>
+        <p>{STOCH_9_6_3_Divergence_Desc}</p>
+    </article>
+    <article class="description-box">
+        <h3>Swings Description:</h3>
+        <p>{STOCH_9_6_3_Swings_Desc}</p>
+    </article>
+</div>
+    </section>
+</main>
+<a href="#">Back to Top</a>
+<footer>&copy; 2023 The Iraqi Investor. All Rights Reserved.</footer>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var coll = document.getElementsByClassName("collapsible");
+    var maxHeight = "10000px";  // An arbitrary value; adjust as needed based on your content
+    
+    for (var i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", toggleCollapsible);      
+        coll[i].addEventListener("touchend", handleTouchEnd);
+        
+        if (coll[i].classList.contains('active')) {
+            toggleCollapsible.call(coll[i]);
+        }
+    }
+
+    function handleTouchEnd(event) {
+        event.preventDefault();
+        toggleCollapsible.call(this, event);
+    }
+    
+    function toggleCollapsible(event) {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+            content.style.maxHeight = "0px";
+        } else {
+            content.style.maxHeight = maxHeight;
+        } 
+    }
+
+    var tables = document.querySelectorAll(".styled-table");  // Targeting the styled-table class
+    tables.forEach(function(table) {
+        var rows = table.querySelectorAll("tbody tr");  // Get all rows in the table body
+        rows.forEach(function(row) {
+            var changeCell = row.querySelector("td:nth-child(6)");  // Change column
+            var changePercentCell = row.querySelector("td:nth-child(7)");  // Change% column
+
+            // For Change column
+            if (parseFloat(changeCell.textContent) < 0) {
+                changeCell.classList.add("negative");
+            } else {
+                changeCell.classList.add("positive");
+            }
+
+            // For Change% column
+            var changePercentValue = parseFloat(changePercentCell.textContent.replace('%', ''));  // Extract the float value
+            if (changePercentValue < 0) {
+                changePercentCell.classList.add("negative");
+            } else {
+                changePercentCell.classList.add("positive");
+            }
+            changePercentCell.textContent = changePercentValue.toFixed(2) + '%';  // Append the % sign back
+        });
+    });
+});
+</script>
+
+</body>
+</html>

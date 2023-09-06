@@ -70,7 +70,12 @@ class DataFetcher(QObject):
                 page_num += 1
             df = df.sort_values(by='Date', ascending=True)
 
-            
+            # Compute the actual change and change% based on the Close prices
+            df['Change'] = df['Close'].diff()
+            df['Change%'] = df['Change'] / df['Close'].shift(1) * 100
+            # Round the values to two decimal places
+            df['Change'] = df['Change'].round(2)
+            df['Change%'] = df['Change%'].round(2)
            
             self.logger.log_or_print(f"Data fetching completed. {len(df)} rows fetched.", level="INFO")
             self.data_frame_ready_signal.emit(df)
