@@ -78,6 +78,9 @@ class DataVisualizer(QObject):
                     fig.add_trace(go.Scatter(x=df['Date'], y=df['STOCHd_9_6_3'], mode='lines', name='STOCHd_9_6_3', yaxis='y2', line=dict(color="Black", width=2)))
                     # Guidelines for Stochastic Oscillator
                     self._add_stoch_guidelines_to_fig(fig, df)
+                if 'CMF_20' in indicators and 'CMF_20' in df.columns:
+                    fig.add_trace(go.Scatter(x=df['Date'], y=df['CMF_20'], mode='lines', name='CMF_20', yaxis='y2', line=dict(color="orange", width=2)))
+
             
             self.logger.log_or_print("plot_candlestick_chart: DataFrame processed. Returning the processed figure.", level='DEBUG')
             self.chart_ready_signal.emit(fig)

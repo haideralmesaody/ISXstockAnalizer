@@ -24,6 +24,7 @@ class DataCalculator(QObject):
     sma_calculated_signal = pyqtSignal(pd.DataFrame)
     rsi_calculated_signal = pyqtSignal(pd.DataFrame)
     stochastic_calculated_signal = pyqtSignal(pd.DataFrame)
+    cmf_calculated_signal = pyqtSignal(pd.DataFrame)
     macd_calculated_signal = pyqtSignal(pd.DataFrame)
     def __init__(self):
         super().__init__()
@@ -401,3 +402,100 @@ class DataCalculator(QObject):
             self.stochastic_calculated_signal.emit(df)
 
 
+    def calculate_cmf(self, df, window=20):
+        try:
+            if df is None:
+                self.logger.log_or_print("DataFrame is None in calculate_cmf", level="ERROR")
+                self.cmf_calculated_signal.emit(None)
+                return
+
+            # Log initial DataFrame headers
+            self.logger.log_or_print(f"Initial DataFrame columns: {df.columns.tolist()}", level="DEBUG")
+            self.logger.log_or_print("Starting CMF calculation...", level="INFO")
+
+            # Ensure data is sorted by date in ascending order
+            #df = df.sort_values(by='Date')
+            delta = df['High'] - df['Low']
+            zero_delta_indices = delta[delta == 0].index
+            if len(zero_delta_indices) > 0:
+                self.logger.log_or_print(f"Identified rows with zero high-low difference at indices: {zero_delta_indices.tolist()}", level="WARNING")
+            delta.replace({0: 0.0001}, inplace=True)  # replace 0 with a small number to avoid division by zero
+            # Money Flow Multiplier (MFM)
+
+            MFM = ((df['Close'] - df['Low']) - (df['High'] - df['Close'])) / delta       
+            # Money Flow Volume (MFV)
+            MFV = MFM * df['T.Shares']
+            # CMF
+            df['CMF_' + str(window)] = ((MFV.rolling(window=window).sum() / df['T.Shares'].rolling(window=window).sum())).round(2)
+
+            # Flags
+            df['CMF_Positive_Flag'] = df['CMF_' + str(window)] > 0
+            df['CMF_Negative_Flag'] = df['CMF_' + str(window)] < 0
+            df['CMF_Neutral_Flag'] = df['CMF_' + str(window)] == 0
+            df['CMF_Zero_Crossover_Up_Flag'] = (df['CMF_' + str(window)] > 0) & (df['CMF_' + str(window)].shift(1) <= 0)
+            df['CMF_Zero_Crossover_Down_Flag'] = (df['CMF_' + str(window)] < 0) & (df['CMF_' + str(window)].shift(1) >= 0)
+            df['CMF_Above_SMA50_Flag'] = df['CMF_' + str(window)] > df['SMA50']
+            df['CMF_Below_SMA50_Flag'] = df['CMF_' + str(window)] < df['SMA50']
+            df['CMF_Overbought_Flag'] = df['CMF_' + str(window)] > 0.25
+            df['CMF_Oversold_Flag'] = df['CMF_' + str(window)] < -0.25
+            df['CMF_Bullish_Divergence_Flag'] = (df['Low'].diff() < 0) & (df['CMF_' + str(window)].diff() > 0)
+            df['CMF_Bearish_Divergence_Flag'] = (df['High'].diff() > 0) & (df['CMF_' + str(window)].diff() < 0)
+
+
+        # Interpretations and Recommendations
+            df['CMF_Value_Range_Desc'] = df.apply(
+                lambda x:
+                "Bullish Pressure: Buying pressure has been dominant. Consider potential long positions or holding current longs, but always check for other confirming indicators."
+                if x['CMF_Positive_Flag']
+                else "Bearish Pressure: Selling pressure prevails. Consider potential short positions or exiting current longs. Monitor resistance levels."
+                if x['CMF_Negative_Flag']
+                else "Neutral Pressure: Market indecision. Adopt a wait-and-see approach. Look for other technical patterns or breakout signals.",
+                axis=1
+            )
+
+            df['CMF_Zero_Crossover_Desc'] = df.apply(
+                lambda x:
+                "Bullish Signal: Consider buying, especially if supported by other bullish indicators."
+                if x['CMF_Zero_Crossover_Up_Flag']
+                else "Bearish Signal: Consider selling or hedging your positions, especially if the downtrend is confirmed by other indicators."
+                if x['CMF_Zero_Crossover_Down_Flag']
+                else "No significant zero-line crossovers at this time. Monitor for potential shifts in momentum.",
+                axis=1
+            )
+
+            df['CMF_SMA_Comparison_Desc'] = df.apply(
+                lambda x:
+                "Bullish Trend Confirmation: Reinforce or enter long positions but set a stop-loss near key support levels."
+                if x['CMF_Above_SMA50_Flag']
+                else "Bearish Trend Confirmation: Exercise caution with long positions. Consider hedging or shorting if other indicators align bearishly."
+                if x['CMF_Below_SMA50_Flag']
+                else "The CMF is in alignment with the SMA50, indicating a potential period of equilibrium. Monitor for breakout or breakdown signals.",
+                axis=1
+            )
+
+            df['CMF_Overbought_Oversold_Desc'] = df.apply(
+                lambda x:
+                "Overbought: Tighten stop-loss orders or consider taking some profits."
+                if x['CMF_Overbought_Flag']
+                else "Oversold: Look for potential buying opportunities but ensure confirmation from other indicators."
+                if x['CMF_Oversold_Flag']
+                else "The CMF isn't in an extreme overbought or oversold condition. Monitor for potential shifts or other confirming signals.",
+                axis=1
+            )
+
+            df['CMF_Divergence_Desc'] = df.apply(
+                lambda x:
+                "Bullish Divergence: Potential buying opportunity. Ensure other confirming bullish signals."
+                if x['CMF_Bullish_Divergence_Flag']
+                else "Bearish Divergence: Exercise caution with long positions. Consider taking profits or setting a tighter stop-loss."
+                if x['CMF_Bearish_Divergence_Flag']
+                else "No clear divergence signals at this time. Divergences can be powerful signals, so continue monitoring.",
+                axis=1
+            )
+
+            self.logger.log_or_print("CMF calculation completed successfully.", level="INFO")
+            self.cmf_calculated_signal.emit(df)
+
+        except Exception as e:
+            self.logger.log_or_print(f"An error occurred in calculate_cmf: {str(e)}", level="ERROR", exc_info=True)
+            self.cmf_calculated_signal.emit(df)

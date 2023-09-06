@@ -73,6 +73,7 @@ class MainGUI(QMainWindow):
             self.rsi_9_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
             self.rsi_25_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
             self.stoch_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
+            self.cmf_20_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
             #self.sma_checkbox.stateChanged.connect() - to be used later
             # ... (rest of your signal connections)
 
@@ -141,6 +142,7 @@ class MainGUI(QMainWindow):
             self.rsi_9_checkbox = QCheckBox("Show RSI_9")
             self.rsi_25_checkbox = QCheckBox("Show RSI_25")
             self.stoch_checkbox = QCheckBox("Show Stoch(9,6)")
+            self.cmf_20_checkbox = QCheckBox("Show CMF_20")
             self.sma_period_spinbox = QSpinBox()
             self.sma_period_spinbox.setMinimum(1)
             self.sma_period_spinbox.setMaximum(200)
@@ -149,6 +151,7 @@ class MainGUI(QMainWindow):
             self.rsi_14_label = QLabel("RSI_14: -")
             self.rsi_25_label = QLabel("RSI_25: -")
             self.stoch_label = QLabel("Stoch: -")
+            self.cmf_20_label = QLabel("CMF_20: -")
             self.start_button = QPushButton("Start")
             self.save_button = QPushButton("Save")
             self.generate_report_button = QPushButton("Generate Report")
@@ -181,6 +184,7 @@ class MainGUI(QMainWindow):
             left_layout.addWidget(self.rsi_checkbox)
             left_layout.addWidget(self.rsi_25_checkbox)
             left_layout.addWidget(self.stoch_checkbox)
+            left_layout.addWidget(self.cmf_20_checkbox)
             left_layout.addWidget(self.start_button)               
             left_layout.addWidget(self.save_button)
             left_layout.addWidget(self.generate_report_button)
@@ -201,6 +205,7 @@ class MainGUI(QMainWindow):
             right_layout.addWidget(self.rsi_14_label)
             right_layout.addWidget(self.rsi_25_label)
             right_layout.addWidget(self.stoch_label)
+            right_layout.addWidget(self.cmf_20_label)
             self.splitter.addWidget(self.right_widget)
             self.rsi_details_tab.addTab(self.rsi_interpretation_text, "RSI_Interpretation")
             self.rsi_details_tab.addTab(self.rsi_divergence_text, "RSI_Divergence")
@@ -304,7 +309,7 @@ class MainGUI(QMainWindow):
             # Connect checkboxes
             checkboxes = [
                 self.sma_checkbox, self.rsi_checkbox, self.rsi_9_checkbox,
-                self.rsi_25_checkbox, self.stoch_checkbox
+                self.rsi_25_checkbox, self.stoch_checkbox, self.cmf_20_checkbox
             ]
             for checkbox in checkboxes:
                 checkbox.stateChanged.connect(self.emit_plot_chart_signal)
@@ -549,6 +554,8 @@ class MainGUI(QMainWindow):
                 active_indicators.append("RSI_25")
             if self.stoch_checkbox.isChecked():
                 active_indicators.append("STOCH")
+            if self.cmf_20_checkbox.isChecked():
+                active_indicators.append("CMF_20")
 
             self.indicator_checkbox_changed_signal.emit(active_indicators)
         except Exception as e:
@@ -559,6 +566,7 @@ class MainGUI(QMainWindow):
         self.rsi_9_label.setText(f"RSI_9: {values.get('RSI_9', '-')}")
         self.rsi_14_label.setText(f"RSI_14: {values.get('RSI_14', '-')}")
         self.rsi_25_label.setText(f"RSI_25: {values.get('RSI_25', '-')}")
+        self.cmf_20_label.setText(f"CMF_20: {values.get('CMF_20', '-')}")
         if 'StochK' in values and 'StochD' in values:
             self.stoch_label.setText(f"Stoch(K): {values['StochK']:.2f}, Stoch(D): {values['StochD']:.2f}")
     def emit_generate_report_signal(self):
