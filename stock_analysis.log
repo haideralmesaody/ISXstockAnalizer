@@ -1,0 +1,356 @@
+2023-09-06 06:03:25,546 - DEBUG - LoggerFunction - log_or_print - 59 - 77b8b474-2a50-4a0a-bc17-55263ca04de1 - Main - Main: Starting application...
+2023-09-06 06:03:25,786 - DEBUG - LoggerFunction - log_or_print - 59 - ec8596de-6605-4b54-bba4-e6114116338a - MainGUI - MainGUI: Initializing...
+2023-09-06 06:03:25,788 - DEBUG - LoggerFunction - log_or_print - 59 - 47e66b9c-973b-44e8-8106-673cd09dfb7f - MainGUI - MainGUI: Initializing RSI Details Tab widget.
+2023-09-06 06:03:26,104 - INFO - LoggerFunction - log_or_print - 59 - cd0c125a-d6f2-4921-9b91-3c674e81cc84 - MainGUI - MainGUI: Creating UI...
+2023-09-06 06:03:26,106 - DEBUG - LoggerFunction - log_or_print - 59 - 5eaeb6a6-b978-4f31-9bb1-5adb48ba4279 - MainGUI - MainGUI: Starting UI setup.
+2023-09-06 06:03:26,107 - DEBUG - LoggerFunction - log_or_print - 59 - ccc10e26-1435-4a9c-acf3-c07c8bb08f30 - MainGUI - MainGUI: Initializing RSI Details Tab widget.
+2023-09-06 06:03:26,109 - DEBUG - LoggerFunction - log_or_print - 59 - afa2be93-65cb-41ce-bd2f-430a66db3c65 - MainGUI - MainGUI: Setting up layouts.
+2023-09-06 06:03:26,114 - INFO - LoggerFunction - log_or_print - 59 - 74121b2e-f022-4bc6-980a-b3530ce29a27 - MainGUI - MainGUI: UI created successfully.
+2023-09-06 06:03:26,115 - DEBUG - LoggerFunction - log_or_print - 59 - 4b725727-764f-4878-a387-2a349510a692 - MainGUI - MainGUI: Completed UI setup.
+2023-09-06 06:03:26,117 - DEBUG - LoggerFunction - log_or_print - 59 - bd5c61c6-50fd-4b39-930c-665f51255a7e - MainGUI - MainGUI: Initialized.
+2023-09-06 06:03:26,118 - DEBUG - LoggerFunction - log_or_print - 59 - 5a3e8f75-1d34-4658-a31c-9fa38d7c65fd - MainLogic - MainLogic: DataFetcher initialized and connected.
+2023-09-06 06:03:26,119 - DEBUG - LoggerFunction - log_or_print - 59 - fe37c377-1478-4016-985d-dbc282fd796c - MainLogic - MainLogic: DataVisualizer initialized and connected.
+2023-09-06 06:03:26,120 - DEBUG - LoggerFunction - log_or_print - 59 - f229143d-960b-4ba4-a92e-2a9b3353d6b4 - MainLogic - MainLogic: MainGUI signals connected.
+2023-09-06 06:03:26,121 - DEBUG - LoggerFunction - log_or_print - 59 - 7af56918-cd71-4abe-ad6a-a31817ba5117 - MainLogic - MainLogic: Initialized.
+2023-09-06 06:03:26,249 - DEBUG - LoggerFunction - log_or_print - 59 - a144b748-6314-49ef-aa16-70180f760f6c - Main - Main: Displayed GUI.
+2023-09-06 06:03:35,235 - DEBUG - LoggerFunction - log_or_print - 59 - 9f7ea7f4-48bb-45ef-ab19-d0abf5291adf - MainGUI - emit_fetch_data_signal called
+2023-09-06 06:03:35,236 - DEBUG - LoggerFunction - log_or_print - 59 - 3bc999e1-e13d-44ba-a793-9d4f11113213 - MainLogic - MainLogic: Fetching data for BNOI with 300 rows...
+2023-09-06 06:03:35,237 - INFO - LoggerFunction - log_or_print - 59 - 2704e3f9-ad5d-4614-ab9b-0423ad55422b - Attempting to allocate Selenium WebDriver resource...
+2023-09-06 06:03:36,421 - INFO - LoggerFunction - log_or_print - 59 - d21a6c90-0c58-4ec4-b371-3679234fb1a3 - Successfully allocated Selenium WebDriver resource.
+2023-09-06 06:03:41,735 - INFO - LoggerFunction - log_or_print - 59 - 538e6d08-2a9d-4875-814a-88a9019a7a52 - Alert found and dismissed.
+2023-09-06 06:03:47,636 - INFO - LoggerFunction - log_or_print - 59 - 6b3e368b-9105-42d2-8dc4-811e3c850508 - Scraping page 1...
+2023-09-06 06:03:47,637 - INFO - LoggerFunction - log_or_print - 59 - ab959ae8-eb31-4c0a-9197-91dec054789e - Extracting data from current page...
+2023-09-06 06:03:47,710 - INFO - LoggerFunction - log_or_print - 59 - e3f370a6-a8e6-4c85-8c12-30cc0a5707b2 - Data extraction successful.
+2023-09-06 06:03:47,711 - INFO - LoggerFunction - log_or_print - 59 - f18fe6b5-4624-4ece-8fc0-1047c6ea6ccd - Navigating to the next page...
+2023-09-06 06:03:48,792 - INFO - LoggerFunction - log_or_print - 59 - a1b4e550-7e4e-40e1-8acc-5f4216312231 - Successfully navigated to the next page.
+2023-09-06 06:03:48,794 - INFO - LoggerFunction - log_or_print - 59 - 58683c0a-bcb5-4654-bb9a-704f7db10a35 - Scraping page 2...
+2023-09-06 06:03:48,795 - INFO - LoggerFunction - log_or_print - 59 - b6ddb4ab-d038-4e52-b192-57ed7caa5ef1 - Extracting data from current page...
+2023-09-06 06:03:48,912 - INFO - LoggerFunction - log_or_print - 59 - 0a3cec0f-1c4f-4578-9df2-aeb80da2050c - Data extraction successful.
+2023-09-06 06:03:48,930 - INFO - LoggerFunction - log_or_print - 59 - 46e0bafd-7a79-4807-a6f2-10f037dc1b97 - Navigating to the next page...
+2023-09-06 06:03:49,647 - INFO - LoggerFunction - log_or_print - 59 - 6ea09107-e4fb-4a5f-8f03-c6a5900fe493 - Successfully navigated to the next page.
+2023-09-06 06:03:49,648 - INFO - LoggerFunction - log_or_print - 59 - 5eef2e1e-d433-431f-a39a-397fa425445b - Scraping page 3...
+2023-09-06 06:03:49,650 - INFO - LoggerFunction - log_or_print - 59 - a7a30609-e43d-4793-a8e5-3dca5de2eecc - Extracting data from current page...
+2023-09-06 06:03:49,707 - INFO - LoggerFunction - log_or_print - 59 - d0905edf-c4b3-4f39-a24b-c97ced5f4ea8 - Data extraction successful.
+2023-09-06 06:03:49,708 - INFO - LoggerFunction - log_or_print - 59 - 9ed451d7-859a-43f0-af4b-8e2e3c3021c9 - Navigating to the next page...
+2023-09-06 06:03:50,387 - INFO - LoggerFunction - log_or_print - 59 - ba7a7045-a921-4f59-b4ed-6ceaaac4a66c - Successfully navigated to the next page.
+2023-09-06 06:03:50,388 - INFO - LoggerFunction - log_or_print - 59 - 7133ae6b-8ab4-4466-ba7b-b1191e711d5a - Scraping page 4...
+2023-09-06 06:03:50,389 - INFO - LoggerFunction - log_or_print - 59 - f2acdd55-cec7-4647-a43a-a933477f1c57 - Extracting data from current page...
+2023-09-06 06:03:50,462 - INFO - LoggerFunction - log_or_print - 59 - ac219f3c-86b2-4e48-9856-d6956d24e5a2 - Data extraction successful.
+2023-09-06 06:03:50,463 - INFO - LoggerFunction - log_or_print - 59 - 665af00f-efd6-43c9-b05d-bd7c766f33a1 - Navigating to the next page...
+2023-09-06 06:03:51,174 - INFO - LoggerFunction - log_or_print - 59 - 99649cbf-c76a-4047-aa28-fcf5899d5341 - Successfully navigated to the next page.
+2023-09-06 06:03:51,174 - INFO - LoggerFunction - log_or_print - 59 - 7bdea5d7-534b-409b-a6f2-e467724292a6 - Scraping page 5...
+2023-09-06 06:03:51,176 - INFO - LoggerFunction - log_or_print - 59 - 71c46f3e-0ad0-4e08-b83c-a2f228a97273 - Extracting data from current page...
+2023-09-06 06:03:51,301 - INFO - LoggerFunction - log_or_print - 59 - dbafbd4c-fcda-4a13-9172-f0b2db43a88c - Data extraction successful.
+2023-09-06 06:03:51,302 - INFO - LoggerFunction - log_or_print - 59 - b5de6320-f1f8-4c8f-961c-e18a9bf3bf71 - Navigating to the next page...
+2023-09-06 06:03:52,013 - INFO - LoggerFunction - log_or_print - 59 - 827f092b-110e-478a-b4a0-927e8880e5dc - Successfully navigated to the next page.
+2023-09-06 06:03:52,014 - INFO - LoggerFunction - log_or_print - 59 - b737238b-3d58-42b8-b178-5522cfcba2fb - Scraping page 6...
+2023-09-06 06:03:52,015 - INFO - LoggerFunction - log_or_print - 59 - 5b7a4b23-e821-48fd-b7b5-aa8fb1dd14b3 - Extracting data from current page...
+2023-09-06 06:03:52,111 - INFO - LoggerFunction - log_or_print - 59 - 2e2e0fef-b686-4f1c-bcdd-40b2eafb5d3f - Data extraction successful.
+2023-09-06 06:03:52,113 - INFO - LoggerFunction - log_or_print - 59 - ad918f87-d154-4d8f-82c3-ffc5d9399134 - Navigating to the next page...
+2023-09-06 06:03:52,787 - INFO - LoggerFunction - log_or_print - 59 - 31eafd93-2ab4-48b3-964c-2afb6dc71809 - Successfully navigated to the next page.
+2023-09-06 06:03:52,787 - INFO - LoggerFunction - log_or_print - 59 - 5c66daa9-9f8b-4fea-ab3d-94a3be139974 - Scraping page 7...
+2023-09-06 06:03:52,788 - INFO - LoggerFunction - log_or_print - 59 - e5615201-0a97-4aed-aa3c-97b1efccae0c - Extracting data from current page...
+2023-09-06 06:03:52,844 - INFO - LoggerFunction - log_or_print - 59 - cdb5fbb6-82d8-4605-9618-f3bbffd551f3 - Data extraction successful.
+2023-09-06 06:03:52,845 - INFO - LoggerFunction - log_or_print - 59 - 91a0879b-4a30-46e9-a619-b2c53b863502 - Navigating to the next page...
+2023-09-06 06:03:53,500 - INFO - LoggerFunction - log_or_print - 59 - 592a1eea-8572-4dfc-b670-013bb54814ae - Successfully navigated to the next page.
+2023-09-06 06:03:53,501 - INFO - LoggerFunction - log_or_print - 59 - 09004144-6822-41fa-9ef1-e545da390db9 - Scraping page 8...
+2023-09-06 06:03:53,502 - INFO - LoggerFunction - log_or_print - 59 - b8d3ca1f-a718-469b-ab11-a00e56770265 - Extracting data from current page...
+2023-09-06 06:03:53,558 - INFO - LoggerFunction - log_or_print - 59 - 5f265364-78e8-405c-a755-2e8bf63c31ac - Data extraction successful.
+2023-09-06 06:03:53,559 - INFO - LoggerFunction - log_or_print - 59 - 42b0f846-2d85-48b2-9365-37d7faf53e3c - Navigating to the next page...
+2023-09-06 06:03:54,199 - INFO - LoggerFunction - log_or_print - 59 - 919ef65c-045b-40e0-8f42-fc15d2ea5f15 - Successfully navigated to the next page.
+2023-09-06 06:03:54,200 - INFO - LoggerFunction - log_or_print - 59 - 11906390-58fb-4720-80a2-24fd5dc74dab - Scraping page 9...
+2023-09-06 06:03:54,202 - INFO - LoggerFunction - log_or_print - 59 - 06dab6c0-5bbc-4fa6-a545-bb2bcee4a9f0 - Extracting data from current page...
+2023-09-06 06:03:54,261 - INFO - LoggerFunction - log_or_print - 59 - 95c95d07-0b5b-442c-8910-693805ad70b5 - Data extraction successful.
+2023-09-06 06:03:54,262 - INFO - LoggerFunction - log_or_print - 59 - fcdcf929-9701-4d1c-ae92-4bfe7bc915e0 - Navigating to the next page...
+2023-09-06 06:03:54,917 - INFO - LoggerFunction - log_or_print - 59 - 66186a05-0a3b-4cc7-847c-d4a5ca4a4666 - Successfully navigated to the next page.
+2023-09-06 06:03:54,918 - INFO - LoggerFunction - log_or_print - 59 - e1dd8cc7-6605-4ec8-8775-dcefbdc6a7c2 - Scraping page 10...
+2023-09-06 06:03:54,919 - INFO - LoggerFunction - log_or_print - 59 - 3fbfbaa7-0dd3-46d3-bd9c-aaf3b0df6ceb - Extracting data from current page...
+2023-09-06 06:03:55,001 - INFO - LoggerFunction - log_or_print - 59 - c5e24752-6b9f-4259-89df-59c7c1612be7 - Data extraction successful.
+2023-09-06 06:03:55,006 - INFO - LoggerFunction - log_or_print - 59 - 0924f8ba-9532-4e0c-8eb2-d211c07909e8 - Navigating to the next page...
+2023-09-06 06:03:55,683 - INFO - LoggerFunction - log_or_print - 59 - 36e7a27b-a9f4-4e5e-94ba-150d90863ce9 - Successfully navigated to the next page.
+2023-09-06 06:03:55,684 - INFO - LoggerFunction - log_or_print - 59 - da68def3-0294-4b1e-833f-1d56f7ce6a21 - Scraping page 11...
+2023-09-06 06:03:55,685 - INFO - LoggerFunction - log_or_print - 59 - 8726cfbd-2318-4c21-ba31-0fdeb5b573a1 - Extracting data from current page...
+2023-09-06 06:03:55,752 - INFO - LoggerFunction - log_or_print - 59 - 398e178e-0532-4d27-8155-05484190bb27 - Data extraction successful.
+2023-09-06 06:03:55,753 - INFO - LoggerFunction - log_or_print - 59 - 8b6b39f0-f2b8-470e-8e93-c189c389f510 - Navigating to the next page...
+2023-09-06 06:03:56,401 - INFO - LoggerFunction - log_or_print - 59 - ab81c542-fc08-4f4b-a6fa-f81b9abcb381 - Successfully navigated to the next page.
+2023-09-06 06:03:56,402 - INFO - LoggerFunction - log_or_print - 59 - e588608c-9ed3-42e7-bbc8-84dba4026f93 - Scraping page 12...
+2023-09-06 06:03:56,403 - INFO - LoggerFunction - log_or_print - 59 - 927d7afd-a30c-4209-bfd0-130c628f5f68 - Extracting data from current page...
+2023-09-06 06:03:56,504 - INFO - LoggerFunction - log_or_print - 59 - 42786482-d07c-48cb-b8da-c33bc8a9b01d - Data extraction successful.
+2023-09-06 06:03:56,508 - INFO - LoggerFunction - log_or_print - 59 - 8f7bc2da-dec9-4146-b471-41542fdc4f39 - Data fetching completed. 300 rows fetched.
+2023-09-06 06:03:56,509 - DEBUG - LoggerFunction - log_or_print - 59 - ebc76630-8dbe-4814-b56b-6728e871512c - plot_candlestick_chart: Function called. Attempting to process DataFrame...
+2023-09-06 06:03:56,510 - DEBUG - LoggerFunction - log_or_print - 59 - dff519c1-6412-4d69-8fc9-fda810ec175e - plot_candlestick_chart: DataFrame is available.
+2023-09-06 06:03:56,573 - DEBUG - LoggerFunction - log_or_print - 59 - 1262b1bb-5a8a-44ec-ab5f-311fd1a1dd01 - plot_candlestick_chart: DataFrame processed. Returning the processed figure.
+2023-09-06 06:03:56,574 - DEBUG - LoggerFunction - log_or_print - 59 - f25d35a9-52ff-42b3-84e5-d5afb8d1b318 - MainLogic - Update_chart in MainGUI is called .
+2023-09-06 06:03:56,602 - DEBUG - LoggerFunction - log_or_print - 59 - c969a7c4-ce2a-4c8d-9112-dd5668ef50e3 - MainLogic - Update_chart in MainGUI is called .
+2023-09-06 06:03:56,603 - ERROR - LoggerFunction - log_or_print - 59 - 64ac3d98-c54e-4e64-82d7-cc109df13c8c - fig is None, cannot convert to HTML
+2023-09-06 06:03:56,605 - ERROR - LoggerFunction - log_or_print - 59 - 351a4e3e-5e26-4da8-bf42-c057017b8f05 - MainLogic - An error occurred in update_chart: cannot access local variable 'raw_html' where it is not associated with a value
+2023-09-06 06:03:56,606 - INFO - LoggerFunction - log_or_print - 59 - d9c7bb90-548e-4829-8ee1-75a4ecf0e971 - Attempting to release Selenium WebDriver resource...
+2023-09-06 06:03:58,754 - INFO - LoggerFunction - log_or_print - 59 - fbf73d5f-5217-4754-a3bf-38e3ae86ca73 - Successfully released Selenium WebDriver resource.
+2023-09-06 06:04:02,900 - DEBUG - LoggerFunction - log_or_print - 59 - e8d81863-078c-4c1d-af9c-470ac308589c - MainLogic - MainLogic: Fetched DataFrame:            Date  Close  Open  High   Low  Change  Change%  T.Shares    Volume  No. Trades
+299  2022-04-21   1.30  1.31  1.32  1.30     NaN      NaN  55100000  71647504          71
+298  2022-04-24   1.28  1.28  1.30  1.28   -0.02    -1.54  21666489  27883106          21
+297  2022-04-25   1.27  1.29  1.29  1.27   -0.01    -0.78  66533511  84927728          39
+296  2022-04-26   1.27  1.27  1.28  1.27    0.00     0.00  22226489  28283142          15
+295  2022-04-27   1.26  1.26  1.26  1.26   -0.01    -0.79  36200000  45612000          25
+2023-09-06 06:04:02,919 - DEBUG - LoggerFunction - log_or_print - 59 - 83fbc48d-77e6-4774-8016-9139e4bc2c54 - MainLogic - MainLogic: Central DataFrame updated with fetched data. First few rows:
+           Date  Close  Open  High   Low  Change  Change%  T.Shares    Volume  No. Trades
+299  2022-04-21   1.30  1.31  1.32  1.30     NaN      NaN  55100000  71647504          71
+298  2022-04-24   1.28  1.28  1.30  1.28   -0.02    -1.54  21666489  27883106          21
+297  2022-04-25   1.27  1.29  1.29  1.27   -0.01    -0.78  66533511  84927728          39
+296  2022-04-26   1.27  1.27  1.28  1.27    0.00     0.00  22226489  28283142          15
+295  2022-04-27   1.26  1.26  1.26  1.26   -0.01    -0.79  36200000  45612000          25
+2023-09-06 06:04:02,922 - INFO - LoggerFunction - log_or_print - 59 - 4099b62e-24ae-4df2-8891-03c560107dcd - MainLogic - MainLogic: Starting data calculations using the central DataFrame...
+2023-09-06 06:04:02,924 - INFO - LoggerFunction - log_or_print - 59 - e41d3c9d-bb5d-4b0f-b5a1-c60ee5dd8dd8 - Starting SMA calculation...
+2023-09-06 06:04:02,967 - INFO - LoggerFunction - log_or_print - 59 - d4fab5b8-ad5b-4603-a6f4-da39f2bde67e - SMA calculation completed successfully.
+2023-09-06 06:04:02,968 - DEBUG - LoggerFunction - log_or_print - 59 - 7dd73b2f-723c-4427-9d28-6a32e4a43ed3 - MainLogic - MainLogic: Receiving SMA calculated DataFrame...
+2023-09-06 06:04:03,004 - DEBUG - LoggerFunction - log_or_print - 59 - 56b171a4-2a4a-4ac2-9342-143fd8338ecb - MainLogic - MainLogic: Central DataFrame updated with SMA data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc']
+Last 3 rows:
+         Date  Close  Open  High  ...  SMA10_Above_SMA50                        SMA_Relation...
+2023-09-06 06:04:03,007 - INFO - LoggerFunction - log_or_print - 59 - b63a8cbe-8b86-4e5e-872c-1433e6c86f64 - MainLogic - MainLogic: SMA calculation initiated.
+2023-09-06 06:04:03,008 - INFO - LoggerFunction - log_or_print - 59 - 2b614689-a4f4-44e9-ba83-8c64fa7f2413 - 
+
+---------Starting RSI 9 Calculation---------
+2023-09-06 06:04:03,015 - INFO - LoggerFunction - log_or_print - 59 - a1c1d0c8-11a7-48be-b558-2bd86693466b - 
+DataFrame columns before flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9'],
+      dtype...
+2023-09-06 06:04:03,025 - INFO - LoggerFunction - log_or_print - 59 - 7d66278e-712a-48cb-b1db-05c6a9bffaec - 
+DataFrame columns after flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbo...
+2023-09-06 06:04:03,029 - INFO - LoggerFunction - log_or_print - 59 - 728406e3-6f4d-446c-8f01-14b78cc36cac - 
+Column RSI_9_Bullish_Divergence_Flag values:
+2023-09-06 06:04:03,031 - INFO - LoggerFunction - log_or_print - 59 - 7b15c5e9-3f8c-4019-935e-a51de47ab1c4 - 299    False
+298    False
+297    False
+296    False
+295    False
+294    False
+293    False
+292    False
+291    False
+290    False
+Name: RSI_9_Bullish_Divergence_Flag, dtype: bool
+2023-09-06 06:04:03,038 - INFO - LoggerFunction - log_or_print - 59 - 1b2f99f6-7b8d-45b2-b4bc-c8828d46002d - Columns: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Overs...
+2023-09-06 06:04:03,050 - INFO - LoggerFunction - log_or_print - 59 - e8f39df9-a058-4dd7-85cf-420ebae9a476 - RSI 9 calculation and interpretation completed successfully.
+2023-09-06 06:04:03,051 - DEBUG - LoggerFunction - log_or_print - 59 - 2dfa1f1e-b2be-49ac-9f19-9897ab885e8e - MainLogic - MainLogic: Receiving RSI calculated DataFrame...
+2023-09-06 06:04:03,101 - DEBUG - LoggerFunction - log_or_print - 59 - c29b4a6d-c455-4be4-8764-c342eac420d3 - MainLogic - MainLogic: Central DataFrame updated with RSI data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_...
+2023-09-06 06:04:03,103 - INFO - LoggerFunction - log_or_print - 59 - 3cd58d68-9bb2-4e5c-89b7-028161350b5b - 
+
+---------Starting RSI 14 Calculation---------
+2023-09-06 06:04:03,112 - INFO - LoggerFunction - log_or_print - 59 - 5a888301-451f-41b0-a2e8-e2ddb5b82d55 - 
+DataFrame columns before flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overb...
+2023-09-06 06:04:03,121 - INFO - LoggerFunction - log_or_print - 59 - dcff671d-abd7-4826-82cc-c872cc26cb7e - 
+DataFrame columns after flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbo...
+2023-09-06 06:04:03,125 - INFO - LoggerFunction - log_or_print - 59 - f80cd58b-3d43-4414-a621-bb901d28e63f - 
+Column RSI_14_Bullish_Divergence_Flag values:
+2023-09-06 06:04:03,127 - INFO - LoggerFunction - log_or_print - 59 - 24126c35-059f-4dad-b9e0-fc9f540328ba - 299    False
+298    False
+297    False
+296    False
+295    False
+294    False
+293    False
+292    False
+291    False
+290    False
+Name: RSI_14_Bullish_Divergence_Flag, dtype: bool
+2023-09-06 06:04:03,133 - INFO - LoggerFunction - log_or_print - 59 - 43a477e0-72d3-4982-ae2b-4561d28551c6 - Columns: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Overs...
+2023-09-06 06:04:03,144 - INFO - LoggerFunction - log_or_print - 59 - 6306225f-72eb-4785-8ecc-e78303ce90af - RSI 14 calculation and interpretation completed successfully.
+2023-09-06 06:04:03,150 - DEBUG - LoggerFunction - log_or_print - 59 - bfe4ee37-3bab-4f1b-b8e6-a13a12d56d8d - MainLogic - MainLogic: Receiving RSI calculated DataFrame...
+2023-09-06 06:04:03,207 - DEBUG - LoggerFunction - log_or_print - 59 - c96da094-968f-4d04-bbed-401a86205bde - MainLogic - MainLogic: Central DataFrame updated with RSI data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_...
+2023-09-06 06:04:03,209 - INFO - LoggerFunction - log_or_print - 59 - a31e7629-eb56-4787-9c1e-718cab925df4 - 
+
+---------Starting RSI 25 Calculation---------
+2023-09-06 06:04:03,214 - INFO - LoggerFunction - log_or_print - 59 - 61f96c16-2d6d-4568-824b-f59a674e5635 - 
+DataFrame columns before flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overb...
+2023-09-06 06:04:03,223 - INFO - LoggerFunction - log_or_print - 59 - d5c10e55-42a8-41a9-a824-c90b8627a871 - 
+DataFrame columns after flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbo...
+2023-09-06 06:04:03,227 - INFO - LoggerFunction - log_or_print - 59 - 29613d40-50a2-42c9-9c34-9adbf02cde3d - 
+Column RSI_25_Bullish_Divergence_Flag values:
+2023-09-06 06:04:03,229 - INFO - LoggerFunction - log_or_print - 59 - 6d61ddff-68b7-4e36-9774-08413cdf7935 - 299    False
+298    False
+297    False
+296    False
+295    False
+294    False
+293    False
+292    False
+291    False
+290    False
+Name: RSI_25_Bullish_Divergence_Flag, dtype: bool
+2023-09-06 06:04:03,235 - INFO - LoggerFunction - log_or_print - 59 - 758756cd-cad4-4303-92c9-26323c1750ad - Columns: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Overs...
+2023-09-06 06:04:03,245 - INFO - LoggerFunction - log_or_print - 59 - fe9776d6-3610-49a1-9dea-2e592ab8f00f - RSI 25 calculation and interpretation completed successfully.
+2023-09-06 06:04:03,246 - DEBUG - LoggerFunction - log_or_print - 59 - d3dc718d-2ae7-4ae7-a302-e8f1db9f1010 - MainLogic - MainLogic: Receiving RSI calculated DataFrame...
+2023-09-06 06:04:03,303 - DEBUG - LoggerFunction - log_or_print - 59 - 66d2ab2b-20f8-4b3f-80a2-c49e00cae56a - MainLogic - MainLogic: Central DataFrame updated with RSI data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_...
+2023-09-06 06:04:03,306 - INFO - LoggerFunction - log_or_print - 59 - 02b1bb4c-cd8f-462d-ba7a-9839eec9def7 - MainLogic - MainLogic: RSI calculation initiated.
+2023-09-06 06:04:03,308 - DEBUG - LoggerFunction - log_or_print - 59 - 25902c41-6be8-4634-a57a-a4cad0188ae4 - Initial DataFrame columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_F...
+2023-09-06 06:04:03,310 - INFO - LoggerFunction - log_or_print - 59 - abf0443f-03f7-4329-a907-8f51d4bc4425 - Starting Stochastic Oscillator calculation...
+2023-09-06 06:04:03,317 - DEBUG - LoggerFunction - log_or_print - 59 - 69b8875c-be47-4995-a78a-46dacbae910c - Columns after stochastic calculation: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_D...
+2023-09-06 06:04:03,319 - DEBUG - LoggerFunction - log_or_print - 59 - c80557f9-d416-493a-9d92-61b35173adf3 - Last column after stochastic calculation:
+4    85.97
+3    86.11
+2    84.47
+1    82.02
+0    78.33
+Name: STOCHd_9_6_3, dtype: float64
+2023-09-06 06:04:03,331 - DEBUG - LoggerFunction - log_or_print - 59 - 1e7890bd-b1f7-4ed8-81f8-4c005aadf117 - Columns after flag setting: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_...
+2023-09-06 06:04:03,333 - DEBUG - LoggerFunction - log_or_print - 59 - 91c6b2ec-9542-4295-9b52-8901a7ea64c7 - Last column after flag setting:
+4    False
+3    False
+2    False
+1    False
+0    False
+Name: STOCH_9_6_3_Midpoint_Cross_Down_Flag, dtype: bool
+2023-09-06 06:04:03,348 - DEBUG - LoggerFunction - log_or_print - 59 - a9f8d134-e68f-4291-badd-494ba37ee22e - Columns after setting descriptions: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Div...
+2023-09-06 06:04:03,351 - DEBUG - LoggerFunction - log_or_print - 59 - af04f113-1f31-4b4c-b12c-8b5618fe4671 - Last column after setting descriptions:
+4    Bearish Crossover Alert: The Stochastic Oscill...
+3    Neutral Oscillator Readings: Currently, the St...
+2    Neutral Oscillator Readings: Currently, the St...
+1    Neutral Oscillator Readings: Currently, the St...
+0    Neutral Oscillator Readings: Currently, the St...
+Name: STOCH_9_6_3_Swings_Desc, dtype: object
+2023-09-06 06:04:03,353 - INFO - LoggerFunction - log_or_print - 59 - ff63af24-107e-43ae-81fe-7f48dd2870d5 - Stochastic Oscillator calculation and interpretation completed successfully.
+2023-09-06 06:04:03,354 - DEBUG - LoggerFunction - log_or_print - 59 - 38407b96-e641-4804-ae44-326906f96389 - MainLogic - MainLogic: Receiving Stochastic Oscillator calculated DataFrame...
+2023-09-06 06:04:03,421 - DEBUG - LoggerFunction - log_or_print - 59 - bace5c3b-9f23-4cb2-add7-44ecab0267d9 - MainLogic - MainLogic: Central DataFrame updated with Stochastic Oscillator data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_B...
+2023-09-06 06:04:03,424 - INFO - LoggerFunction - log_or_print - 59 - deb46c4e-a2fe-473e-845d-7379d0688c79 - MainLogic - MainLogic: Stochastic Oscillator calculation initiated.
+2023-09-06 06:04:03,425 - DEBUG - LoggerFunction - log_or_print - 59 - 06955644-e04e-4afe-b0c4-4ccb0e4c0eb4 - MainLogic - Emitting indicator values update signal.
+2023-09-06 06:04:03,426 - DEBUG - LoggerFunction - log_or_print - 59 - 7259ca2a-d9d3-4bbe-bd56-eb7c92c7f688 - plot_candlestick_chart: Function called. Attempting to process DataFrame...
+2023-09-06 06:04:03,427 - DEBUG - LoggerFunction - log_or_print - 59 - 98537cfc-c200-4fd0-aba8-2396e9197661 - plot_candlestick_chart: DataFrame is available.
+2023-09-06 06:04:03,437 - DEBUG - LoggerFunction - log_or_print - 59 - a6b5c225-07be-464d-9379-4f0a1c5af2ed - plot_candlestick_chart: DataFrame processed. Returning the processed figure.
+2023-09-06 06:04:03,438 - DEBUG - LoggerFunction - log_or_print - 59 - a838751f-5613-4c00-bea4-e78cd7ca9db1 - MainLogic - Update_chart in MainGUI is called .
+2023-09-06 06:04:03,450 - DEBUG - LoggerFunction - log_or_print - 59 - 54c6c3ef-593c-485f-a5df-972dbe7f7e91 - MainLogic - Update_chart in MainGUI is called .
+2023-09-06 06:04:03,451 - ERROR - LoggerFunction - log_or_print - 59 - 0aeb7599-432d-454c-ae9c-60e9d644f928 - fig is None, cannot convert to HTML
+2023-09-06 06:04:03,453 - ERROR - LoggerFunction - log_or_print - 59 - 77f69f48-585c-4502-bf9c-9319682500ce - MainLogic - An error occurred in update_chart: cannot access local variable 'raw_html' where it is not associated with a value
+2023-09-06 06:04:03,454 - DEBUG - LoggerFunction - log_or_print - 59 - b9758ddf-ba26-4cd9-818c-6e5c19bad62f - MainGUI - self.start_data_fetching_signal.emit(ticker, desired_rows) done

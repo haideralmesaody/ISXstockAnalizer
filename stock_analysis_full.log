@@ -1,0 +1,265 @@
+2023-09-06 06:04:03,004 - DEBUG - LoggerFunction - log_or_print - 52 - 56b171a4-2a4a-4ac2-9342-143fd8338ecb - MainLogic: Central DataFrame updated with SMA data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc']
+Last 3 rows:
+         Date  Close  Open  High  ...  SMA10_Above_SMA50                        SMA_Relationship_10_50_Desc  SMA50_Above_SMA200                       SMA_Relationship_50_200_Desc
+2  2023-09-03   1.91  1.91  1.91  ...               True  Positive Momentum: The short-term average (SMA...                True  Strong Bullish Trend: The medium-term average ...
+1  2023-09-04   1.95  1.92  1.95  ...               True  Positive Momentum: The short-term average (SMA...                True  Strong Bullish Trend: The medium-term average ...
+0  2023-09-05   1.93  1.94  1.95  ...               True  Positive Momentum: The short-term average (SMA...                True  Strong Bullish Trend: The medium-term average ...
+
+[3 rows x 43 columns]
+2023-09-06 06:04:03,015 - INFO - LoggerFunction - log_or_print - 52 - a1c1d0c8-11a7-48be-b558-2bd86693466b - 
+DataFrame columns before flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9'],
+      dtype='object')
+2023-09-06 06:04:03,024 - INFO - LoggerFunction - log_or_print - 52 - 7d66278e-712a-48cb-b1db-05c6a9bffaec - 
+DataFrame columns after flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag'],
+      dtype='object')
+2023-09-06 06:04:03,037 - INFO - LoggerFunction - log_or_print - 52 - 1b2f99f6-7b8d-45b2-b4bc-c8828d46002d - Columns: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag',
+       'RSI_9_Overbought_Oversold_Desc'],
+      dtype='object')
+2023-09-06 06:04:03,100 - DEBUG - LoggerFunction - log_or_print - 52 - c29b4a6d-c455-4be4-8764-c342eac420d3 - MainLogic: Central DataFrame updated with RSI data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc']
+Last 3 rows:
+         Date  Close  Open  ...                     RSI_9_Overbought_Oversold_Desc                              RSI_9_Divergence_Desc                                  RSI_9_Swings_Desc
+2  2023-09-03   1.91  1.91  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+1  2023-09-04   1.95  1.92  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+0  2023-09-05   1.93  1.94  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+
+[3 rows x 54 columns]
+2023-09-06 06:04:03,111 - INFO - LoggerFunction - log_or_print - 52 - 5a888301-451f-41b0-a2e8-e2ddb5b82d55 - 
+DataFrame columns before flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag',
+       'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc',
+       'RSI_9_Swings_Desc', 'RSI_14'],
+      dtype='object')
+2023-09-06 06:04:03,120 - INFO - LoggerFunction - log_or_print - 52 - dcff671d-abd7-4826-82cc-c872cc26cb7e - 
+DataFrame columns after flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag',
+       'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc',
+       'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag',
+       'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag',
+       'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag',
+       'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag'],
+      dtype='object')
+2023-09-06 06:04:03,133 - INFO - LoggerFunction - log_or_print - 52 - 43a477e0-72d3-4982-ae2b-4561d28551c6 - Columns: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag',
+       'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc',
+       'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag',
+       'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag',
+       'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag',
+       'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag',
+       'RSI_14_Overbought_Oversold_Desc'],
+      dtype='object')
+2023-09-06 06:04:03,206 - DEBUG - LoggerFunction - log_or_print - 52 - c96da094-968f-4d04-bbed-401a86205bde - MainLogic: Central DataFrame updated with RSI data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag', 'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag', 'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag', 'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag', 'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc', 'RSI_14_Swings_Desc']
+Last 3 rows:
+         Date  Close  Open  ...                    RSI_14_Overbought_Oversold_Desc                             RSI_14_Divergence_Desc                                 RSI_14_Swings_Desc
+2  2023-09-03   1.91  1.91  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+1  2023-09-04   1.95  1.92  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+0  2023-09-05   1.93  1.94  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+
+[3 rows x 65 columns]
+2023-09-06 06:04:03,214 - INFO - LoggerFunction - log_or_print - 52 - 61f96c16-2d6d-4568-824b-f59a674e5635 - 
+DataFrame columns before flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag',
+       'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc',
+       'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag',
+       'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag',
+       'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag',
+       'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag',
+       'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc',
+       'RSI_14_Swings_Desc', 'RSI_25'],
+      dtype='object')
+2023-09-06 06:04:03,223 - INFO - LoggerFunction - log_or_print - 52 - d5c10e55-42a8-41a9-a824-c90b8627a871 - 
+DataFrame columns after flag creation: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag',
+       'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc',
+       'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag',
+       'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag',
+       'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag',
+       'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag',
+       'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc',
+       'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag',
+       'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag',
+       'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag',
+       'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag'],
+      dtype='object')
+2023-09-06 06:04:03,235 - INFO - LoggerFunction - log_or_print - 52 - 758756cd-cad4-4303-92c9-26323c1750ad - Columns: Index(['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares',
+       'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200',
+       'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc',
+       'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down',
+       'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up',
+       'Price_Cross_SMA50_Down', 'Price_Crossover_Desc',
+       'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down',
+       'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up',
+       'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up',
+       'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10',
+       'Price_Distance_SMA50', 'Price_Distance_SMA200',
+       'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc',
+       'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50',
+       'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200',
+       'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag',
+       'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag',
+       'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag',
+       'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag',
+       'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc',
+       'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag',
+       'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag',
+       'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag',
+       'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag',
+       'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc',
+       'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag',
+       'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag',
+       'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag',
+       'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag',
+       'RSI_25_Overbought_Oversold_Desc'],
+      dtype='object')
+2023-09-06 06:04:03,303 - DEBUG - LoggerFunction - log_or_print - 52 - 66d2ab2b-20f8-4b3f-80a2-c49e00cae56a - MainLogic: Central DataFrame updated with RSI data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag', 'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag', 'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag', 'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag', 'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc', 'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag', 'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag', 'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag', 'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag', 'RSI_25_Overbought_Oversold_Desc', 'RSI_25_Divergence_Desc', 'RSI_25_Swings_Desc']
+Last 3 rows:
+         Date  Close  Open  ...                    RSI_25_Overbought_Oversold_Desc                             RSI_25_Divergence_Desc                                 RSI_25_Swings_Desc
+2  2023-09-03   1.91  1.91  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+1  2023-09-04   1.95  1.92  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+0  2023-09-05   1.93  1.94  ...  Overbought Territory: The RSI value exceeds 70...  No Divergence Detected: Both the price and the...  Neutral RSI Movement: Currently, there's no si...
+
+[3 rows x 76 columns]
+2023-09-06 06:04:03,307 - DEBUG - LoggerFunction - log_or_print - 52 - 25902c41-6be8-4634-a57a-a4cad0188ae4 - Initial DataFrame columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag', 'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag', 'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag', 'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag', 'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc', 'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag', 'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag', 'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag', 'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag', 'RSI_25_Overbought_Oversold_Desc', 'RSI_25_Divergence_Desc', 'RSI_25_Swings_Desc']
+2023-09-06 06:04:03,316 - DEBUG - LoggerFunction - log_or_print - 52 - 69b8875c-be47-4995-a78a-46dacbae910c - Columns after stochastic calculation: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag', 'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag', 'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag', 'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag', 'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc', 'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag', 'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag', 'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag', 'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag', 'RSI_25_Overbought_Oversold_Desc', 'RSI_25_Divergence_Desc', 'RSI_25_Swings_Desc', 'STOCHk_9_6_3', 'STOCHd_9_6_3']
+2023-09-06 06:04:03,330 - DEBUG - LoggerFunction - log_or_print - 52 - 1e7890bd-b1f7-4ed8-81f8-4c005aadf117 - Columns after flag setting: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag', 'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag', 'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag', 'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag', 'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc', 'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag', 'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag', 'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag', 'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag', 'RSI_25_Overbought_Oversold_Desc', 'RSI_25_Divergence_Desc', 'RSI_25_Swings_Desc', 'STOCHk_9_6_3', 'STOCHd_9_6_3', 'STOCH_9_6_3_Overbought_Flag', 'STOCH_9_6_3_Oversold_Flag', 'STOCH_9_6_3_Bullish_Crossover_Flag', 'STOCH_9_6_3_Bearish_Crossover_Flag', 'STOCH_9_6_3_Bullish_Divergence_Flag', 'STOCH_9_6_3_Bearish_Divergence_Flag', 'STOCH_9_6_3_Midpoint_Cross_Up_Flag', 'STOCH_9_6_3_Midpoint_Cross_Down_Flag']
+2023-09-06 06:04:03,347 - DEBUG - LoggerFunction - log_or_print - 52 - a9f8d134-e68f-4291-badd-494ba37ee22e - Columns after setting descriptions: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag', 'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag', 'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag', 'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag', 'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc', 'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag', 'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag', 'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag', 'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag', 'RSI_25_Overbought_Oversold_Desc', 'RSI_25_Divergence_Desc', 'RSI_25_Swings_Desc', 'STOCHk_9_6_3', 'STOCHd_9_6_3', 'STOCH_9_6_3_Overbought_Flag', 'STOCH_9_6_3_Oversold_Flag', 'STOCH_9_6_3_Bullish_Crossover_Flag', 'STOCH_9_6_3_Bearish_Crossover_Flag', 'STOCH_9_6_3_Bullish_Divergence_Flag', 'STOCH_9_6_3_Bearish_Divergence_Flag', 'STOCH_9_6_3_Midpoint_Cross_Up_Flag', 'STOCH_9_6_3_Midpoint_Cross_Down_Flag', 'STOCH_9_6_3_Overbought/Oversold_Desc', 'STOCH_9_6_3_Divergence_Desc', 'STOCH_9_6_3_Swings_Desc']
+2023-09-06 06:04:03,421 - DEBUG - LoggerFunction - log_or_print - 52 - bace5c3b-9f23-4cb2-add7-44ecab0267d9 - MainLogic: Central DataFrame updated with Stochastic Oscillator data.
+Columns: ['Date', 'Close', 'Open', 'High', 'Low', 'Change', 'Change%', 'T.Shares', 'Volume', 'No. Trades', 'SMA', 'SMA10', 'SMA50', 'SMA200', 'Golden_Cross', 'Death_Cross', 'Golden_Death_Cross_Desc', 'Price_Cross_SMA10_Up', 'Price_Cross_SMA10_Down', 'Price_SMA10_Crossover_Desc', 'Price_Cross_SMA50_Up', 'Price_Cross_SMA50_Down', 'Price_Crossover_Desc', 'Price_Cross_SMA200_Up', 'Price_Cross_SMA200_Down', 'Price_SMA200_Crossover_Desc', 'SMA10_Cross_SMA200_Up', 'SMA10_Cross_SMA200_Down', 'SMA10_SMA200_Crossover_Desc', 'SMA10_Up', 'SMA50_Up', 'SMA200_Up', 'SMA_Slopes_Desc', 'Price_Distance_SMA10', 'Price_Distance_SMA50', 'Price_Distance_SMA200', 'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 'SMA10_Above_SMA50', 'SMA_Relationship_10_50_Desc', 'SMA50_Above_SMA200', 'SMA_Relationship_50_200_Desc', 'RSI_9', 'RSI_9_Overbought_Flag', 'RSI_9_Oversold_Flag', 'RSI_9_Neutral_Flag', 'RSI_9_Bearish_Divergence_Flag', 'RSI_9_Bullish_Divergence_Flag', 'RSI_9_Swing_Failure_Buy_Flag', 'RSI_9_Swing_Failure_Sell_Flag', 'RSI_9_Overbought_Oversold_Desc', 'RSI_9_Divergence_Desc', 'RSI_9_Swings_Desc', 'RSI_14', 'RSI_14_Overbought_Flag', 'RSI_14_Oversold_Flag', 'RSI_14_Neutral_Flag', 'RSI_14_Bearish_Divergence_Flag', 'RSI_14_Bullish_Divergence_Flag', 'RSI_14_Swing_Failure_Buy_Flag', 'RSI_14_Swing_Failure_Sell_Flag', 'RSI_14_Overbought_Oversold_Desc', 'RSI_14_Divergence_Desc', 'RSI_14_Swings_Desc', 'RSI_25', 'RSI_25_Overbought_Flag', 'RSI_25_Oversold_Flag', 'RSI_25_Neutral_Flag', 'RSI_25_Bearish_Divergence_Flag', 'RSI_25_Bullish_Divergence_Flag', 'RSI_25_Swing_Failure_Buy_Flag', 'RSI_25_Swing_Failure_Sell_Flag', 'RSI_25_Overbought_Oversold_Desc', 'RSI_25_Divergence_Desc', 'RSI_25_Swings_Desc', 'STOCHk_9_6_3', 'STOCHd_9_6_3', 'STOCH_9_6_3_Overbought_Flag', 'STOCH_9_6_3_Oversold_Flag', 'STOCH_9_6_3_Bullish_Crossover_Flag', 'STOCH_9_6_3_Bearish_Crossover_Flag', 'STOCH_9_6_3_Bullish_Divergence_Flag', 'STOCH_9_6_3_Bearish_Divergence_Flag', 'STOCH_9_6_3_Midpoint_Cross_Up_Flag', 'STOCH_9_6_3_Midpoint_Cross_Down_Flag', 'STOCH_9_6_3_Overbought/Oversold_Desc', 'STOCH_9_6_3_Divergence_Desc', 'STOCH_9_6_3_Swings_Desc']
+Last 3 rows:
+         Date  Close  Open  ...               STOCH_9_6_3_Overbought/Oversold_Desc                        STOCH_9_6_3_Divergence_Desc                            STOCH_9_6_3_Swings_Desc
+2  2023-09-03   1.91  1.91  ...  Neutral Stochastic Readings: The asset's price...  Neutral Divergence Readings: Currently, the St...  Neutral Oscillator Readings: Currently, the St...
+1  2023-09-04   1.95  1.92  ...  Neutral Stochastic Readings: The asset's price...  Neutral Divergence Readings: Currently, the St...  Neutral Oscillator Readings: Currently, the St...
+0  2023-09-05   1.93  1.94  ...  Neutral Stochastic Readings: The asset's price...  Neutral Divergence Readings: Currently, the St...  Neutral Oscillator Readings: Currently, the St...
+
+[3 rows x 89 columns]
