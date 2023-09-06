@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Report for {ticker_name}</title>
+<link href="report_style.css" rel="stylesheet"/>
+</head>
+<body>
+
+
+<!-- SMA Section -->
+
+<main><header><div class="report-header">
+<h1>Stock Report for {ticker_name}</h1>
+<h2>Date: {report_date}</h2>
+</div></header><section class="stock-data">
+        {table}
+    </section><section class="indicator-section">
+<h2>SMA</h2>
+<!-- SMA Values -->
+<p><strong>SMA10:</strong> {sma10_value}</p>
+<p><strong>SMA50:</strong> {sma50_value}</p>
+<p><strong>SMA200:</strong> {sma200_value}</p>
+<!-- Flags Table -->
+<table>
+<thead>
+<tr>
+<th scope="col">Flag Name</th>
+<th scope="col">Flag Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Golden Cross</td>
+<td><span class="green">{golden_cross_flag}</span></td>
+<td><span class="red">{death_cross_flag}</span></td>
+</tr>
+<tr>
+<td>Death Cross</td>
+<td>{death_cross_flag}</td>
+</tr>
+<tr>
+<td>Price Cross SMA10 Up</td>
+<td>{price_cross_sma10_up_flag}</td>
+</tr>
+<tr>
+<td>Price Cross SMA10 Down</td>
+<td>{price_cross_sma10_down_flag}</td>
+</tr>
+<tr>
+<td>Price Cross SMA50 Up</td>
+<td>{price_cross_sma50_up_flag}</td>
+</tr>
+<tr>
+<td>Price Cross SMA50 Down</td>
+<td>{price_cross_sma50_down_flag}</td>
+</tr>
+<tr>
+<td>Price Cross SMA200 Up</td>
+<td>{price_cross_sma200_up_flag}</td>
+</tr>
+<tr>
+<td>Price Cross SMA200 Down</td>
+<td>{price_cross_sma200_down_flag}</td>
+</tr>
+<tr>
+<td>SMA10 Cross SMA200 Up</td>
+<td>{sma10_cross_sma200_up_flag}</td>
+</tr>
+<tr>
+<td>SMA10 Cross SMA200 Down</td>
+<td>{sma10_cross_sma200_down_flag}</td>
+</tr>
+<tr>
+<td>SMA10 Up</td>
+<td>{sma10_up_flag}</td>
+</tr>
+<tr>
+<td>SMA50 Up</td>
+<td>{sma50_up_flag}</td>
+</tr>
+<tr>
+<td>SMA200 Up</td>
+<td>{sma200_up_flag}</td>
+</tr>
+<tr>
+<td>SMA10 Above SMA50</td>
+<td>{sma10_above_sma50_flag}</td>
+</tr>
+<tr>
+<td>SMA50 Above SMA200</td>
+<td>{sma50_above_sma200_flag}</td>
+</tr>
+<tr>
+<td>Price Distance from SMA10</td>
+<td>{Price_Distance_SMA10}</td>
+</tr>
+<tr>
+<td>Price Distance from SMA50</td>
+<td>{Price_Distance_SMA50}</td>
+</tr>
+<tr>
+<td>Price Distance from SMA200</td>
+<td>{Price_Distance_SMA200}</td>
+</tr>
+<!-- You can continue adding flag rows as needed -->
+</tbody>
+</table>
+<!-- Descriptions -->
+<article class="description-box">
+<h3>Golden Death Cross Description:</h3>
+<p>{golden_death_cross_desc}</p>
+</article>
+<article class="description-box">
+<h3>Price SMA10 Crossover Description:</h3>
+<p>{price_sma10_crossover_desc}</p>
+</article>
+<article class="description-box">
+<h3>Price Crossover Description:</h3>
+<p>{price_crossover_desc}</p>
+</article>
+<article class="description-box">
+<h3>Price SMA200 Crossover Description:</h3>
+<p>{price_sma200_crossover_desc}</p>
+</article>
+<article class="description-box">
+<h3>SMA10 SMA200 Crossover Description:</h3>
+<p>{sma10_sma200_crossover_desc}</p>
+</article>
+<article class="description-box">
+<h3>SMA Slopes Description:</h3>
+<p>{sma_slopes_desc}</p>
+</article>
+<article class="description-box">
+<h3>Price Distance SMA10 Description:</h3>
+<p>{price_distance_sma10_desc}</p>
+</article>
+<article class="description-box">
+<h3>Price Distance SMA50 Description:</h3>
+<p>{price_distance_sma50_desc}</p>
+</article>
+<article class="description-box">
+<h3>Price Distance SMA200 Description:</h3>
+<p>{price_distance_sma200_desc}</p>
+</article>
+<article class="description-box">
+<h3>SMA Relationship 10-50 Description:</h3>
+<p>{sma_relationship_10_50_desc}</p>
+</article>
+<article class="description-box">
+<h3>SMA Relationship 50-200 Description:</h3>
+<p>{sma_relationship_50_200_desc}</p>
+</article>
+<!-- You can continue adding description boxes as needed -->
+</section></main><a href="#">Back to Top</a><footer>© 2023 Stock Reports Inc.</footer></body>
+</html>

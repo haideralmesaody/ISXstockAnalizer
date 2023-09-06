@@ -137,9 +137,9 @@ class DataCalculator(QObject):
                     "This could suggest a period of consolidation, or even a potential downturn. It's advisable to exercise caution, monitor other market indicators, and perhaps adopt a defensive strategy."), axis=1)
 
             # Distance Between Price and SMA
-            df['Price_Distance_SMA10'] = df['Close'] - df['SMA10']
-            df['Price_Distance_SMA50'] = df['Close'] - df['SMA50']
-            df['Price_Distance_SMA200'] = df['Close'] - df['SMA200']
+            df['Price_Distance_SMA10'] = (df['Close'] - df['SMA10']).round(2)
+            df['Price_Distance_SMA50'] = (df['Close'] - df['SMA50']).round(2)
+            df['Price_Distance_SMA200'] = (df['Close'] - df['SMA200']).round(2)
 
             # SMA10 Description
             df['Price_Distance_SMA10_Desc'] = df.apply(
@@ -276,6 +276,7 @@ class DataCalculator(QObject):
                     if row.get(f"{column_name}_Bearish_Divergence_Flag")
                     else ("No Divergence Detected: Both the price and the RSI are moving in tandem, indicating a strong and consistent trend. "
                         "Investors can interpret this as the current trend, whether bullish or bearish, being robust. It's advisable to continue monitoring other market signals and stay informed.")
+                , axis=1
                 )
 
 
@@ -292,6 +293,7 @@ class DataCalculator(QObject):
                     if row.get(f"{column_name}_Swing_Failure_Sell_Flag")
                     else ("Neutral RSI Movement: Currently, there's no significant swing detected in the RSI. "
                         "The asset is moving without a clear bullish or bearish bias. It's recommended for investors to stay vigilant, monitor other technical patterns, and stay updated with market conditions.")
+                , axis=1
                 )
 
                 self.logger.log_or_print(f"RSI {period} calculation and interpretation completed successfully.", level="INFO")
