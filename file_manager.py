@@ -102,7 +102,7 @@ class FileManager:
                     self.logger.log_or_print("generate_report: DataFrame is not None.", level="INFO", module="FileManager")
 
                 # Extract the last 10 days data
-                subset_df = df.iloc[-10:, :10]
+                subset_df = df.iloc[-100:, :10]
                 html_table = subset_df.to_html(classes="styled-table", index=False)
 
                 # Load the HTML template
@@ -219,7 +219,29 @@ class FileManager:
                     'CMF_Zero_Crossover_Desc': last_row['CMF_Zero_Crossover_Desc'],
                     'CMF_SMA_Comparison_Desc': last_row['CMF_SMA_Comparison_Desc'],
                     'CMF_Overbought_Oversold_Desc': last_row['CMF_Overbought_Oversold_Desc'],
-                    'CMF_Divergence_Desc': last_row['CMF_Divergence_Desc']
+                    'CMF_Divergence_Desc': last_row['CMF_Divergence_Desc'],
+                     # Additions for MACD_12_26_9
+                    'MACD_12_26_9': last_row['MACD_12_26_9'],
+                    'MACDs_12_26_9': last_row['MACDs_12_26_9'],
+                    'MACDh_12_26_9': last_row['MACDh_12_26_9'],
+                    'MACD_Bullish_Crossover_Flag': self._bool_to_symbol(last_row['MACD_Bullish_Crossover_Flag']),
+                    'MACD_Bearish_Crossover_Flag': self._bool_to_symbol(last_row['MACD_Bearish_Crossover_Flag']),
+                    'MACD_Above_Zero_Flag': self._bool_to_symbol(last_row['MACD_Above_Zero_Flag']),
+                    'MACD_Below_Zero_Flag': self._bool_to_symbol(last_row['MACD_Below_Zero_Flag']),
+                    'MACD_Bullish_Divergence_Flag': self._bool_to_symbol(last_row['MACD_Bullish_Divergence_Flag']),
+                    'MACD_Bearish_Divergence_Flag': self._bool_to_symbol(last_row['MACD_Bearish_Divergence_Flag']),
+                    'MACD_Histogram_Positive_Flag': self._bool_to_symbol(last_row['MACD_Histogram_Positive_Flag']),
+                    'MACD_Histogram_Negative_Flag': self._bool_to_symbol(last_row['MACD_Histogram_Negative_Flag']),
+                    'MACD_Histogram_Reversal_Positive_Flag': self._bool_to_symbol(last_row['MACD_Histogram_Reversal_Positive_Flag']),
+                    'MACD_Histogram_Reversal_Negative_Flag': self._bool_to_symbol(last_row['MACD_Histogram_Reversal_Negative_Flag']),
+                    'MACD_Trending_Up_Flag': self._bool_to_symbol(last_row['MACD_Trending_Up_Flag']),
+                    'MACD_Trending_Down_Flag': self._bool_to_symbol(last_row['MACD_Trending_Down_Flag']),
+                    'MACD_Crossover_Desc': last_row['MACD_Crossover_Desc'],
+                    'MACD_Zero_Line_Desc': last_row['MACD_Zero_Line_Desc'],
+                    'MACD_Divergence_Desc': last_row['MACD_Divergence_Desc'],
+                    'MACD_Histogram_Desc': last_row['MACD_Histogram_Desc'],
+                    'MACD_Histogram_Reversal_Desc': last_row['MACD_Histogram_Reversal_Desc'],
+                    'MACD_Trend_Desc': last_row['MACD_Trend_Desc']
 
                 }
                 for key, value in replacements.items():

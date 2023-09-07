@@ -499,3 +499,113 @@ class DataCalculator(QObject):
         except Exception as e:
             self.logger.log_or_print(f"An error occurred in calculate_cmf: {str(e)}", level="ERROR", exc_info=True)
             self.cmf_calculated_signal.emit(df)
+    def calculate_macd(self, df, short_period=12, long_period=26, signal_period=9):
+        try:
+            if df is None:
+                self.logger.log_or_print("DataFrame is None in calculate_macd", level="ERROR")
+                self.macd_calculated_signal.emit(None)  # Assuming you have a signal for MACD like for stochastic
+                return
+
+            # Log initial DataFrame headers
+            self.logger.log_or_print(f"Initial DataFrame columns: {df.columns.tolist()}", level="DEBUG")
+            self.logger.log_or_print("Starting MACD calculation using pandas-ta...", level="INFO")
+
+            # Compute MACD using pandas-ta
+            macd_df = ta.macd(df['Close'], fast=short_period, slow=long_period, signal=signal_period)
+
+            # Extracting MACD, Signal Line, and Histogram from the computed DataFrame
+            df['MACD_12_26_9'] = macd_df[f'MACD_{short_period}_{long_period}_{signal_period}'].round(2)
+            df['MACDs_12_26_9'] = macd_df[f'MACDs_{short_period}_{long_period}_{signal_period}'].round(2)
+            df['MACDh_12_26_9'] = macd_df[f'MACDh_{short_period}_{long_period}_{signal_period}'].round(2)
+
+            # Log headers and last column after MACD calculation
+            self.logger.log_or_print(f"Columns after MACD calculation with pandas-ta: {df.columns.tolist()}", level="DEBUG")
+            self.logger.log_or_print(f"Last column after MACD calculation with pandas-ta:\n{df[df.columns[-1]].tail()}", level="DEBUG")
+             # 1. MACD Line and Signal Line Crossover Flags
+            df[f'MACD_Bullish_Crossover_Flag'] = df['MACD_12_26_9'] > df['MACDs_12_26_9']
+            df[f'MACD_Bearish_Crossover_Flag'] = df['MACD_12_26_9'] < df['MACDs_12_26_9']
+
+            # 2. MACD and the Zero Line Flags
+            df[f'MACD_Above_Zero_Flag'] = df['MACD_12_26_9'] > 0
+            df[f'MACD_Below_Zero_Flag'] = df['MACD_12_26_9'] < 0
+
+            # 3. MACD Divergence Flags (requires additional logic, placeholder for now)
+            df[f'MACD_Bullish_Divergence_Flag'] = False
+            df[f'MACD_Bearish_Divergence_Flag'] = False
+
+            # 4. MACD Histogram Flag (positive or negative histogram)
+            df[f'MACD_Histogram_Positive_Flag'] = df['MACDh_12_26_9'] > 0
+            df[f'MACD_Histogram_Negative_Flag'] = df['MACDh_12_26_9'] < 0
+
+            # 5. MACD Histogram Reversals Flags
+            df[f'MACD_Histogram_Reversal_Positive_Flag'] = (df['MACDh_12_26_9'] > 0) & (df['MACDh_12_26_9'].shift(1) < 0)
+            df[f'MACD_Histogram_Reversal_Negative_Flag'] = (df['MACDh_12_26_9'] < 0) & (df['MACDh_12_26_9'].shift(1) > 0)
+
+            # 6. MACD Trend & Double Crossover Flags
+            df[f'MACD_Trending_Up_Flag'] = df['MACD_12_26_9'] > df['MACD_12_26_9'].shift(1)
+            df[f'MACD_Trending_Down_Flag'] = df['MACD_12_26_9'] < df['MACD_12_26_9'].shift(1)
+            # 1. MACD Line and Signal Line Crossover Interpretation
+            df[f'MACD_Crossover_Desc'] = df.apply(
+                lambda x: ("Bullish Crossover Alert: The MACD line has crossed above the Signal line, suggesting potential bullish momentum. Especially if the crossover occurs after an extended downtrend, this might indicate a buying opportunity. Always confirm with other technical indicators and consider opening a long position with a set stop-loss.")
+                if x[f'MACD_Bullish_Crossover_Flag']
+                else ("Bearish Crossover Alert: The MACD line has crossed below the Signal line, hinting at potential bearish momentum. This could be a warning of a potential price decline. Before making decisions, validate with other indicators, evaluate the broader market context, and think about shorting or reducing holdings with a stop-loss.")
+                if x[f'MACD_Bearish_Crossover_Flag']
+                else "No significant MACD line and Signal line crossover detected.",
+                axis=1
+            )
+
+            # 2. MACD and the Zero Line Interpretation
+            df[f'MACD_Zero_Line_Desc'] = df.apply(
+                lambda x: ("Bullish Territory: With the MACD above the zero line, the short-term momentum outpaces the long-term momentum, suggesting a bullish bias. Look for buying opportunities but ensure to cross-check with other technical and fundamental factors.")
+                if x[f'MACD_Above_Zero_Flag']
+                else ("Bearish Territory: With the MACD below the zero line, the short-term momentum lags behind the long-term momentum, pointing to a bearish outlook. Before making decisions, verify with other indicators and market news, and consider selling or shorting.")
+                if x[f'MACD_Below_Zero_Flag']
+                else "MACD is near the zero line, indicating equilibrium between the short-term and long-term momentum.",
+                axis=1
+            )
+
+            # 3. MACD Divergence Interpretation (placeholder logic for the flags)
+            df[f'MACD_Divergence_Desc'] = df.apply(
+                lambda x: ("Bullish Divergence Alert: The asset's price is making new lows, but the MACD isn't, hinting at potential weakening in the bearish trend. This could indicate an upcoming bullish reversal. Monitor closely, consider buying if other indicators align, and set a tight stop-loss.")
+                if x[f'MACD_Bullish_Divergence_Flag']
+                else ("Bearish Divergence Alert: As the asset's price reaches new highs and the MACD doesn't, there's a potential decline in bullish momentum, possibly foreshadowing a bearish reversal. Be cautious about holding long positions, consider taking profits or setting a trailing stop.")
+                if x[f'MACD_Bearish_Divergence_Flag']
+                else "No significant MACD divergence detected.",
+                axis=1
+            )
+
+            # 4. MACD Histogram Interpretation
+            df[f'MACD_Histogram_Desc'] = df.apply(
+                lambda x: ("Bullish Momentum: The positive MACD histogram indicates strong bullish momentum as the MACD line is above the Signal line. Consider holding or increasing long positions but be vigilant for any signs of reversal.")
+                if x[f'MACD_Histogram_Positive_Flag']
+                else ("Bearish Momentum: The negative MACD histogram points to dominant bearish momentum as the MACD line is below the Signal line. It's a good time to reassess positions and think about hedging or reducing exposure.")
+                if x[f'MACD_Histogram_Negative_Flag']
+                else "The MACD histogram is near zero, suggesting a balance between bullish and bearish forces.",
+                axis=1
+            )
+
+            # 5. MACD Histogram Reversals Interpretation
+            df[f'MACD_Histogram_Reversal_Desc'] = df.apply(
+                lambda x: ("Bullish Reversal Alert: The MACD histogram's transition from negative to positive suggests potential bullish momentum reversal. Be ready to capitalize on potential uptrends, but validate with other indicators before committing.")
+                if x[f'MACD_Histogram_Reversal_Positive_Flag']
+                else ("Bearish Reversal Alert: The shift of the MACD histogram from positive to negative indicates a potential bearish momentum reversal. Consider taking protective measures like hedging or selling.")
+                if x[f'MACD_Histogram_Reversal_Negative_Flag']
+                else "No significant MACD histogram reversal detected.",
+                axis=1
+            )
+
+            # 6. MACD Trend Interpretation
+            df[f'MACD_Trend_Desc'] = df.apply(
+                lambda x: ("Uptrend Momentum: With the MACD line trending upwards, there's increasing bullish momentum. It's advisable to stay invested but maintain vigilance for trend changes.")
+                if x[f'MACD_Trending_Up_Flag']
+                else ("Downtrend Momentum: As the MACD line trends downwards, it signifies growing bearish momentum. Adopt a defensive stance and consider reducing risk or shorting.")
+                if x[f'MACD_Trending_Down_Flag']
+                else "The MACD line is relatively flat, suggesting a potential consolidation or lack of strong momentum in either direction.",
+                axis=1
+            )
+            self.logger.log_or_print("MACD calculation with pandas-ta completed successfully.", level="INFO")
+            self.macd_calculated_signal.emit(df)  # Assuming you have a signal for MACD like for stochastic
+
+        except Exception as e:
+            self.logger.log_or_print(f"An error occurred in calculate_macd: {str(e)}", level="ERROR", exc_info=True)
+            self.macd_calculated_signal.emit(df)  # Assuming you have a signal for MACD like for stochastic

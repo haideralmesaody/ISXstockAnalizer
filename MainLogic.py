@@ -32,6 +32,8 @@ class MainLogic(QObject):
         self.data_calculator.stochastic_calculated_signal.connect(self.on_stochastic_calculated)
         # Connect the cmf_calculated_signal to a slot
         self.data_calculator.cmf_calculated_signal.connect(self.on_cmf_calculated)
+        # Connect the cmf_calculated_signal to a slot
+        self.data_calculator.macd_calculated_signal.connect(self.on_macd_calculated)
         main_gui.indicator_checkbox_changed_signal.connect(self.update_chart_with_indicators)
         self.gui.indicator_values_updated_signal.connect(self.gui.update_indicator_labels)
         self.indicator_values_updated_signal.connect(self.update_gui_labels_with_indicator_values)
@@ -110,17 +112,23 @@ class MainLogic(QObject):
             # Start Stochastic Oscillator calculation
             self.data_calculator.calculate_stochastic_oscillator(self.df)  # This will emit the stochastic_calculated_signal
             self.logger.log_or_print("MainLogic: Stochastic Oscillator calculation initiated.", level="INFO", module="MainLogic")
-            self.data_calculator.calculate_cmf(self.df)  
+            # Start CMF calculation
+            self.data_calculator.calculate_cmf(self.df) 
             self.logger.log_or_print("MainLogic: CMF calculation initiated.", level="INFO", module="MainLogic")
+
+            # Start MACD calculation
+            self.data_calculator.calculate_macd(self.df)  
+            self.logger.log_or_print("MainLogic: MACD calculation initiated.", level="INFO", module="MainLogic")
             latest_values = {
                 'RSI_9': self.df['RSI_9'].iloc[-1] if 'RSI_9' in self.df.columns else None,
                 'RSI_14': self.df['RSI_14'].iloc[-1] if 'RSI_14' in self.df.columns else None,
                 'RSI_25': self.df['RSI_25'].iloc[-1] if 'RSI_25' in self.df.columns else None,
                 'StochK': self.df['STOCHk_9_6_3'].iloc[-1] if 'STOCHk_9_6_3' in self.df.columns else None,
                 'StochD': self.df['STOCHd_9_6_3'].iloc[-1] if 'STOCHd_9_6_3' in self.df.columns else None,
-                'CMF_20': self.df['CMF_20'].iloc[-1] if 'CMF_20' in self.df.columns else None
+                'CMF_20': self.df['CMF_20'].iloc[-1] if 'CMF_20' in self.df.columns else None,
+                'MACD_12_26_9': self.df['MACD_12_26_9'].iloc[-1] if 'MACD_12_26_9' in self.df.columns else None,
+                'MACDs_12_26_9': self.df['MACDs_12_26_9'].iloc[-1] if 'MACDs_12_26_9' in self.df.columns else None
             }
-                        # Start CMF calculation
 
             self.logger.log_or_print("Emitting indicator values update signal.", level="DEBUG", module="MainLogic")
             self.indicator_values_updated_signal.emit(latest_values)
@@ -200,7 +208,13 @@ class MainLogic(QObject):
              self.logger.log_or_print(f"MainLogic: Central DataFrame updated with CMF data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
         else:
             self.logger.log_or_print("MainLogic: Received None DataFrame from CMF calculation.", level="ERROR", module="MainLogic")
-
+    def on_macd_calculated(self, df):
+        self.logger.log_or_print("MainLogic: Receiving MACD calculated DataFrame...", level="DEBUG", module="MainLogic")
+        if df is not None:
+             self.df = df
+             self.logger.log_or_print(f"MainLogic: Central DataFrame updated with MACD data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
+        else:
+            self.logger.log_or_print("MainLogic: Received None DataFrame from MACD calculation.", level="ERROR", module="MainLogic")
     def update_gui_labels_with_indicator_values(self, latest_values):
         self.gui.update_indicator_labels(latest_values)
     @pyqtSlot()
