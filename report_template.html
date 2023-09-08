@@ -6,6 +6,7 @@
     <title>Report for {ticker_name}</title>
     <link href="report_style.css" rel="stylesheet"/>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highcharts@9.3.0/modules/annotations.js"></script>
 </head>
 <body>
 <main>
@@ -23,11 +24,13 @@
         <button class="collapsible">Stock Table</button>
         <div class="collapsible-content"> 
             <div class="table-container">
-                {table}
+                <div class="scrollable-table" data-name="mainScrollableTable">
+                        {table}
+                </div>
             </div>
         </div>
 
-        <div id="candlestick-chart" style="width: 100%; height: 400px;"></div>
+        <div id="candlestick-chart" data-name="mainChart" style="width: 100%; height: 600px;"></div>
     </section>
         <section class="indicator-section">
             <button class="collapsible">SMA Indicators and Description</button>
@@ -37,6 +40,18 @@
                     <p><strong>SMA50:</strong> {sma50_value}</p>
                     <p><strong>SMA200:</strong> {sma200_value}</p> 
                 </div>
+                <button class="collapsible">Stock Table _ SMA</button>
+                <div class="collapsible-content"> 
+                    <div class="table-container">
+                        <div class="smaScrollableTable">
+
+                                {table_sma}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="candlestick-chart_sma" data-name="smaChart" style="width: 100%; height: 600px;"></div>
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
@@ -566,8 +581,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } 
     }
 
-    var tables = document.querySelectorAll(".styled-table");  // Targeting the styled-table class
-    tables.forEach(function(table) {
+    function processTable(table) {
         var rows = table.querySelectorAll("tbody tr");  // Get all rows in the table body
         rows.forEach(function(row) {
             var changeCell = row.querySelector("td:nth-child(6)");  // Change column
@@ -589,270 +603,365 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             changePercentCell.textContent = changePercentValue.toFixed(2) + '%';  // Append the % sign back
         });
-    });
+    }
+
+    // Target the main table
+    var mainTable = document.querySelector('div.scrollable-table[data-name="mainScrollableTable"] table');
+    if (mainTable) {
+        processTable(mainTable);
+    }
+
+
+    // Add more tables by name as needed...
 });
+
 </script>
 <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 <script>
-    // Function to extract data from table
-    function extractDataFromTable() {
-    const table = document.querySelector('.table-container table');
-    const rows = table.querySelectorAll('tr');
-    const candlestickData = [];
-    const volumeData = [];
+    // Function to extract data from the main table
+    document.addEventListener("DOMContentLoaded", function() {
+    // Function to extract data from main table
+    function extractDataFromMainTable() {
+        const table = document.querySelector('div.scrollable-table[data-name="mainScrollableTable"] table');
+        const rows = table.querySelectorAll('tr');
+        const data = {
+            candlestick: [],
+            volume: []
+        };
 
-    // Skip the first row since it's headers
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].querySelectorAll('td');
-        const date = Date.parse(cells[0].textContent.trim());
-        const open = parseFloat(cells[2].textContent.trim());
-        const high = parseFloat(cells[3].textContent.trim());
-        const low = parseFloat(cells[4].textContent.trim());
-        const close = parseFloat(cells[1].textContent.trim());
-        const volume = parseFloat(cells[6].textContent.trim().replace(/,/g, ''));  // Removing commas for thousands
+        // Skip the first row since it's headers
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].querySelectorAll('td');
+            const date = Date.parse(cells[0].textContent.trim());
+            const open = parseFloat(cells[2].textContent.trim());
+            const high = parseFloat(cells[3].textContent.trim());
+            const low = parseFloat(cells[4].textContent.trim());
+            const close = parseFloat(cells[1].textContent.trim());
+            const volume = parseFloat(cells[7].textContent.trim().replace(/,/g, '')); // Removing commas
 
-        candlestickData.push([date, open, high, low, close]);
-        volumeData.push({
-            x: date,
-            y: volume,
-            color: close >= open ? 'green' : 'red'  // Color based on price movement
-        });
+            data.candlestick.push([date, open, high, low, close]);
+            data.volume.push([date, volume]);
+        }
+
+        return data;
     }
 
-    return {
-        candlestick: candlestickData,
-        volume: volumeData
-    };
-}
+    const mainData = extractDataFromMainTable();
 
-// Function to extract data from table
-function extractDataFromTable() {
-    const table = document.querySelector('.table-container table');
-    const rows = table.querySelectorAll('tr');
-    const data = {
-        candlestick: [],
-        volume: []
-    };
-
-    // Skip the first row since it's headers
-    for (let i = 1; i < rows.length; i++) {
-        const cells = rows[i].querySelectorAll('td');
-        const date = Date.parse(cells[0].textContent.trim());
-        const open = parseFloat(cells[2].textContent.trim());
-        const high = parseFloat(cells[3].textContent.trim());
-        const low = parseFloat(cells[4].textContent.trim());
-        const close = parseFloat(cells[1].textContent.trim());
-        const volume = parseFloat(cells[6].textContent.trim().replace(/,/g, '')); // Removing commas
-        
-        data.candlestick.push([date, open, high, low, close]);
-        data.volume.push([date, volume]);
-    }
-
-    return data;
-}
-
-// Extract data
-const extractedData = extractDataFromTable();
-
-// Compute 50-day moving average
-let sum = 0;
-const movingAverages = extractedData.candlestick.slice(0, 49).map(() => null);
-extractedData.candlestick.slice(0, 50).forEach(point => { sum += point[4]; });
-for (let i = 49; i < extractedData.candlestick.length; i++) {
-    movingAverages.push(sum / 50);
-    sum += extractedData.candlestick[i][4] - extractedData.candlestick[i - 49][4];
-}
-
-// Initialize the Highcharts candlestick chart
-Highcharts.stockChart('candlestick-chart', {
+    Highcharts.stockChart('candlestick-chart', {
     chart: {
-        backgroundColor: '#fafafa',
+        backgroundColor: '#f5f5f5',  // Lighter background
         style: {
-            fontFamily: 'Arial'
+            fontFamily: 'Arial, sans-serif'
         },
         panning: true,
         pinchType: 'x'
     },
-
-    // Enhanced tooltip to show OHLC
-    tooltip: {
-    split: true,
-    valueDecimals: 2,
-    borderColor: '#888',
-    shadow: true,
-    headerFormat: '<b>{point.x:%A, %b %e, %Y}</b><br/>'
+    legend: {
+    enabled: true,
+    layout: 'horizontal',
+    align: 'center',
+    verticalAlign: 'top',
+    borderWidth: 0,
+    floating: true
 },
 
-    // Range selector with custom buttons
-    rangeSelector: {
-        buttonTheme: {
-            fill: '#e6e6e6',
-            stroke: '#c4c4c4',
-            'stroke-width': 1,
-            style: {
-                color: '#333',
-                fontWeight: 'bold',
-                fontSize: '10px'
-            },
-            states: {
-                hover: {
-                    fill: '#d4d4d4'
-                },
-                select: {
-                    fill: '#c4c4c4'
-                }
-            }
+zoomType: 'xy',
+    tooltip: {
+        split: true,
+        valueDecimals: 2,
+        borderColor: '#8a8a8a',
+        shadow: false,
+        headerFormat: '<b>{point.x:%A, %b %e, %Y}</b><br/>',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+        borderRadius: 5,
+        style: {
+            fontWeight: 'bold'
         },
-        labelStyle: {
-            fontSize: '10px'
-        },
-        buttons: [{
-            type: 'week',
-            count: 1,
-            text: '1w'
+        crosshairs: [{
+            width: 2,
+            color: 'gray',
+            dashStyle: 'shortdot'
         }, {
-            type: 'month',
-            count: 1,
-            text: '1m'
-        },  {
-            type: 'month',
-            count: 6,
-            text: '6m'
-        }, {
-            type: 'all',
-            text: 'All'
+            width: 2,
+            color: 'gray',
+            dashStyle: 'shortdot'
         }],
-        selected: 1
+ 
     },
-
-    // Candlestick and volume series
-    series: [{
-        type: 'candlestick',
-       
-        color: '#E57373',    // Color for downward movement
-    upColor: '#81C784',  // Color for upward movement
-    lineColor: '#E57373',
-    upLineColor: '#81C784',
-        data: extractedData.candlestick,
-        dataGrouping: {
-            units: [
-                ['day', [1]]
-            ]
-        }
-    }, {
-        type: 'column',
-        name: 'Volume',
-        data: extractedData.volume,
-        yAxis: 1,
-        color: '#BDBDBD', // Neutral color for volume bars
-        dataGrouping: {
-            units: [
-                ['day', [1]]
-            ]
-        }
-    }],
-
-    // Y axis configurations for stock price and volume
     yAxis: [{
-        labels: {
-            align: 'right',
-            x: -3
-        },
         title: {
             text: 'Stock Price'
         },
         height: '90%',
         lineWidth: 2,
-        resize: {
-            enabled: true
-        },
-        // Plot lines for 52-week high and low
+        gridLineColor: '#e6e6e6',  // Lighter gridlines
         plotLines: [{
-            value: Math.max(...extractedData.candlestick.map(point => point[2])),
-            color: '#E74C3C',
-            dashStyle: 'ShortDash',
-            width: 1,
-            label: {
-                text: '52-week high',
-                align: 'left'
-            }
-        }, {
-            value: Math.min(...extractedData.candlestick.map(point => point[3])),
-            color: '#27AE60',
-            dashStyle: 'ShortDash',
-            width: 1,
-            label: {
-                text: '52-week low',
-                align: 'left'
-            }
-        }]
+        value: Math.max(...mainData.candlestick.map(point => point[2])),  // 52-week high
+        color: '#FF4136',  // Light red for 52-week high
+        dashStyle: 'ShortDash',
+        width: 1,
+        label: {
+            text: '52-week high',
+            align: 'left'
+        }
     }, {
-        labels: {
-            align: 'right',
-            x: -3
-        },
-        title: {
-            text: 'Volume'
-        },
-        top: '90%',
-        height: '10%',
-        offset: 0,
-        lineWidth: 2
+        value: Math.min(...mainData.candlestick.map(point => point[3])),  // 52-week low
+        color: '#3D9970',  // Light green for 52-week low
+        dashStyle: 'ShortDash',
+        width: 1,
+        label: {
+            text: '52-week low',
+            align: 'left'
+        }
+    }]
+}, {
+    title: {
+        text: 'Volume'
+    },
+    top: '90%',
+    height: '10%',
+    offset: 0,
+    lineWidth: 2
+}
+],
+    series: [{
+        type: 'candlestick',
+        data: mainData.candlestick,
+        name: 'Stock Price',
+        yAxis: 0,
+        color: '#FF4136',  // More beautiful shade of red
+        upColor: '#3D9970',  // More beautiful shade of green
+        lineColor: '#FF4136',  // Line color for downward movement
+        upLineColor: '#3D9970'  // Line color for upward movement
+    }, {
+        type: 'column',
+        data: mainData.volume,
+        name: 'Volume',
+        color: '#95a5a6',  // Neutral color for volume
+        yAxis: 1
     }],
-
-    // Crosshair configurations
-    xAxis: {
-        crosshair: {
-            color: '#BDBDBD',
-            dashStyle: 'ShortDot'
-        }
-    },
-
-    // Navigator configurations
-    navigator: {
-        enabled: true,
-        height: 15,  // Set the height of the navigator
-        series: {
-            data: extractedData.candlestick,
-            color: '#00aaff',
-            lineColor: '#00aaff',
-            fillOpacity: 0.1,
-            lineWidth: 1
-        }
-    },
-
-    // Scrollbar styles
-    scrollbar: {
-        enabled: false,
-        barBackgroundColor: '#BDBDBD',
-        trackBackgroundColor: '#EDEDED',
-        trackBorderWidth: 1,
-        trackBorderColor: '#C4C4C4',
-        buttonArrowColor: '#666',
-        buttonBackgroundColor: '#EDEDED',
-        buttonBorderColor: '#C4C4C4',
-        rifleColor: '#666',
-        height: 14
-    },
-
-    // Responsiveness
-    responsive: {
-        rules: [{
-            condition: {
-                maxWidth: 500
+    rangeSelector: {
+    buttonTheme: {
+        fill: '#e6e6e6',
+        stroke: '#c4c4c4',
+        style: {
+            color: '#333',
+            fontWeight: 'bold'
+        },
+        states: {
+            hover: {
+                fill: '#d4d4d4'
             },
-            chartOptions: {
-                chart: {
-                    height: 'auto'
-                },
-                rangeSelector: {
-                    inputEnabled: false
+            select: {
+                fill: '#c4c4c4',
+                style: {
+                    color: 'white'
                 }
             }
-        }]
+        }
+    },
+    inputBoxBorderColor: '#c4c4c4',
+    inputBoxHeight: 18,
+    inputBoxWidth: 120,
+    inputStyle: {
+        fontSize: '10px',
+        color: '#333'
+    },
+    labelStyle: {
+        color: '#666',
+        fontWeight: 'bold'
+    }
+},
+navigator: {
+    maskFill: 'rgba(170, 205, 170, 0.3)',  // Light green mask
+    series: {
+        color: '#2ecc71',
+        lineColor: '#2ecc71'
+    },
+    height: 15  // Adjust this value to set the desired height
+},
+
+    scrollbar: {
+        enabled: false,
+        
     }
 });
+});
+    // Function to extract data from the SMA table
+    document.addEventListener("DOMContentLoaded", function() {
+    // Function to extract data from the SMA table
+    function extractDataFromSMATable() {
+        const table = document.querySelector('div.table-container .smaScrollableTable table');
+        const rows = table.querySelectorAll('tr');
+        const data = {
+            candlestick: [],
+            volume: [],
+            sma10: [],
+            sma50: [],
+            sma200: []
+        };
 
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].querySelectorAll('td');
+            const date = Date.parse(cells[0].textContent.trim());
+            const open = parseFloat(cells[2].textContent.trim());
+            const high = parseFloat(cells[3].textContent.trim());
+            const low = parseFloat(cells[4].textContent.trim());
+            const close = parseFloat(cells[1].textContent.trim());
+            const volume = parseFloat(cells[5].textContent.trim().replace(/,/g, ''));
+            const sma10Value = parseFloat(cells[6].textContent.trim());
+            const sma50Value = parseFloat(cells[7].textContent.trim());
+            const sma200Value = parseFloat(cells[8].textContent.trim());
+
+            data.candlestick.push([date, open, high, low, close]);
+            data.volume.push([date, volume]);
+            data.sma10.push([date, sma10Value]);
+            data.sma50.push([date, sma50Value]);
+            data.sma200.push([date, sma200Value]);
+        }
+
+        return data;
+    }
+
+    const smaData = extractDataFromSMATable();
+
+    Highcharts.stockChart('candlestick-chart_sma', {
+        chart: {
+            backgroundColor: '#f5f5f5',  // Lighter background
+            style: {
+                fontFamily: 'Arial, sans-serif'
+            },
+            panning: true,
+            pinchType: 'x'
+        },
+        legend: {
+    enabled: true,
+    layout: 'horizontal',
+    align: 'center',
+    verticalAlign: 'top',
+    borderWidth: 0,
+    floating: true
+},
+
+zoomType: 'xy',
+        tooltip: {
+            split: true,
+            valueDecimals: 2,
+            borderColor: '#8a8a8a',
+            shadow: false,
+            headerFormat: '<b>{point.x:%A, %b %e, %Y}</b><br/>',
+            backgroundColor: 'rgba(255, 255, 255, 0.7)',
+            borderRadius: 5,
+            style: {
+                fontWeight: 'bold'
+            },
+            crosshairs: [{
+                width: 2,
+                color: 'gray',
+                dashStyle: 'shortdot'
+            }, {
+                width: 2,
+                color: 'gray',
+                dashStyle: 'shortdot'
+            }]
+        },
+        yAxis: [{
+            title: {
+                text: 'Stock Price'
+            },
+            height: '90%',
+            lineWidth: 2,
+            gridLineColor: '#e6e6e6'  // Lighter gridlines
+        }, {
+            title: {
+                text: 'Volume'
+            },
+            top: '90%',
+            height: '10%',
+            offset: 0,
+            lineWidth: 2
+        }],
+        series: [{
+            type: 'candlestick',
+            data: smaData.candlestick,
+            name: 'Stock Price',
+            color: '#FF4136',  // More beautiful shade of red
+            upColor: '#3D9970',  // More beautiful shade of green
+            lineColor: '#FF4136',  // Line color for downward movement
+            upLineColor: '#3D9970',  // Line color for upward movement
+            yAxis: 0
+        }, {
+            type: 'line',
+            data: smaData.sma10,
+            name: 'SMA10',
+            yAxis: 0,
+            color: '#3498db'  // Shade of blue for SMA10
+        }, {
+            type: 'line',
+            data: smaData.sma50,
+            name: 'SMA50',
+            yAxis: 0,
+            color: '#e67e22'  // Shade of orange for SMA50
+        }, {
+            type: 'line',
+            data: smaData.sma200,
+            name: 'SMA200',
+            yAxis: 0,
+            color: '#8e44ad'  // Shade of purple for SMA200
+        }, {
+            type: 'column',
+            data: smaData.volume,
+            name: 'Volume',
+            color: '#95a5a6',  // Neutral color for volume
+            yAxis: 1
+        }],
+        rangeSelector: {
+            buttonTheme: {
+                fill: '#e6e6e6',
+                stroke: '#c4c4c4',
+                style: {
+                    color: '#333',
+                    fontWeight: 'bold'
+                },
+                states: {
+                    hover: {
+                        fill: '#d4d4d4'
+                    },
+                    select: {
+                        fill: '#c4c4c4',
+                        style: {
+                            color: 'white'
+                        }
+                    }
+                }
+            },
+            inputBoxBorderColor: '#c4c4c4',
+            inputBoxHeight: 18,
+            inputBoxWidth: 120,
+            inputStyle: {
+                fontSize: '10px',
+                color: '#333'
+            },
+            labelStyle: {
+                color: '#666',
+                fontWeight: 'bold'
+            }
+        },
+        navigator: {
+            maskFill: 'rgba(170, 205, 170, 0.3)',  // Light green mask
+            series: {
+                color: '#2ecc71',
+                lineColor: '#2ecc71'
+            },
+            height: 15  // Adjust this value to set the desired height
+        },
+        scrollbar: {
+            enabled: false
+        }
+    });
+});
 </script>
+
 </body>
 </html>

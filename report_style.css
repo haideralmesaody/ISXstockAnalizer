@@ -66,9 +66,20 @@ table tbody tr:hover {
     justify-content: center;
     margin-bottom: 1rem;
     width: 100%;
+    max-height: 400px; /* Set the maximum height as needed */
     overflow-x: auto; 
+    position: relative; /* Position relative for absolute header */
 }
-
+.scrollable-table {
+    width: 100%; /* Optional: Set the width of the scrollable table */
+}
+/* Sticky table header */
+.scrollable-table table {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: white; /* Optional: Add a background color to the header */
+}
 /* INDICATOR & DESCRIPTION SECTIONS */
 .stock-data, .indicator-section {
     background-color: #fff;

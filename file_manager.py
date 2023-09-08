@@ -101,9 +101,12 @@ class FileManager:
                 if self.logger:
                     self.logger.log_or_print("generate_report: DataFrame is not None.", level="INFO", module="FileManager")
 
-                # Extract the last 10 days data
-                subset_df = df.iloc[-100:, :10]
+                # Extract the first 10 columns for standard candle chart
+                subset_df = df.iloc[:, :10]
                 html_table = subset_df.to_html(classes="styled-table", index=False)
+                # Extract the requried columns for SMA anlaysis
+                subset_df_sma = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "SMA10", "SMA50", "SMA200"]]
+                html_table_sma = subset_df_sma.to_html(classes="styled-table", index=False)
 
                 # Load the HTML template
                 template_path = os.path.join(os.path.dirname(__file__), 'report_template.html')
@@ -118,6 +121,7 @@ class FileManager:
                 formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
                 replacements = {
                     'table': html_table,
+                    'table_sma': html_table_sma,
                     'ticker_name': ticker,
                     'report_date': formatted_date,
                     'sma10_value': last_row['SMA10'],
