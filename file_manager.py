@@ -89,6 +89,20 @@ class FileManager:
             if self.logger:
                 self.logger.log_or_print(f"embed_css_and_images_in_html: An exception occurred. Details: {str(e)}.", level="ERROR", module="FileManager")
             return None
+    def embed_js_in_html(self, html_content, js_path):
+        try:
+            with open(js_path, "r") as file:
+                js_content = file.read()
+            
+            js_filename = os.path.basename(js_path)
+            embedded_js = f"<script>{js_content}</script>"
+            html_content = html_content.replace(f'<script src="{js_filename}"></script>', embedded_js)
+            
+            return html_content
+        except Exception as e:
+            if self.logger:
+                self.logger.log_or_print(f"embed_js_in_html: An exception occurred while embedding JS file {js_path}. Details: {str(e)}.", level="ERROR", module="FileManager")
+            return None
     def generate_report(self, df, ticker):
         """
         Logic to generate and save the report based on the provided structure.
@@ -262,6 +276,15 @@ class FileManager:
                     img_filepath = os.path.join(os.path.dirname(__file__), 'Logo.png')
 
                     template = self.embed_css_and_images_in_html(template, css_filepath, img_filepath)
+                        # Embedding JS files one-by-one
+                    js_files = [
+                        'chart_Main.js',
+                        'chart_SMA.js',
+                        'collapsible_handler.js'
+                    ]
+
+                    for js_file in js_files:
+                        template = self.embed_js_in_html(template, js_file)
                     if not template:
                         raise ValueError("Failed to embed CSS or Images in the report.")
                     # Save the embedded version as a new file
