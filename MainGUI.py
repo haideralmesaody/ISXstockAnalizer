@@ -133,6 +133,9 @@ class MainGUI(QMainWindow):
             self.rsi_swing_text = QTextEdit()
             self.status_label = QLabel(self)
             self.ticker_input = QLineEdit()
+            # Set properties for QLineEdit
+            self.ticker_input.setInputMask('>AAAAAAAAAA; ')  # A stands for an alphabetic character (A-Z, a-z)
+            self.ticker_input.setMaxLength(4)  # Allow up to 4 characters
             self.rows_label = QLabel("Number of rows:")
             self.row_spin_box = QSpinBox()
             self.row_spin_box.setMinimum(1)

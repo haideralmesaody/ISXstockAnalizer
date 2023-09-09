@@ -1,5 +1,10 @@
 import logging
+import os
+from datetime import datetime
+from dateutil import tz
 import time
+import datetime
+import pytz
 from datetime import datetime
 import pandas as pd
 import pandas_ta as ta
@@ -29,46 +34,167 @@ class DataFetcher(QObject):
         self.logger = Logger()
 
     def fetch_data(self, ticker, desired_rows):
+        # Define the GMT+3 timezone
+        gmt3 = tz.tzoffset('GMT+3', 3*3600)
+
+        # Get the current date and time in GMT+3
+        current_datetime = datetime.now(gmt3)
+        current_date = current_datetime.date()
+        
+        self.logger.log_or_print(f"Starting data fetch for ticker {ticker} on {current_date}. Desired rows: {desired_rows}", level="INFO")
+
         driver = None  # Initialize driver to None
+        filename = f"raw_{ticker}.csv"
+        df = self.initialize_dataframe()
+        df_existing = self.initialize_dataframe()
+        df_temp = self.initialize_dataframe()
         try:
-            # Initialization and existing code
-            self.logger.log_or_print("Attempting to allocate Selenium WebDriver resource...", level="INFO")
-            URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
+            if os.path.exists(filename):
+                
+                df_existing = pd.read_csv(filename)
+                number_of_rows = df_existing.shape[0]
+                self.logger.log_or_print(f"{filename} exists with {number_of_rows} rows.", level="INFO")
+                self.logger.log_or_print(f"{filename}  exist!", level="INFO")
+                self.logger.log_or_print(df.head(), level="INFO")
+                # Ensure the 'Date' column is of datetime type
+                df_existing['Date'] = pd.to_datetime(df_existing['Date'])
+                # Get the maximum date
+                max_date = df_existing['Date'].max().date()  # Convert to datetime.date
+                difference_in_days = (current_date - max_date).days  # Calculate the difference in days
+                self.logger.log_or_print(f"Max date from existing CSV: {max_date}. Difference in days: {difference_in_days}.", level="INFO")
+                if difference_in_days > 20 or number_of_rows < desired_rows-20:# if the CSV is older than 10day the CSV or the number of rows are less than the desired rows be deleted and the to proceed normally to fetch the desired trading days
+                    self.logger.log_or_print("Conditions met: Either the CSV is older than 10 days or number of rows is less than desired.", level="INFO")
+                    os.remove(filename)
+                    # Initialization and existing code
+                    self.logger.log_or_print("Attempting to allocate Selenium WebDriver resource...", level="INFO")
+                    URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
 
-            # Initialize Edge driver
-            driver_service = Service(EDGE_DRIVER_PATH)
-            driver = EdgeDriver(service=driver_service)
-            self.logger.log_or_print("Successfully allocated Selenium WebDriver resource.", level="INFO")
+                    # Initialize Edge driver
+                    driver_service = Service(EDGE_DRIVER_PATH)
+                    driver = EdgeDriver(service=driver_service)
+                    self.logger.log_or_print("Successfully allocated Selenium WebDriver resource.", level="INFO")
 
-            driver.get(URL)
-            self.dismiss_alert_if_present(driver)
+                    driver.get(URL)
+                    self.dismiss_alert_if_present(driver)
 
-            # Adjust the value of the input field
-            driver.execute_script('document.querySelector("#fromDate").value = "1/1/2010";')
-            WebDriverWait(driver, WEBDRIVER_WAIT_TIME).until(lambda driver: driver.execute_script('return document.querySelector("#fromDate").value;') == "1/1/2010")
+                    # Adjust the value of the input field
+                    driver.execute_script('document.querySelector("#fromDate").value = "1/1/2010";')
+                    WebDriverWait(driver, WEBDRIVER_WAIT_TIME).until(lambda driver: driver.execute_script('return document.querySelector("#fromDate").value;') == "1/1/2010")
 
-            # Find the button and click it
-            update_button = driver.execute_script('return document.querySelector("#command > div.filterbox > div.button-all")')
-            update_button.click()
+                    # Find the button and click it
+                    update_button = driver.execute_script('return document.querySelector("#command > div.filterbox > div.button-all")')
+                    update_button.click()
 
-            time.sleep(2)  # Wait for a couple of seconds after pressing the button
+                    time.sleep(2)  # Wait for a couple of seconds after pressing the button
 
-            # Wait for table to load
-            self.wait_for_table_to_load(driver)
-            
-            df = self.initialize_dataframe()
-            page_num = 1
+                    # Wait for table to load
+                    self.wait_for_table_to_load(driver)
+                    
+
+                    page_num = 1
+
+                    while len(df) < desired_rows:
+                        self.logger.log_or_print(f"Scraping page {page_num}...", level="INFO")
+                        df = self.extract_data_from_page(df, driver)
+                        df['Date'] = pd.to_datetime(df['Date'])
+                        df = df.drop_duplicates(subset='Date', keep='first')
+                        if len(df) >= desired_rows:
+                            break
+                        
+                        self.navigate_to_next_page(driver)
+                        page_num += 1
+                    df['Date'] = pd.to_datetime(df['Date'])
+                    df = df.sort_values(by='Date', ascending=True)
+
+                else: # if the CSV is freash fetch only the first page, to be modified to check for the number of rows
+                    self.logger.log_or_print("Fetching only the first page since the CSV is fresh.", level="INFO")
+                    os.remove(filename)
+                    # Initialization and existing code
+                    self.logger.log_or_print("Attempting to allocate Selenium WebDriver resource...", level="INFO")
+                    URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
+
+                    # Initialize Edge driver
+                    driver_service = Service(EDGE_DRIVER_PATH)
+                    driver = EdgeDriver(service=driver_service)
+                    self.logger.log_or_print("Successfully allocated Selenium WebDriver resource.", level="INFO")
+
+                    driver.get(URL)
+                    self.dismiss_alert_if_present(driver)
+
+                    # Adjust the value of the input field
+                    driver.execute_script('document.querySelector("#fromDate").value = "1/1/2010";')
+                    WebDriverWait(driver, WEBDRIVER_WAIT_TIME).until(lambda driver: driver.execute_script('return document.querySelector("#fromDate").value;') == "1/1/2010")
+
+                    # Find the button and click it
+                    update_button = driver.execute_script('return document.querySelector("#command > div.filterbox > div.button-all")')
+                    update_button.click()
+
+                    time.sleep(2)  # Wait for a couple of seconds after pressing the button
+
+                    # Wait for table to load
+                    self.wait_for_table_to_load(driver)
+                    
+                    df = self.extract_data_from_page(df, driver)
+                    df_temp = pd.concat([df, df_existing], axis=0, ignore_index=True)
+                    self.logger.log_or_print(f"After concatenation: {df_temp.shape[0]} rows.", level="INFO")
+                    df=df_temp
+                    df['Date'] = pd.to_datetime(df['Date'])
+                    duplicate_dates = df[df.duplicated(subset='Date', keep='first')]['Date']
+                    self.logger.log_or_print(f"Duplicate dates: {duplicate_dates.tolist()}", level="INFO")
+                    df = df.drop_duplicates(subset='Date', keep='first')
+                    self.logger.log_or_print(f"After dropping duplicates: {df.shape[0]} rows.", level="INFO")
+                    df = df.sort_values(by='Date', ascending=False)
+                    df=df.head(desired_rows)
+                    df = df.sort_values(by='Date', ascending=True)
+                    self.logger.log_or_print(f"After selecting top {desired_rows} rows: {df.shape[0]} rows.", level="INFO")
+            else:
+                self.logger.log_or_print(f"{filename} does not exist. Fetching new data...", level="INFO")
+                # Initialization and existing code
+                self.logger.log_or_print("Attempting to allocate Selenium WebDriver resource...", level="INFO")
+                URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
+
+                # Initialize Edge driver
+                driver_service = Service(EDGE_DRIVER_PATH)
+                driver = EdgeDriver(service=driver_service)
+                self.logger.log_or_print("Successfully allocated Selenium WebDriver resource.", level="INFO")
+
+                driver.get(URL)
+                self.dismiss_alert_if_present(driver)
+
+                # Adjust the value of the input field
+                driver.execute_script('document.querySelector("#fromDate").value = "1/1/2010";')
+                WebDriverWait(driver, WEBDRIVER_WAIT_TIME).until(lambda driver: driver.execute_script('return document.querySelector("#fromDate").value;') == "1/1/2010")
+
+                # Find the button and click it
+                update_button = driver.execute_script('return document.querySelector("#command > div.filterbox > div.button-all")')
+                update_button.click()
+
+                time.sleep(2)  # Wait for a couple of seconds after pressing the button
+
+                # Wait for table to load
+                self.wait_for_table_to_load(driver)
+                
+
+                page_num = 1
 
             while len(df) < desired_rows:
                 self.logger.log_or_print(f"Scraping page {page_num}...", level="INFO")
-                df = self.extract_data_from_page(df, driver)
+                df_temp = self.extract_data_from_page(df, driver)  # Extract data into a temporary DataFrame
+
+                # Append the temporary DataFrame to the main DataFrame
+                df = pd.concat([df, df_temp], ignore_index=True)
+
+                # Remove duplicates based on the 'Date' column
+                df = df.drop_duplicates(subset='Date', keep='first')
 
                 if len(df) >= desired_rows:
                     break
-                
+
                 self.navigate_to_next_page(driver)
                 page_num += 1
+
             df = df.sort_values(by='Date', ascending=True)
+            df = df.tail(desired_rows)  # This will keep only the latest 'desired_rows'
 
             # Compute the actual change and change% based on the Close prices
             df['Change'] = df['Close'].diff()
@@ -79,6 +205,8 @@ class DataFetcher(QObject):
            
             self.logger.log_or_print(f"Data fetching completed. {len(df)} rows fetched.", level="INFO")
             self.data_frame_ready_signal.emit(df)
+            filename = f"raw_{ticker}.csv"
+            df.to_csv(filename, index=False)
             return df
 
         except Exception as e:
@@ -139,6 +267,7 @@ class DataFetcher(QObject):
 
                 row_data = [date, open_price, high, low, close, change, change_percent, t_shares, volume, no_trades]
                 df.loc[len(df)] = row_data
+
             
             self.logger.log_or_print("Data extraction successful.", level="INFO")
             return df
@@ -147,9 +276,7 @@ class DataFetcher(QObject):
             self.logger.log_or_print(f"An error occurred while extracting data from the page: {str(e)}", level="ERROR", exc_info=True)
             return df  # Return the DataFrame as is
             
-        except Exception as e:
-            self.logger.log_or_print(f"An error occurred while extracting data from the page: {str(e)}", level="ERROR", exc_info=True)
-            return df  # Return the DataFrame as is
+
 
     def navigate_to_next_page(self, driver):
         """Navigate to the next page of data."""
