@@ -41,171 +41,249 @@ class DataCalculator(QObject):
             df['SMA50'] = ta.sma(df['Close'], length=50).round(2)
             df['SMA200'] = ta.sma(df['Close'], length=200).round(2)
 
-                # Golden Cross and Death Cross
+            # Golden Cross and Death Cross
             df['Golden_Cross'] = (df['SMA50'] > df['SMA200']) & (df['SMA50'].shift(1) <= df['SMA200'].shift(1))
             df['Death_Cross'] = (df['SMA50'] < df['SMA200']) & (df['SMA50'].shift(1) >= df['SMA200'].shift(1))
-            df['Golden_Death_Cross_Desc'] = df.apply(
-                lambda x: ("Golden Cross detected: This is a bullish signal where the shorter-term SMA50 crosses above the longer-term SMA200. " 
-                        "Historically, this pattern has been seen during the early stages of a prolonged bull market. " 
-                        "It might suggest that the asset's price will see an extended upward trajectory. " 
-                        "As an investor, this can be a favorable time to consider adding to your position or entering a new buy trade.")
-                if x['Golden_Cross'] 
-                else ("Death Cross detected: This is a bearish signal indicating the potential beginning of a downward trend. "
-                    "The shorter-term SMA50 has crossed below the longer-term SMA200, which might suggest a forthcoming bear market or a prolonged period of selling pressure. "
-                    "It's often advisable to exercise caution, consider reducing exposure to the asset, or hedge against potential losses.")
-                if x['Death_Cross'] 
-                else ("No significant cross detected: Currently, the market is showing a neutral behavior with no clear bullish or bearish signals. "
-                    "This can be a period of consolidation or sideways movement. It's essential to keep monitoring other indicators and stay updated with market news. "
-                    "It might be wise to maintain a balanced and diversified strategy during such times."), axis=1)
             # Price and SMA10 Crossover
             df['Price_Cross_SMA10_Up'] = (df['Close'] > df['SMA10']) & (df['Close'].shift(1) <= df['SMA10'].shift(1))
-            df['Price_Cross_SMA10_Down'] = (df['Close'] < df['SMA10']) & (df['Close'].shift(1) >= df['SMA10'].shift(1))
-            # Price and SMA10 Crossover Descriptions
-            df['Price_SMA10_Crossover_Desc'] = df.apply(
-                lambda x: ("Price crossed above SMA10: This indicates a surge in short-term momentum as the asset's price surpasses its average over the last 10 periods. "
-                        "Historically, such upward crossovers can hint at a short-term bullish trend. "
-                        "Investors might interpret this as an opportunity to capitalize on this momentum, while also considering other technical indicators for confirmation.")
-                if x['Price_Cross_SMA10_Up'] 
-                else ("Price crossed below SMA10: This suggests a possible short-term decline as the price dips below its recent 10-period average. "
-                    "It can be indicative of a potential pullback or a temporary bearish phase. Investors might consider this as a sign to be cautious, "
-                    "potentially adjusting their short-term strategies or setting stop losses to protect gains.")
-                if x['Price_Cross_SMA10_Down'] 
-                else ("Price is oscillating around SMA10: The asset's price is currently interweaving with its 10-period average, indicating potential indecision in the market. "
-                    "Such a pattern might point to a phase of consolidation, suggesting investors should stay alert, monitor other indicators, and be prepared for a breakout in either direction."),
-                axis=1)
+            df['Price_Cross_SMA10_Down'] = (df['Close'] < df['SMA10']) & (df['Close'].shift(1) >= df['SMA10'].shift(1))    
             # Price and SMA50 Crossovers
             df['Price_Cross_SMA50_Up'] = (df['Close'] > df['SMA50']) & (df['Close'].shift(1) <= df['SMA50'].shift(1))
-            df['Price_Cross_SMA50_Down'] = (df['Close'] < df['SMA50']) & (df['Close'].shift(1) >= df['SMA50'].shift(1))
-            df['Price_Crossover_Desc'] = df.apply(
-                lambda x: ("Price crossed above SMA50: This indicates that recent price movements are showing bullish momentum as the asset's price has risen above its average over the last 50 periods. " 
-                        "This could suggest a potential upward trend. Historically, when prices move above the SMA50, it's a sign of positive sentiment in the market. " 
-                        "Investors might view this as a favorable time to enter the market or add to existing bullish positions.")
-                if x['Price_Cross_SMA50_Up'] 
-                else ("Price crossed below SMA50: The asset's price dropping below its 50-period average can be a sign of bearish momentum. "
-                    "This may indicate a potential downtrend or a weakening in the asset's price strength. It can be a signal to investors to exercise caution. "
-                    "Consider re-evaluating your position, setting stop losses, or even taking profits if you're already in a favorable position.")
-                if x['Price_Cross_SMA50_Down'] 
-                else ("Price is moving closely with SMA50: Currently, the asset's price is moving in tandem with its 50-period average, indicating a potential equilibrium in the market. "
-                    "This might suggest a period of consolidation where neither the buyers nor sellers have significant control. "
-                    "It's advisable to monitor other market indicators, news, and perhaps maintain a balanced strategy during such times."), axis=1)
-
-
+            df['Price_Cross_SMA50_Down'] = (df['Close'] < df['SMA50']) & (df['Close'].shift(1) >= df['SMA50'].shift(1))  
             # Price and SMA200 Crossover
             df['Price_Cross_SMA200_Up'] = (df['Close'] > df['SMA200']) & (df['Close'].shift(1) <= df['SMA200'].shift(1))
             df['Price_Cross_SMA200_Down'] = (df['Close'] < df['SMA200']) & (df['Close'].shift(1) >= df['SMA200'].shift(1))
-            # Price and SMA200 Crossover Descriptions
-            df['Price_SMA200_Crossover_Desc'] = df.apply(
-                lambda x: ("Price crossed above SMA200: A significant bullish signal as the asset's price moves above its long-term average of the past 200 periods. "
-                        "This can often be interpreted as the commencement of a long-term upward trend. Historically, when prices ascend above the SMA200, the market sentiment tends to be bullish. "
-                        "Investors might consider this a robust sign of the asset's potential and contemplate long-term investment strategies.")
-                if x['Price_Cross_SMA200_Up'] 
-                else ("Price crossed below SMA200: This denotes a potential long-term bearish trend as the asset's price descends below its 200-period average. "
-                    "It's a warning signal that the asset might be entering a prolonged bearish phase. Investors should exercise caution, consider diversifying their portfolio, or look for hedging options.")
-                if x['Price_Cross_SMA200_Down'] 
-                else ("Price is meandering near SMA200: The asset's price is closely following its long-term average, suggesting a balance between buying and selling pressures. "
-                    "This equilibrium might hint at a period of market consolidation. During such phases, investors might benefit from a wait-and-watch strategy, looking for stronger market signals."),
-                axis=1)
             # SMA10 and SMA200 Crossover
             df['SMA10_Cross_SMA200_Up'] = (df['SMA10'] > df['SMA200']) & (df['SMA10'].shift(1) <= df['SMA200'].shift(1))
             df['SMA10_Cross_SMA200_Down'] = (df['SMA10'] < df['SMA200']) & (df['SMA10'].shift(1) >= df['SMA200'].shift(1))
-            # SMA10 and SMA200 Crossover Descriptions
-            df['SMA10_SMA200_Crossover_Desc'] = df.apply(
-                lambda x: ("Golden Cross: The SMA10 crossed above SMA200, a bullish signal often seen as an indicator of a potential long-term upward trend. "
-                        "Historically, the 'Golden Cross' has been a precursor to significant bullish phases. Investors might consider this a favorable sign for long-term investment opportunities, "
-                        "but it's always wise to corroborate with other indicators.")
-                if x['SMA10_Cross_SMA200_Up'] 
-                else ("Death Cross: The SMA10 crossed below SMA200, typically perceived as a bearish sign, indicating a potential long-term downtrend. "
-                    "Historically, the 'Death Cross' has been associated with prolonged bear markets. Investors might want to reassess their portfolios, considering defensive strategies or hedging against potential losses.")
-                if x['SMA10_Cross_SMA200_Down'] 
-                else ("SMA10 is closely tracking SMA200: The short-term and long-term averages are moving hand in hand, suggesting a balanced market momentum. "
-                    "This can indicate a period of market consolidation or equilibrium. A breakout from this pattern can offer significant insights into the market's next move."),
-                axis=1)
             # SMA Slopes
             df['SMA10_Up'] = df['SMA10'].diff() > 0
             df['SMA50_Up'] = df['SMA50'].diff() > 0
             df['SMA200_Up'] = df['SMA200'].diff() > 0
-            df['SMA_Slopes_Desc'] = df.apply(
-                lambda x: ("SMA10 Trending Upwards: The asset's recent price movements are favorable, indicating short-term bullish momentum. " 
-                        "This could suggest that the current sentiment in the market is optimistic. For traders who focus on short-term movements, this might be a positive sign to monitor the asset closely.")
-                if x['SMA10_Up'] 
-                else ("SMA50 Trending Upwards: The asset's price is showing strength in the medium term, which can be a sign of sustained bullish momentum. "
-                    "A rising SMA50 often indicates that the asset might be in an uptrend, and investors might consider this a positive sign for medium-term strategies.")
-                if x['SMA50_Up'] 
-                else ("SMA200 Trending Upwards: A rising SMA200 typically suggests a long-term bullish trend. "
-                    "It's often seen as a strong indicator of the overall health of the asset in the broader market. For long-term investors, this might be an encouraging sign.")
-                if x['SMA200_Up']
-                else ("Neutral/Bearish Momentum Detected: Currently, the asset's short, medium, and long-term Simple Moving Averages (SMAs) aren't showing strong upward momentum. "
-                    "This could suggest a period of consolidation, or even a potential downturn. It's advisable to exercise caution, monitor other market indicators, and perhaps adopt a defensive strategy."), axis=1)
-
             # Distance Between Price and SMA
             df['Price_Distance_SMA10'] = (df['Close'] - df['SMA10']).round(2)
             df['Price_Distance_SMA50'] = (df['Close'] - df['SMA50']).round(2)
             df['Price_Distance_SMA200'] = (df['Close'] - df['SMA200']).round(2)
+            # Relationship Between SMA-50 and SMA-200
+            df['SMA50_Above_SMA200'] = df['SMA50'] > df['SMA200']
 
-            # SMA10 Description
-            df['Price_Distance_SMA10_Desc'] = df.apply(
-                lambda x: ("Short-Term Bullish Momentum: The asset's current price is above its short-term average, suggesting bullish momentum. "
-                        "If the difference is too high, it might be approaching overbought conditions. Monitoring for potential pullbacks might be wise.")
-                if x['Price_Distance_SMA10'] > 0 
-                else ("Short-Term Bearish Momentum: The asset is trading below its short-term average, indicating potential bearish momentum. "
-                    "If the difference is significant, it might be entering oversold territory, suggesting a possible buying opportunity soon.")
-                if x['Price_Distance_SMA10'] < 0 
-                else "Neutral Short-Term: The asset's price is trading near its short-term average, suggesting a balanced or consolidating market condition.",
+            df['Golden_Death_Cross_Desc'] = df.apply(
+                lambda x: 
+                ("Buy, Golden Cross Detected: The shorter-term SMA50 has crossed above the longer-term SMA200, a bullish signal. "
+                "Historically, this pattern indicates the early stages of a prolonged bull market. Interpretation: The asset's price might rise, suggesting a favorable time to buy or add to your position.")
+                if x['Golden_Cross'] 
+                else 
+                ("Sell, Death Cross Detected: The shorter-term SMA50 has crossed below the longer-term SMA200, a bearish signal. "
+                "This pattern often precedes a forthcoming bear market or a prolonged period of selling. Interpretation: Exercise caution, consider reducing exposure, or hedge against losses.")
+                if x['Death_Cross'] 
+                else 
+                ("Neutral, No Significant Cross Detected: The market shows no clear bullish or bearish signals at the moment. "
+                "This can indicate a period of consolidation or sideways movement. Interpretation: Monitor other indicators, stay updated with market news, and maintain a diversified strategy."),
                 axis=1
             )
 
+            # Price and SMA10 Crossover Descriptions
+            df['Price_SMA10_Crossover_Desc'] = df.apply(
+                lambda x: 
+                ("Buy, Price Crossed Above SMA10: The asset's price has surged above its 10-period average. "
+                "This upward crossover is historically a sign of short-term bullish momentum. Interpretation: It might be an opportunity to capitalize on the momentum, but also consider other indicators for confirmation.")
+                if x['Price_Cross_SMA10_Up'] 
+                else 
+                ("Sell, Price Crossed Below SMA10: The asset's price is dipping below its recent 10-period average. "
+                "This can hint at a short-term decline or a potential pullback. Interpretation: It might be wise to exercise caution, adjust strategies, or set stop losses.")
+                if x['Price_Cross_SMA10_Down'] 
+                else 
+                ("Neutral, Price Oscillating Around SMA10: The asset's price is weaving around its 10-period average, indicating market indecision. "
+                "This pattern could be a sign of consolidation. Interpretation: Stay alert, monitor other indicators, and be ready for a potential breakout."),
+                axis=1
+            )
+            # Price  Crossover Descriptions
+            df['Price_Crossover_Desc'] = df.apply(
+                lambda x: 
+                ("Buy, Price Crossed Above SMA50: The asset's price has risen above its 50-period average, indicating bullish momentum. "
+                "Historically, prices above the SMA50 suggest positive market sentiment. Interpretation: It might be a favorable time to enter or add to bullish positions.")
+                if x['Price_Cross_SMA50_Up'] 
+                else 
+                ("Sell, Price Crossed Below SMA50: The asset's price has dropped below its 50-period average, signaling bearish momentum. "
+                "This could indicate a potential downtrend or weakening price strength. Interpretation: It's wise to exercise caution, possibly re-evaluate positions or set stop losses.")
+                if x['Price_Cross_SMA50_Down'] 
+                else 
+                ("Neutral, Price Moving with SMA50: The asset's price is in line with its 50-period average, suggesting market equilibrium. "
+                "This pattern might point to consolidation, where neither buyers nor sellers dominate. Interpretation: Monitor other indicators, stay updated with news, and maintain a balanced strategy."),
+                axis=1
+            )
+
+            # Price and SMA200 Crossover Descriptions
+            df['Price_SMA200_Crossover_Desc'] = df.apply(
+                lambda x: 
+                ("Buy, Price Crossed Above SMA200, "
+                "The asset's price has surpassed its long-term 200-period average, signaling a notable bullish trend. Historically, an ascent above the SMA200 has been associated with bullish market sentiment, "
+                "This might be a robust indication of the asset's potential, suggesting consideration for long-term investment.")
+                if x['Price_Cross_SMA200_Up'] 
+                else 
+                ("Sell, Price Crossed Below SMA200, "
+                "The asset's price has dropped below its long-term 200-period average, indicating a potential prolonged bearish phase. This descent is a cautionary signal of a possible extended bearish trend, "
+                "Investors should be cautious, think about diversifying, or explore hedging options.")
+                if x['Price_Cross_SMA200_Down'] 
+                else 
+                ("Neutral, Price Oscillating Near SMA200, "
+                "The asset's price is closely aligned with its 200-period average, suggesting equilibrium between buying and selling forces. This balance might indicate a consolidation phase, "
+                "In such scenarios, a wait-and-observe approach could be beneficial, while awaiting stronger market cues."),
+                axis=1
+            )
+
+            # SMA10 and SMA200 Crossover Descriptions
+            df['SMA10_SMA200_Crossover_Desc'] = df.apply(
+                lambda x: 
+                ("Buy, Golden Cross Detected Between SMA10 and SMA200, "
+                "The shorter-term SMA10 has surpassed the longer-term SMA200, often interpreted as a bullish signal hinting at a potential long-term upward trajectory. Historically, the 'Golden Cross' has signified the onset of extended bullish phases, "
+                "This event can be perceived as a positive sign for long-term investments, but it's recommended to cross-reference with other indicators.")
+                if x['SMA10_Cross_SMA200_Up'] 
+                else 
+                ("Sell, Death Cross Detected Between SMA10 and SMA200, "
+                "The shorter-term SMA10 has descended below the longer-term SMA200, commonly viewed as a bearish sign suggesting a potential prolonged downtrend. Historically, the 'Death Cross' has been a harbinger of extended bear markets, "
+                "Investors should contemplate re-evaluating their positions, potentially adopting defensive strategies or considering hedging measures.")
+                if x['SMA10_Cross_SMA200_Down'] 
+                else 
+                ("Neutral, SMA10 Oscillating Near SMA200, "
+                "Both the short-term and long-term moving averages are moving in tandem, indicating a period of balanced market momentum. This behavior suggests a possible phase of market consolidation or equilibrium, "
+                "Awaiting a breakout from this pattern might provide pivotal insights into the forthcoming market direction."),
+                axis=1
+            )
+            # SMA Slops Descriptions
+            df['SMA_Slopes_Desc'] = df.apply(
+                lambda x: 
+                ("Buy, SMA10 Trending Upwards, "
+                "The recent price movements of the asset are favorable, which may indicate short-term bullish momentum. "
+                "For traders focused on short-term movements, this could be a cue to monitor the asset more closely, anticipating potential opportunities.")
+                if x['SMA10_Up'] 
+                else 
+                ("Buy, SMA50 Trending Upwards, "
+                "The asset's price showcases strength in the medium term, possibly hinting at sustained bullish momentum. "
+                "A rising SMA50 often suggests the asset might be on an uptrend, which can be interpreted as a favorable sign for medium-term investment strategies.")
+                if x['SMA50_Up'] 
+                else 
+                ("Buy, SMA200 Trending Upwards, "
+                "The SMA200, representing long-term trends, is on the rise, often interpreted as a sign of a long-term bullish trend. "
+                "This trend can be a strong indication of the asset's overall health in the broader market, potentially signaling positive prospects for long-term investors.")
+                if x['SMA200_Up']
+                else 
+                ("Neutral, No Strong Upward Momentum in SMAs Detected, "
+                "The asset's short, medium, and long-term Simple Moving Averages (SMAs) aren't displaying significant upward trends. "
+                "This pattern could hint at a phase of market consolidation or a potential downturn, suggesting a cautious approach and monitoring of other market indicators."),
+                axis=1
+            )
+
+
+
+            # SMA10 Description
+            df['Price_Distance_SMA10_Desc'] = df.apply(
+                lambda x: 
+                ("Buy, Short-Term Bullish Momentum, "
+                "The asset's current price is above its short-term average, indicating bullish momentum. "
+                "If the price difference from the SMA10 is substantial, it might be nearing overbought conditions, suggesting the need to monitor for possible retracements.")
+                if x['Price_Distance_SMA10'] > 0 
+                else 
+                ("Sell, Short-Term Bearish Momentum, "
+                "The asset's price is below its short-term average, signaling potential bearish momentum. "
+                "A significant negative difference from the SMA10 could hint at the asset being oversold, potentially offering a buying opportunity in the near future.")
+                if x['Price_Distance_SMA10'] < 0 
+                else 
+                ("Neutral, Asset Price Near SMA10, "
+                "The asset's price is trading around its short-term average, indicating a balanced or consolidating market condition. "
+                "In such scenarios, it's often beneficial to monitor other indicators and market news for clearer direction."),
+                axis=1
+            )
+
+
             # SMA50 Description
             df['Price_Distance_SMA50_Desc'] = df.apply(
-                lambda x: ("Medium-Term Bullish Trend: The asset's price is above its medium-term average, indicating a potential bullish trend. "
-                        "Consistent trading above the SMA50 can be a sign of strength. However, extreme deviations might suggest overvaluation.")
+                lambda x: 
+                ("Buy, Medium-Term Bullish Trend, "
+                "The asset's price is above its medium-term average, suggesting a bullish momentum. "
+                "While consistent trading above the SMA50 can denote strength, significant deviations might point towards overvaluation, warranting a more cautious approach.")
                 if x['Price_Distance_SMA50'] > 0 
-                else ("Medium-Term Bearish Trend: The asset's price is below its medium-term average, which can be a sign of a bearish trend. "
-                    "A consistent deviation below SMA50 might indicate prolonged bearish sentiment or potential undervaluation.")
+                else 
+                ("Sell, Medium-Term Bearish Trend, "
+                "The asset's price is below its medium-term average, which can be an indication of bearish sentiment. "
+                "Trading considerably below the SMA50 might imply a sustained bearish phase or a potential undervalued state, which could be an opportunity for value investors.")
                 if x['Price_Distance_SMA50'] < 0 
-                else "Neutral Medium-Term: The asset's price is near its medium-term average, indicating potential consolidation or sideways movement.",
+                else 
+                ("Neutral, Near Medium-Term Average, "
+                "The asset's price is oscillating around its medium-term average, suggesting potential consolidation or a period of sideways trading. "
+                "In such phases, observing other technical indicators and market news can provide additional insights."),
                 axis=1
             )
 
             # SMA200 Description
             df['Price_Distance_SMA200_Desc'] = df.apply(
-                lambda x: ("Long-Term Bullish Trend: The asset's price is above its long-term average, suggesting a sustained bullish trend. "
-                        "Trading above the SMA200 typically indicates a strong market. Extreme deviations should be approached with caution as they can indicate bubbles.")
+                lambda x: 
+                ("Buy, Long-Term Bullish Trend, "
+                "The asset's price is trading above its long-term average. "
+                "Being above the SMA200 generally signifies a strong market. However, significant deviations might suggest overextended rallies or bubbles, so it's advisable to tread cautiously.")
                 if x['Price_Distance_SMA200'] > 0 
-                else ("Long-Term Bearish Trend: The asset's price is below its long-term average, indicating a potential long-term bearish trend. "
-                    "Trading consistently below the SMA200 can be a warning sign. However, significant undervaluation might present buying opportunities.")
+                else 
+                ("Sell, Long-Term Bearish Trend, "
+                "The asset's price is trading below its long-term average. "
+                "Consistently trading below the SMA200 can be a cause for concern. On the flip side, extreme undervaluation might signal a buying opportunity.")
                 if x['Price_Distance_SMA200'] < 0 
-                else "Neutral Long-Term: The asset's price is relatively close to its long-term average, suggesting stability and a lack of strong long-term trends.",
+                else 
+                ("Neutral, In Line With Long-Term Average, "
+                "The asset's price is hovering around its long-term average. "
+                "Such conditions denote stability and the lack of strong long-term biases, suggesting the need to monitor other market indicators for a clearer picture."),
                 axis=1
             )
+
 
 
             # Relationship Between SMA-10 and SMA-50
             df['SMA10_Above_SMA50'] = df['SMA10'] > df['SMA50']
 
             df['SMA_Relationship_10_50_Desc'] = df.apply(
-                lambda x: ("Positive Momentum: The short-term average (SMA10) is above the medium-term average (SMA50). "
-                        "This typically suggests a bullish momentum. Investors might consider this as a potential time to buy or hold their position. "
-                        "However, it's essential to monitor other market indicators and ensure this isn't a brief upward spike.")
+                lambda x: 
+                ("Buy, Positive Short to Medium-Term Momentum, "
+                "The short-term average (SMA10) is currently above the medium-term average (SMA50), suggesting bullish momentum in the market. "
+                "While this might be seen as a favorable time to buy or hold positions, it's crucial to monitor other market indicators to ensure this isn't a fleeting upward spike.")
                 if x['SMA10_Above_SMA50'] 
-                else ("Negative Momentum: The short-term average (SMA10) is below the medium-term average (SMA50). "
-                    "This can be a sign of bearish momentum. Investors might want to be cautious, consider taking profits, or waiting for a more favorable entry point. "
-                    "Diversifying or hedging against potential downturns might also be an option to consider."),
+                else 
+                ("Sell, Negative Short to Medium-Term Momentum, "
+                "The short-term average (SMA10) is trading below the medium-term average (SMA50), indicating potential bearish momentum. "
+                "Investors might want to exercise caution, possibly re-evaluating their positions or looking for a more opportune entry point. Adopting defensive strategies or considering hedging options might be wise."),
                 axis=1
             )
 
-            # Relationship Between SMA-50 and SMA-200
-            df['SMA50_Above_SMA200'] = df['SMA50'] > df['SMA200']
+
+
 
             df['SMA_Relationship_50_200_Desc'] = df.apply(
-                lambda x: ("Strong Bullish Trend: The medium-term average (SMA50) is above the long-term average (SMA200). "
-                        "Historically, this is a strong sign of a bullish market. Investors might view this as an encouraging sign to enter or remain in the market. "
-                        "Nevertheless, it's prudent to continuously monitor other market indicators and be wary of potential market volatility.")
+                lambda x: 
+                ("Buy, Strong Medium to Long-Term Bullish Trend, "
+                "The medium-term average (SMA50) is currently positioned above the long-term average (SMA200), signifying a dominant bullish trend in the market. "
+                "Historically, this pattern is seen as an indicator of a continuing upward market trajectory. However, it's essential to remain vigilant and monitor other market indicators to anticipate any sudden shifts or volatilities.")
                 if x['SMA50_Above_SMA200'] 
-                else ("Potential Downtrend: The medium-term average (SMA50) is below the long-term average (SMA200). "
-                    "This can indicate a bearish market trend. Investors may want to exercise caution, potentially reducing their exposure or seeking defensive positions. "
-                    "Always consider the broader market context and other technical indicators before making investment decisions."),
+                else 
+                ("Sell, Potential Medium to Long-Term Downtrend, "
+                "The medium-term average (SMA50) is below the long-term average (SMA200), hinting at a potential bearish trend in the market. "
+                "This configuration might be a signal for investors to reassess their market stance, possibly considering defensive measures or reducing exposure. As always, integrating insights from other market indicators and the broader market context is advisable before finalizing decisions."),
                 axis=1
             )
+
+            # Initialize consolidated recommendation count columns
+            df['SMA_Buy_Count'] = 0
+            df['SMA_Sell_Count'] = 0
+            df['SMA_Neutral_Count'] = 0
+
+            # List of SMA Description Columns
+            desc_columns = ['Golden_Death_Cross_Desc', 'Price_SMA10_Crossover_Desc', 'Price_Crossover_Desc', 
+                            'Price_SMA200_Crossover_Desc', 'SMA10_SMA200_Crossover_Desc', 'SMA_Slopes_Desc', 
+                            'Price_Distance_SMA10_Desc', 'Price_Distance_SMA50_Desc', 'Price_Distance_SMA200_Desc', 
+                            'SMA_Relationship_10_50_Desc', 'SMA_Relationship_50_200_Desc']
+
+            # Iterate Over Each Column and aggregate counts
+            for column in desc_columns:
+                df['SMA_Buy_Count'] += df[column].str.startswith("Buy").astype(int)
+                df['SMA_Sell_Count'] += df[column].str.startswith("Sell").astype(int)
+                df['SMA_Neutral_Count'] += df[column].str.startswith("Neutral").astype(int)
 
             
             self.logger.log_or_print("SMA calculation completed successfully.", level="INFO")
@@ -246,56 +324,72 @@ class DataCalculator(QObject):
                     self.logger.log_or_print(f"Problematic rows:\n{problem_rows}", level="INFO")
                 # RSI Overbought, Oversold
                 df[f"{column_name}_Overbought_Oversold_Desc"] = df[column_name].apply(
-                    lambda x: ("Overbought Territory: The RSI value exceeds 70, suggesting the asset might be overbought. "
-                            "Historically, when the RSI remains above this level for an extended period, the asset may see a downward correction. "
-                            "Investors might view this as a warning sign and consider reviewing their positions. "
-                            "However, it's crucial to combine this with other technical indicators and market news before making any decisions.")
+                    lambda x: 
+                    ("Sell, Overbought Territory, "
+                    "The RSI value is currently above 70, indicating that the asset may be overbought. Historically, an RSI value remaining above this level might suggest an impending downward correction. "
+                    "Although this can serve as a cautionary signal for investors, it's imperative to integrate insights from other technical indicators and market news before making investment decisions.")
                     if x > 70 
-                    else ("Oversold Territory: The RSI value is below 30, indicating the asset might be oversold. "
-                        "Assets that remain in this territory for a while could be due for a rebound. "
-                        "Investors might interpret this as a buying opportunity but should also be cautious of potential 'bear traps'. "
-                        "It's recommended to use additional technical indicators and keep abreast of market news.")
+                    else 
+                    ("Buy, Oversold Territory, "
+                    "The RSI value is below 30, which typically suggests that the asset may be undervalued or oversold. Assets with prolonged periods in this zone might be gearing up for a rebound. "
+                    "While this can be seen as a potential buying opportunity, it's essential to be wary of false positives or 'bear traps'. Augmenting this analysis with other indicators and staying updated with market news is crucial.")
                     if x < 30 
-                    else ("Neutral Territory: The RSI is between 30 and 70, suggesting the asset is neither in an overbought nor oversold condition. "
-                        "Investors might want to observe other market signals and indicators to gauge the asset's future movement. "
-                        "Maintaining a balanced strategy and staying informed can be beneficial in this state.")
+                    else 
+                    ("Neutral, Neutral RSI Territory, "
+                    "The RSI value lies between 30 and 70, indicating that the asset is neither overbought nor oversold. In such situations, it's beneficial for investors to monitor other market signals and trends. "
+                    "Maintaining a diversified strategy and staying informed can provide a competitive edge.")
                 )
 
 
                 # RSI Divergences
-                self.logger.log_or_print(f"Columns: {df.columns}", level="INFO")
                 df[f"{column_name}_Divergence_Desc"] = df.apply(
-                    lambda row: ("Bullish Divergence: The price makes a lower low, but the RSI forms a higher low. "
-                                "This divergence suggests that while the price is dropping, the selling momentum is slowing down. "
-                                "Historically, this pattern might precede a potential upward price reversal. "
-                                "Investors could consider this as a sign to watch closely for buy signals. However, as always, it's crucial to use other technical indicators and market news to corroborate findings.")
+                    lambda row: 
+                    ("Buy, Bullish Divergence, "
+                    "The current price trend is making a lower low, but the RSI is observing a higher low. This divergence often indicates a slowing selling momentum despite the dropping price. "
+                    "Historically, such patterns have been associated with potential upward price reversals. As a possible turning point, investors might want to closely monitor for additional buy signals while also considering other technical indicators and market updates.")
                     if row.get(f"{column_name}_Bullish_Divergence_Flag")
-                    else ("Bearish Divergence: The price records a higher high, but the RSI only manages a lower high. "
-                        "This suggests that even though the price is rising, the buying momentum might be diminishing. "
-                        "Historically, such a pattern might precede a potential price decline. "
-                        "Investors might interpret this as a warning to review their positions and watch for sell signals. It's recommended to also consult other technical indicators and stay updated with market news.")
+                    else 
+                    ("Sell, Bearish Divergence, "
+                    "The price trend is achieving a higher high, whereas the RSI is only reaching a lower high. This divergence can indicate a weakening buying momentum even as the price continues to rise. "
+                    "Historically, such scenarios may hint at upcoming price declines. Investors might interpret this as a sign to reassess their positions, look out for potential sell signals, and also factor in insights from other technical indicators and market news.")
                     if row.get(f"{column_name}_Bearish_Divergence_Flag")
-                    else ("No Divergence Detected: Both the price and the RSI are moving in tandem, indicating a strong and consistent trend. "
-                        "Investors can interpret this as the current trend, whether bullish or bearish, being robust. It's advisable to continue monitoring other market signals and stay informed.")
-                , axis=1
-                )
+                    else 
+                    ("Neutral, No Divergence Detected, "
+                    "Both the price and the RSI are synchronously moving, suggesting a consistent trend. Such a movement usually signifies that the prevailing trend, be it bullish or bearish, remains solid. "
+                    "In such scenarios, it's beneficial to stay updated with other market indicators and relevant news.")
+                , axis=1)
+
 
 
                 # RSI Swings
                 df[f"{column_name}_Swings_Desc"] = df.apply(
-                    lambda row: ("Bullish Swing Potential: The RSI has recently crossed above the 30 level. "
-                                "This is often seen as an early signal that the asset might be reversing from its previous downtrend. "
-                                "It suggests that the selling pressure could be decreasing, and the asset might start to gain upward momentum. "
-                                "Investors could consider this as a potential buying opportunity but should also look for confirmation from other technical indicators or market news.")
+                    lambda row: 
+                    ("Buy, Bullish Swing Potential, "
+                    "The RSI has just surpassed the 30 mark, often viewed as a hint of a potential upward reversal from a prior downtrend. "
+                    "Such movements suggest the ebbing of selling pressure, possibly paving the way for rising momentum. Investors might interpret this as an early buying cue but should seek corroborative evidence from other technical indicators and pertinent market news.")
                     if row.get(f"{column_name}_Swing_Failure_Buy_Flag")
-                    else ("Bearish Swing Potential: The RSI has recently dipped below the 70 level. "
-                        "This might indicate that the asset's prior uptrend could be slowing down, and a potential price pullback or reversal is on the horizon. "
-                        "Investors might view this as a sign to be cautious, reassess their holdings, and watch for potential selling opportunities. It's essential to seek validation from other technical signals and be aware of overall market trends.")
+                    else 
+                    ("Sell, Bearish Swing Potential, "
+                    "The RSI has recently descended below the 70 threshold, hinting at a possible wane in the asset's preceding uptrend and signaling a potential price retraction or flip. "
+                    "This might be a juncture for investors to exercise prudence, re-evaluate their positions, and be on the lookout for potential exit points. As always, juxtaposing this with other technical signals and tracking overarching market trends is crucial.")
                     if row.get(f"{column_name}_Swing_Failure_Sell_Flag")
-                    else ("Neutral RSI Movement: Currently, there's no significant swing detected in the RSI. "
-                        "The asset is moving without a clear bullish or bearish bias. It's recommended for investors to stay vigilant, monitor other technical patterns, and stay updated with market conditions.")
-                , axis=1
-                )
+                    else 
+                    ("Neutral, Stable RSI Trajectory, "
+                    "At present, the RSI is not indicating any pronounced swings, showcasing neither a clear bullish nor bearish inclination. In such states, investors might benefit from a vigilant stance, tracking other technical patterns, and staying abreast of market dynamics.")
+                , axis=1)
+                # Count the number of Buy, Sell, and Neutral recommendations for each period
+                df[f"{column_name}_Buy_Count"] = df[f"{column_name}_Overbought_Oversold_Desc"].str.startswith("Buy").astype(int)
+                df[f"{column_name}_Sell_Count"] = df[f"{column_name}_Overbought_Oversold_Desc"].str.startswith("Sell").astype(int)
+                df[f"{column_name}_Neutral_Count"] = df[f"{column_name}_Overbought_Oversold_Desc"].str.startswith("Neutral").astype(int)
+                
+                # Summing the counts for Divergence and Swings descriptions as well
+                df[f"{column_name}_Buy_Count"] += df[f"{column_name}_Divergence_Desc"].str.startswith("Buy").astype(int)
+                df[f"{column_name}_Sell_Count"] += df[f"{column_name}_Divergence_Desc"].str.startswith("Sell").astype(int)
+                df[f"{column_name}_Neutral_Count"] += df[f"{column_name}_Divergence_Desc"].str.startswith("Neutral").astype(int)
+                
+                df[f"{column_name}_Buy_Count"] += df[f"{column_name}_Swings_Desc"].str.startswith("Buy").astype(int)
+                df[f"{column_name}_Sell_Count"] += df[f"{column_name}_Swings_Desc"].str.startswith("Sell").astype(int)
+                df[f"{column_name}_Neutral_Count"] += df[f"{column_name}_Swings_Desc"].str.startswith("Neutral").astype(int)
 
                 self.logger.log_or_print(f"RSI {period} calculation and interpretation completed successfully.", level="INFO")
                 self.rsi_calculated_signal.emit(df)
@@ -341,54 +435,83 @@ class DataCalculator(QObject):
 
             # Overbought/Oversold Descriptions for Stochastic Oscillator
             df[f'{stoch_id}_Overbought/Oversold_Desc'] = df.apply(
-                lambda x: ("Overbought Alert: The Stochastic Oscillator is indicating that the asset might be overextended and is currently trading at a higher price than its intrinsic value. "
-                        "This often suggests that there could be a potential price pullback or reversal in the near future. Investors might consider taking profits, tightening stop losses, or watching for signs of a trend reversal. "
-                        "It's advised to cross-check with other technical indicators and market news before making a decision.")
+                lambda x: 
+                ("Sell, Overbought Condition, "
+                "The Stochastic Oscillator is signaling that the asset may be trading at a price significantly higher than its intrinsic value. "
+                "Historical data often indicates that such conditions can lead to potential price retractions or reversals. Action: Investors might consider taking profits, setting tighter stop-loss levels, or watching for signs of a trend reversal, ensuring to validate with other indicators and stay updated on market news.")
                 if x[f'{stoch_id}_Overbought_Flag']
-                else ("Oversold Alert: The Stochastic Oscillator is suggesting that the asset might be undervalued and is currently trading at a lower price than its perceived value. "
-                    "This can often be an indication that the asset might be due for a bounce back or price reversal upwards. Investors might view this as a potential buying opportunity, especially if they believe the asset's fundamentals are strong. "
-                    "However, it's essential to ensure that the oversold condition isn't due to underlying problems with the asset. Always confirm with other technical indicators and stay updated with relevant news.")
+                else 
+                ("Buy, Oversold Condition, "
+                "The Stochastic Oscillator suggests the asset could be trading at a price notably lower than its perceived value. "
+                "Such readings often imply a possible upward price correction or reversal in the near future. Action: Investors might view this as an opportunity to buy, especially if they have confidence in the asset's fundamentals. However, ensuring the oversold condition isn't due to intrinsic problems with the asset is crucial. It's always wise to cross-check with other indicators and monitor relevant news.")
                 if x[f'{stoch_id}_Oversold_Flag']
-                else ("Neutral Stochastic Readings: The asset's price movement is currently within a typical range as per the Stochastic Oscillator. "
-                    "There are no immediate overbought or oversold signals. It's advised for investors to monitor other technical patterns, be observant for emerging trends, and stay informed on market news."),
-                axis=1
-            )
+                else 
+                ("Neutral, Stable Stochastic Range, "
+                "The Stochastic Oscillator indicates that the asset's price movement is within its typical range, not showing clear overbought or oversold signs. "
+                "This suggests a phase of balance in the market. Action: Investors should keep a close eye on other technical patterns, be ready for emerging trends, and stay informed on market news.")
+            , axis=1)
+
             # Divergence Descriptions for Stochastic Oscillator
             df[f'{stoch_id}_Divergence_Desc'] = df.apply(
-                lambda x: ("Bullish Divergence Alert: The Stochastic Oscillator has identified a bullish divergence between the asset's price and its momentum. "
-                        "This means that while the asset's price is making new lows, the Stochastic Oscillator isn't, suggesting potential weakening in the bearish trend. "
-                        "This could indicate a potential reversal to the upside. Investors might consider this as an early signal to potentially enter a long position or hold off on selling. "
-                        "However, it's crucial to confirm this signal with other technical indicators and ensure that the fundamentals of the asset support this bullish view.")
+                lambda x: 
+                ("Buy, Bullish Divergence Detected, "
+                "The Stochastic Oscillator is highlighting a bullish divergence where the asset's price is recording new lows but the momentum indicator isn't. "
+                "Historically, this indicates potential weakening of the bearish trend, possibly hinting at a future upside reversal. Action: Investors might consider this as an opportunity to buy or to hold off from selling. It's essential to validate this signal with other indicators and ensure the asset's fundamentals align with a bullish perspective.")
                 if x[f'{stoch_id}_Bullish_Divergence_Flag']
-                else ("Bearish Divergence Alert: The Stochastic Oscillator has spotted a bearish divergence between the asset's price and its momentum. "
-                    "This means that while the asset's price is making new highs, the Stochastic Oscillator isn't, hinting at a potential weakening in the bullish momentum. "
-                    "This divergence could foreshadow a potential price reversal to the downside. Investors might consider taking profits, setting a tighter stop loss, or preparing for a potential short entry. "
-                    "Always validate this signal with other technical indicators and make sure to stay updated with any news related to the asset.")
+                else 
+                ("Sell, Bearish Divergence Detected, "
+                "The Stochastic Oscillator is showcasing a bearish divergence; while the asset's price is achieving new highs, the momentum indicator isn't keeping up. "
+                "This often suggests a potential decline in bullish momentum and could foretell a bearish price reversal. Action: Investors might think about realizing profits, setting tighter stop-loss levels, or preparing for a potential short position. It's crucial to corroborate this signal with other technical patterns and to be aware of any asset-related news.")
                 if x[f'{stoch_id}_Bearish_Divergence_Flag']
-                else ("Neutral Divergence Readings: Currently, the Stochastic Oscillator hasn't identified any significant divergence between the asset's price and its momentum. "
-                    "This typically indicates that the ongoing price trend, whether bullish or bearish, might persist. Investors are advised to keep monitoring the market for other technical patterns, stay observant for new divergences, and be informed on relevant market news."),
-                axis=1
-            )
+                else 
+                ("Neutral, No Divergence Observed, "
+                "The Stochastic Oscillator doesn't pinpoint any significant divergence between the asset's price and its momentum at the moment. "
+                "This typically means the ongoing trend, whether bullish or bearish, may continue. Action: Investors should stay vigilant, observe other market signals, and be ready for potential emerging divergences.")
+            , axis=1)
+
             # Swing Descriptions for Stochastic Oscillator
             df[f'{stoch_id}_Swings_Desc'] = df.apply(
-                lambda x: ("Bullish Crossover Alert: The Stochastic Oscillator has indicated a bullish crossover. This means the %K line has crossed above the %D line, suggesting a potential shift in momentum to the upside. "
-                        "Investors might consider this as a buying opportunity, especially if the crossover occurred in the oversold territory. "
-                        "However, always ensure that this signal aligns with other technical and fundamental indicators before making an investment decision.")
+                lambda x: 
+                ("Buy, Bullish Crossover Detected, "
+                "The Stochastic Oscillator has showcased a bullish crossover with the %K line moving above the %D line, indicating a potential upward shift in momentum. "
+                "Historically, this hints at a potential buying opportunity, especially if the crossover occurred in oversold conditions. Action: Investors might consider entering a long position, but it's essential to validate this signal with other indicators and market news.")
                 if x[f'{stoch_id}_Bullish_Crossover_Flag']
-                else ("Bearish Crossover Alert: The Stochastic Oscillator has signaled a bearish crossover. The %K line has crossed below the %D line, hinting at potential bearish momentum. "
-                    "If this crossover occurred in the overbought zone, it might be a stronger signal for a potential pullback or downtrend. Investors might consider taking profits, setting a tighter stop loss, or preparing for a potential short entry. "
-                    "Always corroborate this signal with other technical indicators and stay updated with any fundamental news or events related to the asset.")
+                else 
+                ("Sell, Bearish Crossover Detected, "
+                "The Stochastic Oscillator points to a bearish crossover, with the %K line moving below the %D line, suggesting possible bearish momentum. "
+                "If this crossover took place in the overbought region, it could strengthen the case for a potential pullback. Action: Investors might think about realizing profits or preparing for a potential short entry. Always cross-reference this signal with other technical indicators and current market conditions.")
                 if x[f'{stoch_id}_Bearish_Crossover_Flag']
-                else ("Midpoint Bullish Momentum: The Stochastic Oscillator has crossed above the midpoint (50), suggesting increased bullish momentum in the asset's price. "
-                    "This might be an indication that the asset is gaining strength. Investors could consider this as a positive sign and potentially look for buying opportunities, especially if other indicators concur.")
+                else 
+                ("Buy, Midpoint Bullish Momentum, "
+                "The Stochastic Oscillator has risen above the midpoint (50), implying a surge in bullish momentum. "
+                "Historically, this indicates the asset is gaining strength. Action: Investors might view this as a potential buying opportunity, especially if other technical patterns support this bullish view.")
                 if x[f'{stoch_id}_Midpoint_Cross_Up_Flag']
-                else ("Midpoint Bearish Momentum: The Stochastic Oscillator has crossed below the midpoint (50), signaling potential bearish momentum. "
-                    "This might suggest that the asset is losing strength. Investors should exercise caution and potentially look for exit points or short-selling opportunities if other indicators align with this bearish view.")
+                else 
+                ("Sell, Midpoint Bearish Momentum, "
+                "The Stochastic Oscillator has dipped below the midpoint (50), indicating potential bearish momentum. "
+                "This could suggest the asset's strength is waning. Action: Investors should consider reviewing their positions, potentially looking for exit points or short-selling opportunities if other indicators support this bearish perspective.")
                 if x[f'{stoch_id}_Midpoint_Cross_Down_Flag']
-                else ("Neutral Oscillator Readings: Currently, the Stochastic Oscillator hasn't identified any significant swings or crossovers. The asset might be in a consolidation phase, or the ongoing trend could continue without strong momentum shifts. "
-                    "Investors are recommended to maintain a diversified strategy, monitor other technical indicators for corroborating signals, and stay informed on market news."),
-                axis=1
-            )
+                else 
+                ("Neutral, No Significant Swings Observed, "
+                "The Stochastic Oscillator hasn't pinpointed any notable swings or crossovers, suggesting the asset might be consolidating or the current trend could persist without robust momentum shifts. "
+                "Action: Investors should adopt a balanced approach, keep an eye on other technical signals, and stay updated with market news.")
+            , axis=1)
+            # Initialize consolidated recommendation count columns
+            df[f'{stoch_id}_Buy_Count'] = 0
+            df[f'{stoch_id}_Sell_Count'] = 0
+            df[f'{stoch_id}_Neutral_Count'] = 0
+
+            # List of Stochastic Description Columns
+            desc_columns_stoch = [f'{stoch_id}_Overbought/Oversold_Desc', 
+                                f'{stoch_id}_Divergence_Desc', 
+                                f'{stoch_id}_Swings_Desc']
+
+            # Iterate Over Each Column and aggregate counts
+            for column in desc_columns_stoch:
+                df[f'{stoch_id}_Buy_Count'] += df[column].str.startswith("Buy").astype(int)
+                df[f'{stoch_id}_Sell_Count'] += df[column].str.startswith("Sell").astype(int)
+                df[f'{stoch_id}_Neutral_Count'] += df[column].str.startswith("Neutral").astype(int)
+
 
 
             # Log headers and last column after setting descriptions
@@ -444,54 +567,106 @@ class DataCalculator(QObject):
 
         # Interpretations and Recommendations
             df['CMF_Value_Range_Desc'] = df.apply(
-                lambda x:
-                "Bullish Pressure: Buying pressure has been dominant. Consider potential long positions or holding current longs, but always check for other confirming indicators."
+                lambda x: 
+                ("Buy, Bullish CMF Value Detected, "
+                "The Chaikin Money Flow (CMF) value is in the positive range, indicating that buying pressure has been dominant over the defined period. "
+                "Historically, a positive CMF suggests a bullish sentiment in the market. Action: Consider potential long positions or holding current longs. As always, corroborate with other technical indicators before making any decisions.")
                 if x['CMF_Positive_Flag']
-                else "Bearish Pressure: Selling pressure prevails. Consider potential short positions or exiting current longs. Monitor resistance levels."
+                else 
+                ("Sell, Bearish CMF Value Detected, "
+                "The CMF value is in the negative range, indicating that selling pressure has been more dominant over the defined period. "
+                "Historically, a negative CMF often suggests a bearish sentiment in the market. Action: Consider potential short positions, exiting current longs, or adopting defensive strategies. Monitoring resistance levels and other technical indicators can be beneficial.")
                 if x['CMF_Negative_Flag']
-                else "Neutral Pressure: Market indecision. Adopt a wait-and-see approach. Look for other technical patterns or breakout signals.",
-                axis=1
-            )
+                else 
+                ("Neutral, CMF Value Near Zero, "
+                "The CMF value is near zero, indicating a balance between buying and selling pressures, which can signify market indecision or equilibrium over the defined period. "
+                "Action: Adopt a wait-and-see approach, and monitor the asset for potential breakout or breakdown patterns. Corroborating with other technical indicators can provide a clearer market outlook.")
+            , axis=1)
 
             df['CMF_Zero_Crossover_Desc'] = df.apply(
-                lambda x:
-                "Bullish Signal: Consider buying, especially if supported by other bullish indicators."
+                lambda x: 
+                ("Buy, Bullish Zero-Line Crossover Detected, "
+                "The Chaikin Money Flow (CMF) has crossed above the zero line, typically suggesting increased buying pressure. "
+                "Historically, this crossover can be a bullish signal indicating potential upward momentum in the asset's price. Action: Consider buying, especially if supported by other bullish indicators and market news.")
                 if x['CMF_Zero_Crossover_Up_Flag']
-                else "Bearish Signal: Consider selling or hedging your positions, especially if the downtrend is confirmed by other indicators."
+                else 
+                ("Sell, Bearish Zero-Line Crossover Detected, "
+                "The CMF has crossed below the zero line, often indicating increased selling pressure or potential bearish momentum in the market. "
+                "Historically, this crossover can be a bearish signal, suggesting a potential decline in the asset's price. Action: Consider selling, hedging, or reducing long positions, especially if the bearish view is confirmed by other technical indicators.")
                 if x['CMF_Zero_Crossover_Down_Flag']
-                else "No significant zero-line crossovers at this time. Monitor for potential shifts in momentum.",
-                axis=1
-            )
+                else 
+                ("Neutral, CMF Near Zero Line, "
+                "The CMF is hovering around the zero line, suggesting equilibrium between buying and selling pressures. "
+                "Action: Monitor for potential shifts in momentum, and corroborate with other technical indicators for a clearer market perspective.")
+            , axis=1)
 
             df['CMF_SMA_Comparison_Desc'] = df.apply(
-                lambda x:
-                "Bullish Trend Confirmation: Reinforce or enter long positions but set a stop-loss near key support levels."
+                lambda x: 
+                ("Buy, Bullish Trend Relative to SMA50 Detected, "
+                "The Chaikin Money Flow (CMF) is above the SMA50, suggesting that the asset's short-term momentum is outpacing its medium-term trend. "
+                "Historically, this configuration can indicate bullish momentum. Action: Reinforce or enter long positions but set a stop-loss near key support levels.")
                 if x['CMF_Above_SMA50_Flag']
-                else "Bearish Trend Confirmation: Exercise caution with long positions. Consider hedging or shorting if other indicators align bearishly."
+                else 
+                ("Sell, Bearish Trend Relative to SMA50 Detected, "
+                "The CMF is below the SMA50, indicating that the asset's short-term momentum is weaker than its medium-term trend. "
+                "Historically, this can be a sign of bearish momentum. Action: Exercise caution with long positions. Consider hedging, shorting, or reducing exposure if other indicators align bearishly.")
                 if x['CMF_Below_SMA50_Flag']
-                else "The CMF is in alignment with the SMA50, indicating a potential period of equilibrium. Monitor for breakout or breakdown signals.",
-                axis=1
-            )
+                else 
+                ("Neutral, CMF and SMA50 Alignment, "
+                "The CMF is aligning with the SMA50, suggesting a balance between short-term and medium-term momentum. "
+                "Action: Adopt a wait-and-see approach. Monitor for potential breakout or breakdown signals and corroborate with other technical indicators.")
+            , axis=1)
 
             df['CMF_Overbought_Oversold_Desc'] = df.apply(
-                lambda x:
-                "Overbought: Tighten stop-loss orders or consider taking some profits."
+                lambda x: 
+                ("Sell, Overbought CMF Detected, "
+                "The CMF has reached overbought levels, indicating that the asset might be trading at a premium relative to its intrinsic value. "
+                "Historically, assets in this state might experience pullbacks. Action: Tighten stop-loss orders, consider taking profits, or reducing long positions. Always validate with other technical indicators.")
                 if x['CMF_Overbought_Flag']
-                else "Oversold: Look for potential buying opportunities but ensure confirmation from other indicators."
+                else 
+                ("Buy, Oversold CMF Detected, "
+                "The CMF has entered the oversold territory, suggesting the asset might be undervalued. "
+                "Historically, this can be a buying opportunity, especially if the fundamentals of the asset are strong. Action: Look for potential buying opportunities but ensure confirmation from other indicators and fundamental analysis.")
                 if x['CMF_Oversold_Flag']
-                else "The CMF isn't in an extreme overbought or oversold condition. Monitor for potential shifts or other confirming signals.",
-                axis=1
-            )
+                else 
+                ("Neutral, CMF in Normal Range, "
+                "The CMF is neither in an overbought nor oversold state, indicating balanced buying and selling pressures. "
+                "Action: Monitor for potential shifts in momentum, and corroborate with other technical indicators for a clearer market perspective.")
+            , axis=1)
 
             df['CMF_Divergence_Desc'] = df.apply(
-                lambda x:
-                "Bullish Divergence: Potential buying opportunity. Ensure other confirming bullish signals."
+                lambda x: 
+                ("Buy, Bullish Divergence Detected, "
+                "The Chaikin Money Flow (CMF) shows a bullish divergence when compared to the asset's price. This suggests that while the price is making new lows, the CMF isn't, indicating potential weakening of the bearish momentum. "
+                "Historically, this can precede an upward price movement. Action: Consider potential long positions, but always ensure confirmation from other technical indicators and set a stop-loss.")
                 if x['CMF_Bullish_Divergence_Flag']
-                else "Bearish Divergence: Exercise caution with long positions. Consider taking profits or setting a tighter stop-loss."
+                else 
+                ("Sell, Bearish Divergence Detected, "
+                "The CMF displays a bearish divergence relative to the asset's price. This implies that even though the price is achieving new highs, the CMF isn't, hinting at a possible decrease in bullish momentum. "
+                "Historically, this might foreshadow a downward price movement. Action: Exercise caution with long positions, consider taking profits, and set a tighter stop-loss. It's crucial to confirm this with other technical indicators.")
                 if x['CMF_Bearish_Divergence_Flag']
-                else "No clear divergence signals at this time. Divergences can be powerful signals, so continue monitoring.",
-                axis=1
-            )
+                else 
+                ("Neutral, No Significant Divergence, "
+                "The CMF and the asset's price are moving without showing significant divergence, indicating a lack of clear bullish or bearish bias. "
+                "Action: Maintain vigilance, and monitor for future divergences as they can be potent signals.")
+            , axis=1)
+            # Initialize consolidated recommendation count columns
+            df['CMF_Buy_Count'] = 0
+            df['CMF_Sell_Count'] = 0
+            df['CMF_Neutral_Count'] = 0
+
+            # List of CMF Description Columns
+            desc_columns_cmf = ['CMF_Value_Range_Desc', 
+                            'CMF_Zero_Crossover_Desc', 
+                            'CMF_SMA_Comparison_Desc',
+                            'CMF_Overbought_Oversold_Desc',
+                            'CMF_Divergence_Desc']
+
+            # Iterate Over Each Column and aggregate counts
+            for column in desc_columns_cmf:
+                df['CMF_Buy_Count'] += df[column].str.startswith("Buy").astype(int)
+                df['CMF_Sell_Count'] += df[column].str.startswith("Sell").astype(int)
+                df['CMF_Neutral_Count'] += df[column].str.startswith("Neutral").astype(int)
 
             self.logger.log_or_print("CMF calculation completed successfully.", level="INFO")
             self.cmf_calculated_signal.emit(df)
@@ -546,63 +721,135 @@ class DataCalculator(QObject):
             df[f'MACD_Trending_Down_Flag'] = df['MACD_12_26_9'] < df['MACD_12_26_9'].shift(1)
             # 1. MACD Line and Signal Line Crossover Interpretation
             df[f'MACD_Crossover_Desc'] = df.apply(
-                lambda x: ("Bullish Crossover Alert: The MACD line has crossed above the Signal line, suggesting potential bullish momentum. Especially if the crossover occurs after an extended downtrend, this might indicate a buying opportunity. Always confirm with other technical indicators and consider opening a long position with a set stop-loss.")
+                lambda x: 
+                ("Buy, Bullish Crossover Detected, "
+                "The MACD line has crossed above the Signal line, indicating a potential change in momentum from bearish to bullish. "
+                "Historically, when this crossover occurs after an extended downtrend, it's often interpreted as the early stages of a bullish phase. Action: Consider this as a buying opportunity, but always confirm with other technical indicators and set a stop-loss to protect your position.")
                 if x[f'MACD_Bullish_Crossover_Flag']
-                else ("Bearish Crossover Alert: The MACD line has crossed below the Signal line, hinting at potential bearish momentum. This could be a warning of a potential price decline. Before making decisions, validate with other indicators, evaluate the broader market context, and think about shorting or reducing holdings with a stop-loss.")
+                else 
+                ("Sell, Bearish Crossover Detected, "
+                "The MACD line has crossed below the Signal line, suggesting the potential onset of bearish momentum. "
+                "Historically, such a crossover might foreshadow a decline in the asset's price. Action: Consider this as a warning to possibly reduce your holdings, or even open a short position, but always validate with other technical indicators and set a stop-loss.")
                 if x[f'MACD_Bearish_Crossover_Flag']
-                else "No significant MACD line and Signal line crossover detected.",
-                axis=1
-            )
+                else 
+                ("Neutral, No Crossover Detected, "
+                "Currently, there's no significant crossover between the MACD line and the Signal line, suggesting that the asset is moving without a clear bullish or bearish bias. "
+                "Historically, this can be an indication of a period of consolidation or continuation of the current trend. Action: Monitor the asset and wait for clearer signals.")
+            , axis=1)
+
 
             # 2. MACD and the Zero Line Interpretation
             df[f'MACD_Zero_Line_Desc'] = df.apply(
-                lambda x: ("Bullish Territory: With the MACD above the zero line, the short-term momentum outpaces the long-term momentum, suggesting a bullish bias. Look for buying opportunities but ensure to cross-check with other technical and fundamental factors.")
+                lambda x: 
+                ("Buy, MACD in Bullish Territory, "
+                "The MACD is currently positioned above the zero line. This usually indicates that the asset's short-term momentum is outpacing its long-term momentum. "
+                "Historically, when MACD remains above the zero line for extended periods, it can signal a sustained bullish phase. Action: Consider this as an opportunity to buy or maintain long positions, but always corroborate with other technical and fundamental indicators.")
                 if x[f'MACD_Above_Zero_Flag']
-                else ("Bearish Territory: With the MACD below the zero line, the short-term momentum lags behind the long-term momentum, pointing to a bearish outlook. Before making decisions, verify with other indicators and market news, and consider selling or shorting.")
+                else 
+                ("Sell, MACD in Bearish Territory, "
+                "The MACD is currently below the zero line, suggesting that the asset's short-term momentum is weaker than its long-term momentum. "
+                "Historically, a MACD position below the zero line can indicate bearish trends or potential downturns. Action: Consider this as a warning to possibly reduce holdings, or even open a short position, but always confirm with other technical indicators and market news.")
                 if x[f'MACD_Below_Zero_Flag']
-                else "MACD is near the zero line, indicating equilibrium between the short-term and long-term momentum.",
-                axis=1
-            )
+                else 
+                ("Neutral, MACD Near Zero Line, "
+                "The MACD is oscillating around the zero line, indicating a balance between the asset's short-term and long-term momentum. "
+                "This can suggest a period of market consolidation or a lack of strong momentum in either direction. Action: Monitor the asset for potential breakout patterns or other technical signals.")
+            , axis=1)
+
 
             # 3. MACD Divergence Interpretation (placeholder logic for the flags)
             df[f'MACD_Divergence_Desc'] = df.apply(
-                lambda x: ("Bullish Divergence Alert: The asset's price is making new lows, but the MACD isn't, hinting at potential weakening in the bearish trend. This could indicate an upcoming bullish reversal. Monitor closely, consider buying if other indicators align, and set a tight stop-loss.")
+                lambda x: 
+                ("Buy, Bullish MACD Divergence Detected, "
+                "Currently, the asset's price is making new lows while the MACD is not showing the same decline. This discrepancy often suggests potential weakness in the prevailing bearish trend. "
+                "Historically, this kind of divergence has been associated with potential bullish reversals. Action: Consider this as a potential buying opportunity, especially if supported by other bullish indicators, but ensure to set a tight stop-loss.")
                 if x[f'MACD_Bullish_Divergence_Flag']
-                else ("Bearish Divergence Alert: As the asset's price reaches new highs and the MACD doesn't, there's a potential decline in bullish momentum, possibly foreshadowing a bearish reversal. Be cautious about holding long positions, consider taking profits or setting a trailing stop.")
+                else 
+                ("Sell, Bearish MACD Divergence Detected, "
+                "The asset's price is reaching new highs, but the MACD isn't following suit, indicating a potential decline in bullish momentum. "
+                "Historically, this pattern has been a precursor to potential bearish reversals. Action: Exercise caution with current long positions, consider taking profits, and set a trailing stop. It's essential to confirm this divergence with other technical indicators before making decisions.")
                 if x[f'MACD_Bearish_Divergence_Flag']
-                else "No significant MACD divergence detected.",
-                axis=1
-            )
+                else 
+                ("Neutral, No MACD Divergence, "
+                "The MACD and the asset's price are moving in tandem, indicating a consistent trend without any detected divergence. "
+                "This usually suggests that the current trend, whether bullish or bearish, might continue. Action: Monitor the asset for changes in momentum or other confirming technical signals.")
+            , axis=1)
+
 
             # 4. MACD Histogram Interpretation
             df[f'MACD_Histogram_Desc'] = df.apply(
-                lambda x: ("Bullish Momentum: The positive MACD histogram indicates strong bullish momentum as the MACD line is above the Signal line. Consider holding or increasing long positions but be vigilant for any signs of reversal.")
+                lambda x: 
+                ("Buy, Bullish MACD Histogram Detected, "
+                "The MACD histogram is currently positive, indicating that the MACD line is above the Signal line. This is a sign of strong bullish momentum. "
+                "Historically, a positive MACD histogram has been associated with upward trends in the asset's price. Action: Consider holding or even increasing long positions, but remain vigilant for potential signs of a reversal.")
                 if x[f'MACD_Histogram_Positive_Flag']
-                else ("Bearish Momentum: The negative MACD histogram points to dominant bearish momentum as the MACD line is below the Signal line. It's a good time to reassess positions and think about hedging or reducing exposure.")
+                else 
+                ("Sell, Bearish MACD Histogram Detected, "
+                "The MACD histogram is currently negative, signaling that the MACD line is below the Signal line. This suggests dominant bearish momentum. "
+                "Historically, a negative MACD histogram has often been an indication of downward trends in the asset's price. Action: It might be a good time to reassess current positions, think about hedging, or even reducing exposure to the asset.")
                 if x[f'MACD_Histogram_Negative_Flag']
-                else "The MACD histogram is near zero, suggesting a balance between bullish and bearish forces.",
-                axis=1
-            )
+                else 
+                ("Neutral, Balanced MACD Histogram, "
+                "The MACD histogram is hovering near zero, which indicates a balance or equilibrium between bullish and bearish forces. "
+                "In such scenarios, the asset's price often moves in a sideways pattern without clear direction. Action: It's advisable to monitor the asset closely, looking for breakout signals or other technical patterns to gauge future movements.")
+            , axis=1)
+
 
             # 5. MACD Histogram Reversals Interpretation
             df[f'MACD_Histogram_Reversal_Desc'] = df.apply(
-                lambda x: ("Bullish Reversal Alert: The MACD histogram's transition from negative to positive suggests potential bullish momentum reversal. Be ready to capitalize on potential uptrends, but validate with other indicators before committing.")
+                lambda x: 
+                ("Buy, Bullish MACD Histogram Reversal Detected, "
+                "The MACD histogram has recently shifted from negative to positive. This transition is typically viewed as an early sign of potential bullish momentum reversal. "
+                "Historically, such transitions in the MACD histogram have been precursors to upward trends in the asset's price. Action: Be prepared to capitalize on potential uptrends, but always corroborate with other technical indicators before committing to a buying decision.")
                 if x[f'MACD_Histogram_Reversal_Positive_Flag']
-                else ("Bearish Reversal Alert: The shift of the MACD histogram from positive to negative indicates a potential bearish momentum reversal. Consider taking protective measures like hedging or selling.")
+                else 
+                ("Sell, Bearish MACD Histogram Reversal Detected, "
+                "The MACD histogram has transitioned from positive to negative. This shift is often seen as an early indication of a potential bearish momentum reversal. "
+                "Historically, a transition like this in the MACD histogram has signaled downward trends in the asset's price. Action: It might be prudent to consider taking protective measures, such as hedging or even selling the asset.")
                 if x[f'MACD_Histogram_Reversal_Negative_Flag']
-                else "No significant MACD histogram reversal detected.",
-                axis=1
-            )
+                else 
+                ("Neutral, No MACD Histogram Reversal Observed, "
+                "Currently, the MACD histogram hasn't shown any significant reversal from its previous trend. "
+                "Without a clear reversal signal, the asset might continue its current trend, whether it's bullish or bearish. Action: It's advisable to continue monitoring the asset and await clearer signals or patterns before making any trading decisions.")
+            , axis=1)
+
 
             # 6. MACD Trend Interpretation
             df[f'MACD_Trend_Desc'] = df.apply(
-                lambda x: ("Uptrend Momentum: With the MACD line trending upwards, there's increasing bullish momentum. It's advisable to stay invested but maintain vigilance for trend changes.")
+                lambda x: 
+                ("Buy, Bullish MACD Trend Detected, "
+                "The MACD line is currently trending upwards, which is often interpreted as increasing bullish momentum. "
+                "Historically, an upward-trending MACD line has been indicative of sustained price increases in the asset. Action: It's advisable to consider staying invested or looking for entry points, while also being vigilant for potential trend reversals.")
                 if x[f'MACD_Trending_Up_Flag']
-                else ("Downtrend Momentum: As the MACD line trends downwards, it signifies growing bearish momentum. Adopt a defensive stance and consider reducing risk or shorting.")
+                else 
+                ("Sell, Bearish MACD Trend Detected, "
+                "The MACD line is trending downwards, suggesting a dominant bearish momentum. "
+                "Historically, a downward-trending MACD line has been a sign of prolonged price declines. Action: Adopt a defensive stance, consider reducing exposure to the asset, or even contemplate shorting opportunities.")
                 if x[f'MACD_Trending_Down_Flag']
-                else "The MACD line is relatively flat, suggesting a potential consolidation or lack of strong momentum in either direction.",
-                axis=1
-            )
+                else 
+                ("Neutral, No MACD Trend Observed, "
+                "The MACD line is currently moving sideways or is relatively flat, indicating a potential consolidation phase or a lack of strong momentum in either the bullish or bearish direction. "
+                "Action: It might be wise to adopt a wait-and-see approach, monitoring the asset for potential breakout patterns or signals.")
+            , axis=1)
+            # Initialize consolidated recommendation count columns for MACD
+            df['MACD_Buy_Count'] = 0
+            df['MACD_Sell_Count'] = 0
+            df['MACD_Neutral_Count'] = 0
+
+            # List of MACD Description Columns
+            desc_columns_macd = [f'MACD_Crossover_Desc', 
+                                f'MACD_Zero_Line_Desc', 
+                                f'MACD_Divergence_Desc', 
+                                f'MACD_Histogram_Desc',
+                                f'MACD_Histogram_Reversal_Desc',
+                                f'MACD_Trend_Desc']
+
+            # Iterate Over Each Column and aggregate counts
+            for column in desc_columns_macd:
+                df['MACD_Buy_Count'] += df[column].str.startswith("Buy").astype(int)
+                df['MACD_Sell_Count'] += df[column].str.startswith("Sell").astype(int)
+                df['MACD_Neutral_Count'] += df[column].str.startswith("Neutral").astype(int)
+
             self.logger.log_or_print("MACD calculation with pandas-ta completed successfully.", level="INFO")
             self.macd_calculated_signal.emit(df)  # Assuming you have a signal for MACD like for stochastic
 

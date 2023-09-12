@@ -83,7 +83,26 @@
                 },
                 height: '90%',
                 lineWidth: 2,
-                gridLineColor: '#e6e6e6'  // Lighter gridlines
+                gridLineColor: '#e6e6e6',  // Lighter gridlines
+                plotLines: [{
+                    value: Math.max(...smaData.candlestick.map(point => point[2])),  // 52-week high
+                    color: '#FF4136',  // Light red for 52-week high
+                    dashStyle: 'ShortDash',
+                    width: 1,
+                    label: {
+                        text: '52-week high',
+                        align: 'left'
+                    }
+                }, {
+                    value: Math.min(...smaData.candlestick.map(point => point[3])),  // 52-week low
+                    color: '#3D9970',  // Light green for 52-week low
+                    dashStyle: 'ShortDash',
+                    width: 1,
+                    label: {
+                        text: '52-week low',
+                        align: 'left'
+                    }
+                }]
             }, {
                 title: {
                     text: 'Volume'

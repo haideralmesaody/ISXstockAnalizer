@@ -1,0 +1,5 @@
+I want each condition description to start with a recommendation (strong sell, sell, neutral, buy, strong buy) then an identification of the case, a description of the case, and an interpretation of the case. this will be the structure for the recommendations
+
+
+
+SMF finished, next cmf

@@ -121,7 +121,24 @@ class FileManager:
                 # Extract the requried columns for SMA anlaysis
                 subset_df_sma = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "SMA10", "SMA50", "SMA200"]]
                 html_table_sma = subset_df_sma.to_html(classes="styled-table", index=False)
-
+                # Extract the requried columns for rsi_9 anlaysis
+                subset_df_rsi_9 = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "RSI_9"]]
+                html_table_rsi_9 = subset_df_rsi_9.to_html(classes="styled-table", index=False)
+                # Extract the requried columns for rsi_14 anlaysis
+                subset_df_rsi_14 = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "RSI_14"]]
+                html_table_rsi_14 = subset_df_rsi_14.to_html(classes="styled-table", index=False)
+                # Extract the requried columns for rsi_25 anlaysis
+                subset_df_rsi_25 = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "RSI_25"]]
+                html_table_rsi_25 = subset_df_rsi_25.to_html(classes="styled-table", index=False)
+                # Extract the requried columns for stoch_9_6_3 anlaysis
+                subset_df_stoch_9_6_3 = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "STOCHk_9_6_3", "STOCHd_9_6_3"]]
+                html_table_stoch_9_6_3 = subset_df_stoch_9_6_3.to_html(classes="styled-table", index=False)
+                # Extract the requried columns for cmf_20 anlaysis
+                subset_df_cmf_20 = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "CMF_20"]]
+                html_table_cmf_20 = subset_df_cmf_20.to_html(classes="styled-table", index=False)
+                # Extract the requried columns for macd_12_26_9 anlaysis
+                subset_df_macd_12_26_9 = df.loc[:, ["Date", "Close", "Open", "High", "Low", "T.Shares", "MACD_12_26_9", "MACDs_12_26_9", "MACDh_12_26_9"]]
+                html_table_macd_12_26_9 = subset_df_macd_12_26_9.to_html(classes="styled-table", index=False)
                 # Load the HTML template
                 template_path = os.path.join(os.path.dirname(__file__), 'report_template.html')
                 with open(template_path, 'r') as file:
@@ -136,6 +153,12 @@ class FileManager:
                 replacements = {
                     'table': html_table,
                     'table_sma': html_table_sma,
+                    'table_rsi_9': html_table_rsi_9,
+                    'table_rsi_14': html_table_rsi_14,
+                    'table_rsi_25': html_table_rsi_25,
+                    'table_stoch_9_6_3': html_table_stoch_9_6_3,
+                    'table_cmf_20': html_table_cmf_20,
+                    'table_macd_12_26_9': html_table_macd_12_26_9,
                     'ticker_name': ticker,
                     'report_date': formatted_date,
                     'sma10_value': last_row['SMA10'],
@@ -170,6 +193,9 @@ class FileManager:
                     'Price_Distance_SMA10':self._bool_to_symbol(last_row['Price_Distance_SMA10']),
                     'Price_Distance_SMA50':self._bool_to_symbol(last_row['Price_Distance_SMA50']),
                     'Price_Distance_SMA200':self._bool_to_symbol(last_row['Price_Distance_SMA200']),
+                    'sma_buy_count': last_row['SMA_Buy_Count'],
+                    'sma_sell_count': last_row['SMA_Sell_Count'],
+                    'sma_neutral_count': last_row['SMA_Neutral_Count'],
                     # Additions for RSI_9
                     'RSI_9': last_row['RSI_9'],
                     'RSI_9_Overbought_Flag': self._bool_to_symbol(last_row['RSI_9_Overbought_Flag']),
@@ -182,6 +208,9 @@ class FileManager:
                     'RSI_9_Overbought_Oversold_Desc': last_row['RSI_9_Overbought_Oversold_Desc'],
                     'RSI_9_Divergence_Desc': last_row['RSI_9_Divergence_Desc'],
                     'RSI_9_Swings_Desc': last_row['RSI_9_Swings_Desc'],
+                    'RSI_9_buy_count': last_row['RSI_9_Buy_Count'],
+                    'RSI_9_sell_count': last_row['RSI_9_Sell_Count'],
+                    'RSI_9_neutral_count': last_row['RSI_9_Neutral_Count'],
                     # Additions for RSI_14
                     'RSI_14': last_row['RSI_14'],
                     'RSI_14_Overbought_Flag': self._bool_to_symbol(last_row['RSI_14_Overbought_Flag']),
@@ -194,6 +223,9 @@ class FileManager:
                     'RSI_14_Overbought_Oversold_Desc': last_row['RSI_14_Overbought_Oversold_Desc'],
                     'RSI_14_Divergence_Desc': last_row['RSI_14_Divergence_Desc'],
                     'RSI_14_Swings_Desc': last_row['RSI_14_Swings_Desc'],
+                    'RSI_14_buy_count': last_row['RSI_14_Buy_Count'],
+                    'RSI_14_sell_count': last_row['RSI_14_Sell_Count'],
+                    'RSI_14_neutral_count': last_row['RSI_14_Neutral_Count'],
                     # Additions for RSI_25
                     'RSI_25': last_row['RSI_25'],
                     'RSI_25_Overbought_Flag': self._bool_to_symbol(last_row['RSI_25_Overbought_Flag']),
@@ -206,6 +238,9 @@ class FileManager:
                     'RSI_25_Overbought_Oversold_Desc': last_row['RSI_25_Overbought_Oversold_Desc'],
                     'RSI_25_Divergence_Desc': last_row['RSI_25_Divergence_Desc'],
                     'RSI_25_Swings_Desc': last_row['RSI_25_Swings_Desc'],
+                    'RSI_25_buy_count': last_row['RSI_25_Buy_Count'],
+                    'RSI_25_sell_count': last_row['RSI_25_Sell_Count'],
+                    'RSI_25_neutral_count': last_row['RSI_25_Neutral_Count'],
                     # Additions for STOCHk_9_6_3
                     'STOCHk_9_6_3': last_row['STOCHk_9_6_3'],
                     'STOCHd_9_6_3': last_row['STOCHd_9_6_3'],
@@ -220,6 +255,9 @@ class FileManager:
                     'STOCH_9_6_3_Overbought/Oversold_Desc': last_row['STOCH_9_6_3_Overbought/Oversold_Desc'],
                     'STOCH_9_6_3_Divergence_Desc': last_row['STOCH_9_6_3_Divergence_Desc'],
                     'STOCH_9_6_3_Swings_Desc': last_row['STOCH_9_6_3_Swings_Desc'],
+                    'STOCH_9_6_3_buy_count': last_row['STOCH_9_6_3_Buy_Count'],
+                    'STOCH_9_6_3_sell_count': last_row['STOCH_9_6_3_Sell_Count'],
+                    'STOCH_9_6_3_neutral_count': last_row['STOCH_9_6_3_Neutral_Count'],
                     # Additions for CFM_20
                     'CMF_20': last_row['CMF_20'],
                     'CMF_Positive_Flag': self._bool_to_symbol(last_row['CMF_Positive_Flag']),
@@ -238,6 +276,9 @@ class FileManager:
                     'CMF_SMA_Comparison_Desc': last_row['CMF_SMA_Comparison_Desc'],
                     'CMF_Overbought_Oversold_Desc': last_row['CMF_Overbought_Oversold_Desc'],
                     'CMF_Divergence_Desc': last_row['CMF_Divergence_Desc'],
+                    'CMF_buy_count': last_row['CMF_Buy_Count'],
+                    'CMF_sell_count': last_row['CMF_Sell_Count'],
+                    'CMF_neutral_count': last_row['CMF_Neutral_Count'],
                      # Additions for MACD_12_26_9
                     'MACD_12_26_9': last_row['MACD_12_26_9'],
                     'MACDs_12_26_9': last_row['MACDs_12_26_9'],
@@ -259,7 +300,16 @@ class FileManager:
                     'MACD_Divergence_Desc': last_row['MACD_Divergence_Desc'],
                     'MACD_Histogram_Desc': last_row['MACD_Histogram_Desc'],
                     'MACD_Histogram_Reversal_Desc': last_row['MACD_Histogram_Reversal_Desc'],
-                    'MACD_Trend_Desc': last_row['MACD_Trend_Desc']
+                    'MACD_Trend_Desc': last_row['MACD_Trend_Desc'],
+                    'MACD_buy_count': last_row['MACD_Buy_Count'],
+                    'MACD_sell_count': last_row['MACD_Sell_Count'],
+                    'MACD_neutral_count': last_row['MACD_Neutral_Count'],
+                    #Total Count for Buys and Sells
+                    'total_buy_count': last_row['SMA_Buy_Count']+last_row['RSI_9_Buy_Count']+last_row['RSI_14_Buy_Count']+last_row['RSI_25_Buy_Count']+last_row['STOCH_9_6_3_Buy_Count']+last_row['CMF_Buy_Count']+last_row['MACD_Buy_Count'],
+                    'total_sell_count': last_row['SMA_Sell_Count']+last_row['RSI_9_Sell_Count']+last_row['RSI_14_Sell_Count']+last_row['RSI_25_Sell_Count']+last_row['STOCH_9_6_3_Sell_Count']+last_row['CMF_Sell_Count']+last_row['MACD_Sell_Count'],
+                    'total_neutral_count': last_row['SMA_Neutral_Count']+last_row['RSI_9_Neutral_Count']+last_row['RSI_14_Neutral_Count']+last_row['RSI_25_Neutral_Count']+last_row['STOCH_9_6_3_Neutral_Count']+last_row['CMF_Neutral_Count']+last_row['MACD_Neutral_Count']
+
+
 
                 }
                 for key, value in replacements.items():
@@ -278,9 +328,16 @@ class FileManager:
                     template = self.embed_css_and_images_in_html(template, css_filepath, img_filepath)
                         # Embedding JS files one-by-one
                     js_files = [
+                        'chart_cmf_20.js',
+                        'chart_macd_12_26_9.js',
                         'chart_Main.js',
+                        'chart_rsi_9.js',
+                        'chart_rsi_14.js',
+                        'chart_rsi_25.js',
                         'chart_SMA.js',
+                        'chart_stoch_9_6_3.js',
                         'collapsible_handler.js'
+
                     ]
 
                     for js_file in js_files:
