@@ -1,0 +1,371 @@
+Ticker,Sector,Name
+AAHP,Agriculture,Al-Ahlyia for Agricultural Production
+ABAP,Agriculture,Babil Animal & vegetable production
+AIPM,Agriculture,Iraqi Agricultural Products Marketing Meat
+AIRP,Agriculture,Iraqi Agricultural Products
+AISP,Agriculture,Iraqi for Seed Production
+AMEF,Agriculture,Middle East Producing & Marketing - Fish
+AREB,Agriculture,AL -Rebass for Poultry & Feed
+BAAI,Banks,AL Arabiya Islamic Bank
+BAIB,Banks,Asia Al Iraq Islamic Bank for Investment
+BAME,Banks,Ameen Al-Iraq Bank for Islamic Investmen
+BAMS,Banks,Al-Mashreq Al-Arabi Islamic Bank
+BANS,Banks,Al-Anssari Islamic Bank
+BASH,Banks,Ashur International Bank For Investment
+BBAY,Banks,Babylon Bank
+BBOB,Banks,Bank Of Baghdad
+BCIH,Banks,Cihan Bank for Islamic & Finance
+BEFI,Banks,Economy Bank For Investment
+BELF,Banks,Elaf Islamic Bank
+BERI,Banks,Erbil Bank for Investment & Finance
+BGUC,Banks,Gulf Commercial Bank
+BIBI,Banks,Investment Bank of Iraq
+BIDB,Banks,International Development Bank for Inves
+BIIB,Banks,Iraqi Islamic Bank
+BIME,Banks,Iraqi Middle East Investment Bank
+BINI,Banks,Iraq Noor Islamic Bank For Investment
+BINT,Banks,International Islamic Bank
+BJAB,Banks,AlJanoob Islamic Bank Investment and Fin
+BKUI,Banks,Kurdistan International Islamic Bank
+BLAD,Banks,Al-Ataa Islamic Bank
+BMFI,Banks,Mousil Bank For Development& Investment
+BMNS,Banks,Al-Mansour Bank
+BMUI,Banks,Al Mustashar Islamic Bank
+BNAI,Banks,National Islamic Bank
+BNOI,Banks,National Bank Of Iraq
+BNOR,Banks,North Bank for Finance & Inv
+BQAB,Banks,Al-Qabedh Islamic Bank for Finance & Inv
+BQUR,Banks,Al -Qurtas Islamic Bank for Investment
+BRAJ,Banks,Rajih Islamic Bank for Investment & fin
+BROI,Banks,Credit Bank Of Iraq
+BRTB,Banks,Region Trade Bank for Investment and Fin
+BSUC,Banks,Sumer Commerical Bank
+BTIB,Banks,Al Taif Islamic Bank for Investment & Fi
+BTRI,Banks,Trans Iraq Bank for Investment
+BTRU,Banks,Trust International Islamic Bank
+BUND,Banks,United Bank
+BUOI,Banks,Union Bank Of Iraq
+BWOR,Banks,World Islamic Bank for Investment& Finan
+BZII,Banks,Zain Al-Iraq Islamic Bank for Investment
+HASH,Tourisim,Ashour Hotel
+HBAG,Tourisim,Baghdad Hotel
+HBAY,Tourisim,Babylon Hotel
+HISH,Tourisim,Ishtar Hotels
+HKAR,Tourisim,Rehab Karbala
+HMAN,Tourisim,Al-Mansour Hotels
+HNTI,Tourisim,National company for Tourisim Investment
+HPAL,Tourisim,Palestine Hotel
+HSAD,Tourisim,AL-Sadeer Hotel
+HTVM,Tourisim,Tourist Village of Mosul dam
+IBPM,Industry,Baghdad for Packing Materials
+IBSD,Industry,Baghdad Soft Drinks
+IELI,Industry,ELectronic Industries
+IFCM,Industry,Fallujah for Construction Materials
+IHFI,Industry,National Household Furniture Industry
+IHLI,Industry,Al -HiLal Industries
+IICM,Industry,Iraqi Carton Manufacturies
+IIDP,Industry,Iraqi Date Processing and Marketing
+IIEW,Industry,Iraqi Engineering Works
+IITC,Industry,Iraqi For Tufted Carpets
+IKHC,Industry,Al -Khazer for Construction Materials
+IKLV,Industry,AL- Kindi of Veterinary Vaccines Drugs
+IMAP,Industry,Al-Mansour Pharmaceuticals Industries
+IMCI,Industry,Modern Chemical Industries
+IMCM,Industry,Modern Constrcution Materials Industry
+IMIB,Industry,Metallic & Bicycles Industries
+IMOS,Industry,Modern Sewing
+INCP,Industry,National Chemical & Plastic Industries
+IRMC,Industry,Ready Made Clothes
+ITLI,Industry,The Light Industries and Mining
+NAHF,Insurance,AHliya For Insurance
+NAME,Insurance,Al-Ameen Insurance
+NDSA,Insurance,Dar Al-Salam for Insurance
+NGIR,Insurance,Gulf Insurance and Reinsurance
+NHAM,Insurance,Al-Hamraa for Insurance
+SAEI,Services,Al-Ameen Estate Investment
+SBAG,Services,AL-Badia for General Trans
+SIBD,Services,Ibdaa Al-Sharq Al-Awsat General Contract
+SIGT,Services,Iraqi for General Transportation
+SILT,Services,Iraqi Land Transport
+SNUC,Services,AL-Nukhba for General Construction
+TASC,Tele,Asia Cell
+TZNI,Tele,AlKatmat for Telecommunication
+VAMF,Investment,Al-Ameen Financial Investment
+VBAT,Investment,AL- Batek Financial Investment
+VKHF,Investment,Al-Khair Financial Investment
+VMES,Investment,Bain Alnahrain Investment
+VWIF,Investment,AL-Wiaam for Financial Investment
+VZAF,Investment,Al-Zawraa for Finanical Investment
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,
+,,

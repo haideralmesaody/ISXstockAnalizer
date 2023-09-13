@@ -1,39 +1,15 @@
-
-        // Function to extract data from the SMA table
-        document.addEventListener("DOMContentLoaded", function() {
-            // Function to extract data from the SMA table
-            function extractDataFromCMF20Table() {
-                const table = document.querySelector('div.table-container .cmf_20_ScrollableTable table');
-                const rows = table.querySelectorAll('tr');
-                const data = {
-                    candlestick: [],
-                    volume: [],
-                    cmf_20: []
-
-                };
-        
-                for (let i = 1; i < rows.length; i++) {
-                    const cells = rows[i].querySelectorAll('td');
-                    const date = Date.parse(cells[0].textContent.trim());
-                    const open = parseFloat(cells[2].textContent.trim());
-                    const high = parseFloat(cells[3].textContent.trim());
-                    const low = parseFloat(cells[4].textContent.trim());
-                    const close = parseFloat(cells[1].textContent.trim());
-                    const volume = parseFloat(cells[5].textContent.trim().replace(/,/g, ''));
-                    const cmf_20 = parseFloat(cells[6].textContent.trim());
-
-        
-                    data.candlestick.push([date, open, high, low, close]);
-                    data.volume.push([date, volume]);
-                    data.cmf_20.push([date, cmf_20]);
-
-                }
-        
-                return data;
-            }
-        
+// Wait for the entire document to load before executing the JavaScript.
+document.addEventListener("DOMContentLoaded", function() {
+    // Get the button element by its ID.
+    const cmf20Button = document.getElementById('cmf20Button');
+    // Event listener for the button click.
+    cmf20Button.addEventListener('click', function() {
+        const content = this.nextElementSibling;
+        // Check if the chart content is currently hidden or not displayed.
+        if (content.style.display === "" || content.style.display === "none") {
+            // Extract data from the table.
             const cmf_20_Data = extractDataFromCMF20Table();
-        
+            // Create and display the Highcharts stock chart with the extracted data.
             Highcharts.stockChart('candlestick-chart_cmf_20', {
                 chart: {
                     backgroundColor: '#f5f5f5',
@@ -42,7 +18,6 @@
                     },
                     panning: true,
                     pinchType: 'x',
-                    
                 },
                 legend: {
                     enabled: true,
@@ -81,8 +56,8 @@
                     height: '60%',
                     lineWidth: 2,
                     gridLineColor: '#e6e6e6',
-                    plotBorderWidth: 1, // Add this line for border
-                    plotBorderColor: 'black', // Add this line for border color
+                    plotBorderWidth: 1,
+                    plotBorderColor: 'black',
                     plotLines: [{
                         value: Math.max(...cmf_20_Data.candlestick.map(point => point[2])),
                         color: '#FF4136',
@@ -110,7 +85,6 @@
                     height: '30%',
                     offset: 0,
                     lineWidth: 2,
-                    
                     plotLines: [{
                         value: 0,
                         color: 'blue',
@@ -220,4 +194,38 @@
                     enabled: false
                 }
             });
-        });
+        }
+    });
+    /**
+     * Extracts data from a table with the class 'cmf_20_ScrollableTable'.
+     * 
+     * @returns {Object} An object containing arrays for candlestick data, volume, and CMF_20.
+     */
+    function extractDataFromCMF20Table() {
+        const table = document.querySelector('div.table-container .cmf_20_ScrollableTable table');
+        const rows = table.querySelectorAll('tr');
+        const data = {
+            candlestick: [],
+            volume: [],
+            cmf_20: []
+        };
+        // Loop through each row (skip the header row) and extract the data.
+        for (let i = 1; i < rows.length; i++) {
+            const cells = rows[i].querySelectorAll('td');
+            // Parse and extract the required data from each cell.
+            const date = Date.parse(cells[0].textContent.trim());
+            const open = parseFloat(cells[2].textContent.trim());
+            const high = parseFloat(cells[3].textContent.trim());
+            const low = parseFloat(cells[4].textContent.trim());
+            const close = parseFloat(cells[1].textContent.trim());
+            const volume = parseFloat(cells[5].textContent.trim().replace(/,/g, ''));
+            const cmf_20 = parseFloat(cells[6].textContent.trim());
+            // Push the parsed data into the respective arrays.
+            data.candlestick.push([date, open, high, low, close]);
+            data.volume.push([date, volume]);
+            data.cmf_20.push([date, cmf_20]);
+        }
+
+        return data;
+    }
+});

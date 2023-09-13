@@ -22,6 +22,7 @@ class Logger:
             full_handler.setFormatter(logging.Formatter(log_format))
 
             logger = logging.getLogger('main_logger')
+            logger.propagate = False
             logger.addHandler(handler)
             logger.setLevel(logging.DEBUG if cls._instance.debug else logging.INFO)
 

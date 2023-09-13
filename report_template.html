@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Report for {ticker_name}</title>
+    
     <link href="report_style.css" rel="stylesheet"/>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highcharts@9.3.0/modules/annotations.js"></script>
@@ -14,7 +14,8 @@
     <header>
         <div class="report-header">
             <div>
-                <h1>Stock Report for {ticker_name}</h1>
+                <h1>Stock Report for {company_name}</h1>
+                <h2> {ticker_name}</h2>
                 <h2 class="report-date">Date: {report_date}</h2>
             </div>
             <img src="Logo.png" alt="Your Logo" class="header-logo">
@@ -159,7 +160,7 @@
         <div id="candlestick-chart" data-name="mainChart" style="width: 100%; height: 600px;"></div>
     </section>
         <section class="indicator-section">
-            <button class="collapsible">SMA Indicators and Description</button>
+            <button id="smaButton" class="collapsible">SMA Indicators and Description</button>
             <div class="collapsible-content">
                 <div class="sma-values">
                     <p><strong>SMA10:</strong> {sma10_value}</p>
@@ -325,7 +326,7 @@
                 </article>
             </div>
        
-            <button class="collapsible">RSI_9 Indicator and Description</button>
+            <button id="rsi9Button" class="collapsible">RSI_9 Indicator and Description</button>
             <div class="collapsible-content">
                 <div class="indicator-values">
                     <p><strong>RSI_9 Value:</strong> {RSI_9}</p>
@@ -411,7 +412,7 @@
                 </article>
             </div>
 
-            <button class="collapsible">RSI_14 Indicator and Description</button>
+            <button id="rsi14Button" class="collapsible">RSI_14 Indicator and Description</button>
             <div class="collapsible-content">
                 <div class="indicator-values">
                     <p><strong>RSI_14 Value:</strong> {RSI_14}</p>
@@ -497,7 +498,7 @@
                 </article>
             </div>
        
-            <button class="collapsible">RSI_25 Indicator and Description</button>
+            <button id="rsi25Button" class="collapsible">RSI_25 Indicator and Description</button>
             <div class="collapsible-content">
                 <div class="indicator-values">
                     <p><strong>RSI_25 Value:</strong> {RSI_25}</p>
@@ -583,7 +584,7 @@
                 </article>
             </div>
             
-            <button class="collapsible">STOCHk_9_6_3 Indicator and Description</button>
+            <button id="STOCH_9_6_3Button" class="collapsible">STOCHk_9_6_3 Indicator and Description</button>
             <div class="collapsible-content">
 
                 <!-- Indicator Values -->
@@ -663,7 +664,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <!-- Description Articles -->
                 <article class="description-box">
                     <h3>Overbought & Oversold Description:</h3>
@@ -678,20 +678,17 @@
                     <p>{STOCH_9_6_3_Swings_Desc}</p>
                 </article>
             </div>
-            <button class="collapsible">CMF_20 Indicators and Description</button>
-            <div class="collapsible-content">
-                
+            <button id="cmf20Button" class="collapsible">CMF_20 Indicators and Description</button>
+            <div class="collapsible-content">                
                 <!-- CMF_20 Value -->
                 <div class="cmf-values">
-                    <p><strong>CMF_20:</strong> {CMF_20}</p>
+                    <p><strong>CMF_20:</strong>{CMF_20}</p>
                 </div>
                 <button class="collapsible">Stock Table _ CMF_20</button>
                 <div class="collapsible-content"> 
                     <div class="table-container">
                         <div class="cmf_20_ScrollableTable">
-
                                 {table_cmf_20}
-
                         </div>
                     </div>
                 </div>
@@ -757,14 +754,13 @@
                 <article class="description-box">
                     <h3>CMF Divergence Description:</h3>
                     <p>{CMF_Divergence_Desc}</p>
-                </article>
-                
+                </article>                
             </div>
-            <button class="collapsible">MACD_12_26_9 Indicators and Description</button>
+            <button id="MACD_12_26_9Button" class="collapsible">MACD_12_26_9 Indicators and Description</button>
             <div class="collapsible-content">
                 
                 <!-- CMF_20 Value -->
-                <div class="cmf-values">
+                <div class="macd-values">
                     <p><strong>MACD Value:</strong> {MACD_12_26_9}</p>
                     <p><strong>MACD Signal:</strong> {MACDs_12_26_9}</p>
                     <p><strong>MACD Histogram:</strong> {MACDh_12_26_9}</p>

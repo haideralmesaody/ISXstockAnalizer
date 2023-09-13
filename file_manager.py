@@ -8,6 +8,14 @@ class FileManager:
     
     def __init__(self):
         self.logger = Logger()
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(script_dir, "TICKERS.csv")
+        try:
+            self.df_tickers = pd.read_csv(csv_path)
+        except Exception as e:
+            if self.logger:
+                self.logger.log_or_print(f"Initialization: Failed to load CSV. Details: {str(e)}.", level="ERROR", module="TickerLookup")
+            raise e
 
     def save_data_to_excel(self, df, ticker):
         """Save data to Excel file."""
@@ -146,7 +154,8 @@ class FileManager:
 
                 # Fetch the last row of the DataFrame
                 last_row = df.iloc[-1]
-
+                #get company name from ticker
+                company_name = self.get_company_name(ticker)
                 # Replace placeholders in the main template
                 now = datetime.now()
                 formatted_date = now.strftime('%Y-%m-%d %H:%M:%S')
@@ -160,6 +169,7 @@ class FileManager:
                     'table_cmf_20': html_table_cmf_20,
                     'table_macd_12_26_9': html_table_macd_12_26_9,
                     'ticker_name': ticker,
+                    'company_name': company_name,
                     'report_date': formatted_date,
                     'sma10_value': last_row['SMA10'],
                     'sma50_value': last_row['SMA50'],
@@ -367,4 +377,26 @@ class FileManager:
                 self.logger.log_or_print(f"generate_report: An exception occurred. Details: {str(e)}.", level="ERROR", module="FileManager")
             return False
 
-      
+    def get_company_name(self, ticker):
+        """
+        Retrieves the company name based on the provided ticker.
+        
+        :param ticker: The ticker symbol of the company.
+        :return: The company name corresponding to the ticker, or an error message if not found.
+        """
+        try:
+            return self.df_tickers[self.df_tickers['Ticker'] == ticker]['Name'].values[0]
+        except IndexError:
+            # Handle case where ticker is not found
+            if self.logger:
+                self.logger.log_or_print(f"get_company_name: Ticker '{ticker}' not found in the dataset.", level="ERROR", module="TickerLookup")
+            return "Ticker not found in the dataset."
+        except Exception as e:
+            # Handle other exceptions
+            if self.logger:
+                self.logger.log_or_print(f"get_company_name: An exception occurred. Details: {str(e)}.", level="ERROR", module="TickerLookup")
+            return False
+
+# Example usage:
+# lookup = TickerLookup("/path/to/TICKERS.csv", logger)
+# company_name = lookup.get_company_name("AAHP")
