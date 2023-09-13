@@ -1,863 +1,1052 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    
-    <link href="report_style.css" rel="stylesheet"/>
-    <script src="https://code.highcharts.com/stock/highstock.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/highcharts@9.3.0/modules/annotations.js"></script>
-    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+  <link href="report_style.css" rel="stylesheet" />
+  <script src="https://code.highcharts.com/stock/highstock.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/highcharts@9.3.0/modules/annotations.js"></script>
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 </head>
+
 <body>
-<main>
+  <main>
     <header>
-        <div class="report-header">
-            <div>
-                <h1>Stock Report for {company_name}</h1>
-                <h2> {ticker_name}</h2>
-                <h2 class="report-date">Date: {report_date}</h2>
-            </div>
-            <img src="Logo.png" alt="Your Logo" class="header-logo">
+      <div class="report-header">
+        <div>
+          <h1>Stock Report for {company_name}</h1>
+          <h2>{ticker_name}</h2>
+          <h2 class="report-date">Date: {report_date}</h2>
         </div>
+        <img src="Logo.png" alt="Your Logo" class="header-logo" />
+      </div>
     </header>
 
     <section class="stock-data">
-        <button class="collapsible">Stock Table</button>
-        <div class="collapsible-content"> 
-            <div class="table-container">
-                <div class="scrollable-table" data-name="mainScrollableTable">
-                        {table}
-                </div>
-            </div>
+      <button class="collapsible">Stock Table</button>
+      <div class="collapsible-content">
+        <div class="table-container">
+          <div class="scrollable-table" data-name="mainScrollableTable">
+            {table}
+          </div>
         </div>
-        <button class="collapsible">Indicators Summary</button>
-        <div class="collapsible-content"> 
-            <div class="table-container">
-                <div class="scrollable-table" data-name="SummaryScrollableTable">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Indicator</th>
-                                <th scope="col">Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <th scope="col">SMA10</th>
-                            <th scope="col">{sma10_value}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">SMA50</th>
-                            <th scope="col">{sma50_value}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">SMA200</th>
-                            <th scope="col">{sma200_value}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">RSI_9</th>
-                            <th scope="col"> {RSI_9}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">RSI_14</th>
-                            <th scope="col"> {RSI_14}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">RSI_25</th>
-                            <th scope="col"> {RSI_25}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">STOCHk_9_6_3</th>
-                            <th scope="col">{STOCHk_9_6_3}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">STOCHD_9_6_3</th>
-                            <th scope="col">{STOCHd_9_6_3}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">CMF_20</th>
-                            <th scope="col">{CMF_20}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">MACD Value</th>
-                            <th scope="col">{MACD_12_26_9}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">MACD Signal</th>
-                            <th scope="col">{MACDs_12_26_9}</th>
-                        </tbody>
-                        <tbody>
-                            <th scope="col">MACD Histogram</th>
-                            <th scope="col">{MACDh_12_26_9}</th>
-                        </tbody>       
-                    </table>
-                    
-
-                </div>
-
-            </div>
-        </div>
-        <div class="table-container">    
-            <table class="total_rec_count">
-                <thead>
-                    <tr>
-                        <th scope="col">Item</th>
-                        <th scope="col">Buy</th>
-                        <th scope="col">Neutral</th>
-                        <th scope="col">Sell</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <td><span class="green">SMA</span></td>
-                    <td><span class="green">{sma_buy_count}</span></td>
-                    <td><span class="green">{sma_neutral_count}</span></td>
-                    <td><span class="green">{sma_sell_count}</span></td>
-                </tbody>
-                <tbody>
-                    <td><span class="green">RSI_9</span></td>
-                    <td><span class="green">{RSI_9_buy_count}</span></td>
-                    <td><span class="green">{RSI_9_neutral_count}</span></td>
-                    <td><span class="green">{RSI_9_sell_count}</span></td>
-                </tbody>
-                <tbody>
-                    <td><span class="green">RSI_14</span></td>
-                    <td><span class="green">{RSI_14_buy_count}</span></td>
-                    <td><span class="green">{RSI_14_neutral_count}</span></td>
-                    <td><span class="green">{RSI_14_sell_count}</span></td>
-                </tbody>
-                <tbody>
-                    <td><span class="green">RSI_25</span></td>
-                    <td><span class="green">{RSI_25_buy_count}</span></td>
-                    <td><span class="green">{RSI_25_neutral_count}</span></td>
-                    <td><span class="green">{RSI_25_sell_count}</span></td>
-                </tbody>
-                <tbody>
-                    <td><span class="green">STOCH_9_6_3</span></td>
-                    <td><span class="green">{STOCH_9_6_3_buy_count}</span></td>
-                    <td><span class="green">{STOCH_9_6_3_neutral_count}</span></td>
-                    <td><span class="green">{STOCH_9_6_3_sell_count}</span></td>
-                </tbody>
-                <tbody>
-                    <td><span class="green">CMF_20</span></td>
-                    <td><span class="green">{CMF_buy_count}</span></td>
-                    <td><span class="green">{CMF_neutral_count}</span></td>
-                    <td><span class="green">{CMF_sell_count}</span></td>
-                </tbody>
-                <tbody>
-                    <td><span class="green">MACD_12_26_9</span></td>
-                    <td><span class="green">{MACD_buy_count}</span></td>
-                    <td><span class="green">{MACD_sell_count}</span></td>
-                    <td><span class="green">{MACD_neutral_count}</span></td>
-                </tbody>
-                <tbody>
-                    <td><span class="green">Total</span></td>
-                    <td><span class="green">{total_buy_count}</span></td>
-                    <td><span class="green">{total_neutral_count}</span></td>
-                    <td><span class="green">{total_sell_count}</span></td>
-                </tbody>
+      </div>
+      <button class="collapsible">Indicators Summary</button>
+      <div class="collapsible-content">
+        <div class="table-container">
+          <div class="scrollable-table" data-name="SummaryScrollableTable">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Indicator</th>
+                  <th scope="col">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <th scope="col">SMA10</th>
+                <th scope="col">{sma10_value}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">SMA50</th>
+                <th scope="col">{sma50_value}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">SMA200</th>
+                <th scope="col">{sma200_value}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">RSI_9</th>
+                <th scope="col">{RSI_9}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">RSI_14</th>
+                <th scope="col">{RSI_14}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">RSI_25</th>
+                <th scope="col">{RSI_25}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">STOCHk_9_6_3</th>
+                <th scope="col">{STOCHk_9_6_3}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">STOCHD_9_6_3</th>
+                <th scope="col">{STOCHd_9_6_3}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">CMF_20</th>
+                <th scope="col">{CMF_20}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">MACD Value</th>
+                <th scope="col">{MACD_12_26_9}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">MACD Signal</th>
+                <th scope="col">{MACDs_12_26_9}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">MACD Histogram</th>
+                <th scope="col">{MACDh_12_26_9}</th>
+              </tbody>
+              <tbody>
+                <th scope="col">OBV</th>
+                <th scope="col">{OBV}</th>
+              </tbody>
             </table>
+          </div>
         </div>
-        <div id="candlestick-chart" data-name="mainChart" style="width: 100%; height: 600px;"></div>
+      </div>
+      <div class="table-container">
+        <table class="total_rec_count">
+          <thead>
+            <tr>
+              <th scope="col">Item</th>
+              <th scope="col">Buy</th>
+              <th scope="col">Neutral</th>
+              <th scope="col">Sell</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td><span class="green">SMA</span></td>
+            <td><span class="green">{sma_buy_count}</span></td>
+            <td><span class="green">{sma_neutral_count}</span></td>
+            <td><span class="green">{sma_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">RSI_9</span></td>
+            <td><span class="green">{RSI_9_buy_count}</span></td>
+            <td><span class="green">{RSI_9_neutral_count}</span></td>
+            <td><span class="green">{RSI_9_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">RSI_14</span></td>
+            <td><span class="green">{RSI_14_buy_count}</span></td>
+            <td><span class="green">{RSI_14_neutral_count}</span></td>
+            <td><span class="green">{RSI_14_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">RSI_25</span></td>
+            <td><span class="green">{RSI_25_buy_count}</span></td>
+            <td><span class="green">{RSI_25_neutral_count}</span></td>
+            <td><span class="green">{RSI_25_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">STOCH_9_6_3</span></td>
+            <td><span class="green">{STOCH_9_6_3_buy_count}</span></td>
+            <td><span class="green">{STOCH_9_6_3_neutral_count}</span></td>
+            <td><span class="green">{STOCH_9_6_3_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">CMF_20</span></td>
+            <td><span class="green">{CMF_buy_count}</span></td>
+            <td><span class="green">{CMF_neutral_count}</span></td>
+            <td><span class="green">{CMF_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">MACD_12_26_9</span></td>
+            <td><span class="green">{MACD_buy_count}</span></td>
+            <td><span class="green">{MACD_neutral_count}</span></td>
+            <td><span class="green">{MACD_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">OBV</span></td>
+            <td><span class="green">{OBV_buy_count}</span></td>
+            <td><span class="green">{OBV_neutral_count}</span></td>
+            <td><span class="green">{OBV_sell_count}</span></td>
+          </tbody>
+          <tbody>
+            <td><span class="green">Total</span></td>
+            <td><span class="green">{total_buy_count}</span></td>
+            <td><span class="green">{total_neutral_count}</span></td>
+            <td><span class="green">{total_sell_count}</span></td>
+          </tbody>
+        </table>
+      </div>
+      <div id="candlestick-chart" data-name="mainChart" style="width: 100%; height: 600px"></div>
     </section>
-        <section class="indicator-section">
-            <button id="smaButton" class="collapsible">SMA Indicators and Description</button>
-            <div class="collapsible-content">
-                <div class="sma-values">
-                    <p><strong>SMA10:</strong> {sma10_value}</p>
-                    <p><strong>SMA50:</strong> {sma50_value}</p>
-                    <p><strong>SMA200:</strong> {sma200_value}</p> 
-                </div>
-                <button class="collapsible">Stock Table _ SMA</button>
-                <div class="collapsible-content"> 
-                    <div class="table-container">
-                        <div class="smaScrollableTable">
+    <section class="indicator-section">
+      <button id="smaButton" class="collapsible">
+        SMA Indicators and Description
+      </button>
+      <div class="collapsible-content">
+        <div class="sma-values">
+          <p><strong>SMA10:</strong> {sma10_value}</p>
+          <p><strong>SMA50:</strong> {sma50_value}</p>
+          <p><strong>SMA200:</strong> {sma200_value}</p>
+        </div>
+        <button class="collapsible">Stock Table _ SMA</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="smaScrollableTable">{table_sma}</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="sma_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{sma_buy_count}</span></td>
+              <td><span class="green">{sma_neutral_count}</span></td>
+              <td><span class="green">{sma_sell_count}</span></td>
+            </tbody>
+          </table>
+        </div>
 
-                                {table_sma}
+        <div id="candlestick-chart_sma" data-name="smaChart" style="width: 100%; height: 600px"></div>
 
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table class="sma_rec_count">
-                        <thead>
-                            <tr>
-                                <th scope="col">Buy</th>
-                                <th scope="col">Neutral</th>
-                                <th scope="col">Sell</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><span class="green">{sma_buy_count}</span></td>
-                            <td><span class="green">{sma_neutral_count}</span></td>
-                            <td><span class="green">{sma_sell_count}</span></td>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Golden Cross</td>
+                <td><span class="green">{golden_cross_flag}</span></td>
+              </tr>
+              <tr>
+                <td>Death Cross</td>
+                <td><span class="red">{death_cross_flag}</span></td>
+              </tr>
+              <tr>
+                <td>Price Cross SMA10 Up</td>
+                <td>{price_cross_sma10_up_flag}</td>
+              </tr>
+              <tr>
+                <td>Price Cross SMA10 Down</td>
+                <td>{price_cross_sma10_down_flag}</td>
+              </tr>
+              <tr>
+                <td>Price Cross SMA50 Up</td>
+                <td>{price_cross_sma50_up_flag}</td>
+              </tr>
+              <tr>
+                <td>Price Cross SMA50 Down</td>
+                <td>{price_cross_sma50_down_flag}</td>
+              </tr>
+              <tr>
+                <td>Price Cross SMA200 Up</td>
+                <td>{price_cross_sma200_up_flag}</td>
+              </tr>
+              <tr>
+                <td>Price Cross SMA200 Down</td>
+                <td>{price_cross_sma200_down_flag}</td>
+              </tr>
+              <tr>
+                <td>SMA10 Cross SMA200 Up</td>
+                <td>{sma10_cross_sma200_up_flag}</td>
+              </tr>
+              <tr>
+                <td>SMA10 Cross SMA200 Down</td>
+                <td>{sma10_cross_sma200_down_flag}</td>
+              </tr>
+              <tr>
+                <td>SMA10 Up</td>
+                <td>{sma10_up_flag}</td>
+              </tr>
+              <tr>
+                <td>SMA50 Up</td>
+                <td>{sma50_up_flag}</td>
+              </tr>
+              <tr>
+                <td>SMA200 Up</td>
+                <td>{sma200_up_flag}</td>
+              </tr>
+              <tr>
+                <td>SMA10 Above SMA50</td>
+                <td>{sma10_above_sma50_flag}</td>
+              </tr>
+              <tr>
+                <td>SMA50 Above SMA200</td>
+                <td>{sma50_above_sma200_flag}</td>
+              </tr>
+              <tr>
+                <td>Price Distance from SMA10</td>
+                <td>{Price_Distance_SMA10}</td>
+              </tr>
+              <tr>
+                <td>Price Distance from SMA50</td>
+                <td>{Price_Distance_SMA50}</td>
+              </tr>
+              <tr>
+                <td>Price Distance from SMA200</td>
+                <td>{Price_Distance_SMA200}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <article class="description-box">
+          <h3>Golden Death Cross Description:</h3>
+          <p>{golden_death_cross_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Price SMA10 Crossover Description:</h3>
+          <p>{price_sma10_crossover_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Price Crossover Description:</h3>
+          <p>{price_crossover_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Price SMA200 Crossover Description:</h3>
+          <p>{price_sma200_crossover_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>SMA10 SMA200 Crossover Description:</h3>
+          <p>{sma10_sma200_crossover_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>SMA Slopes Description:</h3>
+          <p>{sma_slopes_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Price Distance SMA10 Description:</h3>
+          <p>{price_distance_sma10_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Price Distance SMA50 Description:</h3>
+          <p>{price_distance_sma50_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Price Distance SMA200 Description:</h3>
+          <p>{price_distance_sma200_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>SMA Relationship 10-50 Description:</h3>
+          <p>{sma_relationship_10_50_desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>SMA Relationship 50-200 Description:</h3>
+          <p>{sma_relationship_50_200_desc}</p>
+        </article>
+      </div>
 
-                <div id="candlestick-chart_sma" data-name="smaChart" style="width: 100%; height: 600px;"></div>
+      <button id="rsi9Button" class="collapsible">
+        RSI_9 Indicator and Description
+      </button>
+      <div class="collapsible-content">
+        <div class="indicator-values">
+          <p><strong>RSI_9 Value:</strong> {RSI_9}</p>
+        </div>
+        <button class="collapsible">Stock Table _ RSI_9</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="rsi_9_ScrollableTable">{table_rsi_9}</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="rsi_9_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{RSI_9_buy_count}</span></td>
+              <td><span class="green">{RSI_9_neutral_count}</span></td>
+              <td><span class="green">{RSI_9_sell_count}</span></td>
+            </tbody>
+          </table>
+        </div>
+        <div id="candlestick-chart_rsi_9" data-name="rsi_9_Chart" style="width: 100%; height: 600px"></div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Overbought</td>
+                <td>{RSI_9_Overbought_Flag}</td>
+              </tr>
+              <tr>
+                <td>Oversold</td>
+                <td>{RSI_9_Oversold_Flag}</td>
+              </tr>
+              <tr>
+                <td>Neutral</td>
+                <td>{RSI_9_Neutral_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bearish Divergence</td>
+                <td>{RSI_9_Bearish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bullish Divergence</td>
+                <td>{RSI_9_Bullish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Swing Failure (Buy)</td>
+                <td>{RSI_9_Swing_Failure_Buy_Flag}</td>
+              </tr>
+              <tr>
+                <td>Swing Failure (Sell)</td>
+                <td>{RSI_9_Swing_Failure_Sell_Flag}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <article class="description-box">
+          <h3>Overbought & Oversold Description:</h3>
+          <p>{RSI_9_Overbought_Oversold_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Divergence Description:</h3>
+          <p>{RSI_9_Divergence_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Swings Description:</h3>
+          <p>{RSI_9_Swings_Desc}</p>
+        </article>
+      </div>
 
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Flag Name</th>
-                            <th scope="col">Flag Value</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Golden Cross</td>
-                            <td><span class="green">{golden_cross_flag}</span></td>
-                        </tr>
-                        <tr>
-                            <td>Death Cross</td>
-                            <td><span class="red">{death_cross_flag}</span></td>
-                        </tr>
-                        <tr>
-                            <td>Price Cross SMA10 Up</td>
-                            <td>{price_cross_sma10_up_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Cross SMA10 Down</td>
-                            <td>{price_cross_sma10_down_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Cross SMA50 Up</td>
-                            <td>{price_cross_sma50_up_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Cross SMA50 Down</td>
-                            <td>{price_cross_sma50_down_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Cross SMA200 Up</td>
-                            <td>{price_cross_sma200_up_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Cross SMA200 Down</td>
-                            <td>{price_cross_sma200_down_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>SMA10 Cross SMA200 Up</td>
-                            <td>{sma10_cross_sma200_up_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>SMA10 Cross SMA200 Down</td>
-                            <td>{sma10_cross_sma200_down_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>SMA10 Up</td>
-                            <td>{sma10_up_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>SMA50 Up</td>
-                            <td>{sma50_up_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>SMA200 Up</td>
-                            <td>{sma200_up_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>SMA10 Above SMA50</td>
-                            <td>{sma10_above_sma50_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>SMA50 Above SMA200</td>
-                            <td>{sma50_above_sma200_flag}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Distance from SMA10</td>
-                            <td>{Price_Distance_SMA10}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Distance from SMA50</td>
-                            <td>{Price_Distance_SMA50}</td>
-                        </tr>
-                        <tr>
-                            <td>Price Distance from SMA200</td>
-                            <td>{Price_Distance_SMA200}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <article class="description-box">
-                    <h3>Golden Death Cross Description:</h3>
-                    <p>{golden_death_cross_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Price SMA10 Crossover Description:</h3>
-                    <p>{price_sma10_crossover_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Price Crossover Description:</h3>
-                    <p>{price_crossover_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Price SMA200 Crossover Description:</h3>
-                    <p>{price_sma200_crossover_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>SMA10 SMA200 Crossover Description:</h3>
-                    <p>{sma10_sma200_crossover_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>SMA Slopes Description:</h3>
-                    <p>{sma_slopes_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Price Distance SMA10 Description:</h3>
-                    <p>{price_distance_sma10_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Price Distance SMA50 Description:</h3>
-                    <p>{price_distance_sma50_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Price Distance SMA200 Description:</h3>
-                    <p>{price_distance_sma200_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>SMA Relationship 10-50 Description:</h3>
-                    <p>{sma_relationship_10_50_desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>SMA Relationship 50-200 Description:</h3>
-                    <p>{sma_relationship_50_200_desc}</p>
-                </article>
+      <button id="rsi14Button" class="collapsible">
+        RSI_14 Indicator and Description
+      </button>
+      <div class="collapsible-content">
+        <div class="indicator-values">
+          <p><strong>RSI_14 Value:</strong> {RSI_14}</p>
+        </div>
+        <button class="collapsible">Stock Table _ RSI_14</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="rsi_14_ScrollableTable">{table_rsi_14}</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="rsi_14_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{RSI_14_buy_count}</span></td>
+              <td><span class="green">{RSI_14_neutral_count}</span></td>
+              <td><span class="green">{RSI_14_sell_count}</span></td>
+            </tbody>
+          </table>
+        </div>
+        <div id="candlestick-chart_rsi_14" data-name="rsi_14_Chart" style="width: 100%; height: 600px"></div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Overbought</td>
+                <td>{RSI_14_Overbought_Flag}</td>
+              </tr>
+              <tr>
+                <td>Oversold</td>
+                <td>{RSI_14_Oversold_Flag}</td>
+              </tr>
+              <tr>
+                <td>Neutral</td>
+                <td>{RSI_14_Neutral_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bearish Divergence</td>
+                <td>{RSI_14_Bearish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bullish Divergence</td>
+                <td>{RSI_14_Bullish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Swing Failure (Buy)</td>
+                <td>{RSI_14_Swing_Failure_Buy_Flag}</td>
+              </tr>
+              <tr>
+                <td>Swing Failure (Sell)</td>
+                <td>{RSI_14_Swing_Failure_Sell_Flag}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <article class="description-box">
+          <h3>Overbought & Oversold Description:</h3>
+          <p>{RSI_14_Overbought_Oversold_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Divergence Description:</h3>
+          <p>{RSI_14_Divergence_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Swings Description:</h3>
+          <p>{RSI_14_Swings_Desc}</p>
+        </article>
+      </div>
+
+      <button id="rsi25Button" class="collapsible">
+        RSI_25 Indicator and Description
+      </button>
+      <div class="collapsible-content">
+        <div class="indicator-values">
+          <p><strong>RSI_25 Value:</strong> {RSI_25}</p>
+        </div>
+        <button class="collapsible">Stock Table _ RSI_25</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="rsi_25_ScrollableTable">{table_rsi_25}</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="rsi_25_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{RSI_25_buy_count}</span></td>
+              <td><span class="green">{RSI_25_neutral_count}</span></td>
+              <td><span class="green">{RSI_25_sell_count}</span></td>
+            </tbody>
+          </table>
+        </div>
+        <div id="candlestick-chart_rsi_25" data-name="rsi_25_Chart" style="width: 100%; height: 600px"></div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Overbought</td>
+                <td>{RSI_25_Overbought_Flag}</td>
+              </tr>
+              <tr>
+                <td>Oversold</td>
+                <td>{RSI_25_Oversold_Flag}</td>
+              </tr>
+              <tr>
+                <td>Neutral</td>
+                <td>{RSI_25_Neutral_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bearish Divergence</td>
+                <td>{RSI_25_Bearish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bullish Divergence</td>
+                <td>{RSI_25_Bullish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Swing Failure (Buy)</td>
+                <td>{RSI_25_Swing_Failure_Buy_Flag}</td>
+              </tr>
+              <tr>
+                <td>Swing Failure (Sell)</td>
+                <td>{RSI_25_Swing_Failure_Sell_Flag}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <article class="description-box">
+          <h3>Overbought & Oversold Description:</h3>
+          <p>{RSI_25_Overbought_Oversold_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Divergence Description:</h3>
+          <p>{RSI_25_Divergence_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Swings Description:</h3>
+          <p>{RSI_25_Swings_Desc}</p>
+        </article>
+      </div>
+
+      <button id="STOCH_9_6_3Button" class="collapsible">
+        STOCHk_9_6_3 Indicator and Description
+      </button>
+      <div class="collapsible-content">
+        <!-- Indicator Values -->
+        <div class="indicator-values">
+          <p><strong>STOCHk_9_6_3 Value:</strong> {STOCHk_9_6_3}</p>
+          <p><strong>STOCHd_9_6_3 Value:</strong> {STOCHd_9_6_3}</p>
+        </div>
+        <button class="collapsible">Stock Table _ STOCH_9_6_3</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="stoch_9_6_3_ScrollableTable">{table_stoch_9_6_3}</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="STOCH_9_6_3_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{STOCH_9_6_3_buy_count}</span></td>
+              <td><span class="green">{STOCH_9_6_3_neutral_count}</span></td>
+              <td><span class="green">{STOCH_9_6_3_sell_count}</span></td>
+            </tbody>
+          </table>
+        </div>
+        <div id="candlestick-chart_stoch_9_6_3" data-name="stoch_9_6_3_Chart" style="width: 100%; height: 600px"></div>
+        <!-- Table for Flags -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Overbought</td>
+                <td>{STOCH_9_6_3_Overbought_Flag}</td>
+              </tr>
+              <tr>
+                <td>Oversold</td>
+                <td>{STOCH_9_6_3_Oversold_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bullish Crossover</td>
+                <td>{STOCH_9_6_3_Bullish_Crossover_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bearish Crossover</td>
+                <td>{STOCH_9_6_3_Bearish_Crossover_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bullish Divergence</td>
+                <td>{STOCH_9_6_3_Bullish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Bearish Divergence</td>
+                <td>{STOCH_9_6_3_Bearish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>Midpoint Cross Up</td>
+                <td>{STOCH_9_6_3_Midpoint_Cross_Up_Flag}</td>
+              </tr>
+              <tr>
+                <td>Midpoint Cross Down</td>
+                <td>{STOCH_9_6_3_Midpoint_Cross_Down_Flag}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Description Articles -->
+        <article class="description-box">
+          <h3>Overbought & Oversold Description:</h3>
+          <p>{STOCH_9_6_3_Overbought/Oversold_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Divergence Description:</h3>
+          <p>{STOCH_9_6_3_Divergence_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>Swings Description:</h3>
+          <p>{STOCH_9_6_3_Swings_Desc}</p>
+        </article>
+      </div>
+      <button id="cmf20Button" class="collapsible">
+        CMF_20 Indicators and Description
+      </button>
+      <div class="collapsible-content">
+        <!-- CMF_20 Value -->
+        <div class="cmf-values">
+          <p><strong>CMF_20:</strong>{CMF_20}</p>
+        </div>
+        <button class="collapsible">Stock Table _ CMF_20</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="cmf_20_ScrollableTable">{table_cmf_20}</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="cmf_20_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{CMF_buy_count}</span></td>
+              <td><span class="green">{CMF_neutral_count}</span></td>
+              <td><span class="green">{CMF_sell_count}</span></td>
+            </tbody>
+          </table>
+        </div>
+        <div id="candlestick-chart_cmf_20" data-name="cmf_20_Chart" style="width: 100%; height: 600px"></div>
+        <!-- Flag Indicators Table for CMF_20 -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>CMF Positive</td>
+                <td>{CMF_Positive_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Negative</td>
+                <td>{CMF_Negative_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Neutral</td>
+                <td>{CMF_Neutral_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Zero Crossover Up</td>
+                <td>{CMF_Zero_Crossover_Up_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Zero Crossover Down</td>
+                <td>{CMF_Zero_Crossover_Down_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Above SMA50</td>
+                <td>{CMF_Above_SMA50_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Below SMA50</td>
+                <td>{CMF_Below_SMA50_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Overbought</td>
+                <td>{CMF_Overbought_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Oversold</td>
+                <td>{CMF_Oversold_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Bullish Divergence</td>
+                <td>{CMF_Bullish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>CMF Bearish Divergence</td>
+                <td>{CMF_Bearish_Divergence_Flag}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Description Boxes for CMF_20 -->
+        <article class="description-box">
+          <h3>CMF Value Range Description:</h3>
+          <p>{CMF_Value_Range_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>CMF Zero Crossover Description:</h3>
+          <p>{CMF_Zero_Crossover_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>CMF SMA Comparison Description:</h3>
+          <p>{CMF_SMA_Comparison_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>CMF Overbought/Oversold Description:</h3>
+          <p>{CMF_Overbought_Oversold_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>CMF Divergence Description:</h3>
+          <p>{CMF_Divergence_Desc}</p>
+        </article>
+      </div>
+      <button id="MACD_12_26_9Button" class="collapsible">
+        MACD_12_26_9 Indicators and Description
+      </button>
+      <div class="collapsible-content">
+        <!-- CMF_20 Value -->
+        <div class="macd-values">
+          <p><strong>MACD Value:</strong> {MACD_12_26_9}</p>
+          <p><strong>MACD Signal:</strong> {MACDs_12_26_9}</p>
+          <p><strong>MACD Histogram:</strong> {MACDh_12_26_9}</p>
+        </div>
+        <button class="collapsible">Stock Table _ MACD_12_26_9</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="macd_12_26_9_ScrollableTable">
+              {table_macd_12_26_9}
             </div>
-       
-            <button id="rsi9Button" class="collapsible">RSI_9 Indicator and Description</button>
-            <div class="collapsible-content">
-                <div class="indicator-values">
-                    <p><strong>RSI_9 Value:</strong> {RSI_9}</p>
-                </div>
-                <button class="collapsible">Stock Table _ RSI_9</button>
-                <div class="collapsible-content"> 
-                    <div class="table-container">
-                        <div class="rsi_9_ScrollableTable">
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="macd_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{MACD_buy_count}</span></td>
+              <td><span class="green">{MACD_sell_count}</span></td>
+              <td><span class="green">{MACD_neutral_count}</span></td>
+            </tbody>
+          </table>
+        </div>
+        <div id="candlestick-chart_macd_12_26_9" data-name="macd_12_26_9_Chart" style="width: 100%; height: 600px">
+        </div>
+        <!-- Flag Indicators Table for CMF_20 -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>MACD Bullish Crossover</td>
+                <td>{MACD_Bullish_Crossover_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Bearish Crossover</td>
+                <td>{MACD_Bearish_Crossover_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Above Zero</td>
+                <td>{MACD_Above_Zero_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Below Zero</td>
+                <td>{MACD_Below_Zero_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Bullish Divergence</td>
+                <td>{MACD_Bullish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Bearish Divergence</td>
+                <td>{MACD_Bearish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Histogram Positive</td>
+                <td>{MACD_Histogram_Positive_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Histogram Negative</td>
+                <td>{MACD_Histogram_Negative_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Histogram Reversal Positive</td>
+                <td>{MACD_Histogram_Reversal_Positive_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Histogram Reversal Negative</td>
+                <td>{MACD_Histogram_Reversal_Negative_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Trending Up</td>
+                <td>{MACD_Trending_Up_Flag}</td>
+              </tr>
+              <tr>
+                <td>MACD Trending Down</td>
+                <td>{MACD_Trending_Down_Flag}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-                                {table_rsi_9}
+        <!-- Description Boxes for CMF_20 -->
+        <article class="description-box">
+          <h3>MACD Crossover Desc Description:</h3>
+          <p>{MACD_Crossover_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>MACD Zero Line Description:</h3>
+          <p>{MACD_Zero_Line_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>MACD Divergence Description:</h3>
+          <p>{MACD_Divergence_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>MACD Histogram Description:</h3>
+          <p>{MACD_Histogram_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>MACD Histogram Reversal Description:</h3>
+          <p>{MACD_Histogram_Reversal_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>MACD Trend Description:</h3>
+          <p>{MACD_Trend_Desc}</p>
+        </article>
+      </div>
+      <!-- OBV -->
+      <button id="obvButton" class="collapsible">
+        OBV Indicators and Description
+      </button>
+      <div class="collapsible-content">
+        <div class="cmf-values">
+          <p><strong>OBV:</strong>{OBV}</p>
+          <p><strong>OBV_SMA:</strong>{OBV_SMA}</p>
+          <p><strong>OBV_RoC:</strong>{OBV_RoC}</p>
+        </div>
+        <button class="collapsible">Stock Table _ OBV</button>
+        <div class="collapsible-content">
+          <div class="table-container">
+            <div class="obv_ScrollableTable">{table_obv}</div>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="obv_rec_count">
+            <thead>
+              <tr>
+                <th scope="col">Buy</th>
+                <th scope="col">Neutral</th>
+                <th scope="col">Sell</th>
+              </tr>
+            </thead>
+            <tbody>
+              <td><span class="green">{OBV_buy_count}</span></td>
+              <td><span class="green">{OBV_neutral_count}</span></td>
+              <td><span class="green">{OBV_sell_count}</span></td>
+            </tbody>
+          </table>
+        </div>
+        <div id="candlestick-chart_obv" data-name="obv_Chart" style="width: 100%; height: 600px"></div>
+        <!-- Flag Indicators Table for OBV -->
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th scope="col">Flag Name</th>
+                <th scope="col">Flag Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>OBV Increasing</td>
+                <td>{OBV_Increasing_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV Decreasing</td>
+                <td>{OBV_Decreasing_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV above SMA</td>
+                <td>{OBV_above_SMA_Flag}</td>
+              </tr>
+              <tr>
+                <td>BV below SMA</td>
+                <td>{OBV_below_SMA_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV Surge</td>
+                <td>{OBV_Surge_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV Plunge</td>
+                <td>{OBV_Plunge_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV Price Bullish Divergence</td>
+                <td>{OBV_Price_Bullish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV Price Bearish Divergence</td>
+                <td>{OBV_Price_Bearish_Divergence_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV RSI Bullish</td>
+                <td>{OBV_RSI_Bullish_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV RSI Bearish</td>
+                <td>{OBV_RSI_Bearish_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV Stoch Bullish</td>
+                <td>{OBV_Stoch_Bullish_Flag}</td>
+              </tr>
+              <tr>
+                <td>OBV Stoch Bearish</td>
+                <td>{OBV_Stoch_Bearish_Flag}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table class="rsi_9_rec_count">
-                        <thead>
-                            <tr>
-                                <th scope="col">Buy</th>
-                                <th scope="col">Neutral</th>
-                                <th scope="col">Sell</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><span class="green">{RSI_9_buy_count}</span></td>
-                            <td><span class="green">{RSI_9_neutral_count}</span></td>
-                            <td><span class="green">{RSI_9_sell_count}</span></td>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="candlestick-chart_rsi_9" data-name="rsi_9_Chart" style="width: 100%; height: 600px;"></div>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Flag Name</th>
-                                <th scope="col">Flag Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Overbought</td>
-                                <td>{RSI_9_Overbought_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Oversold</td>
-                                <td>{RSI_9_Oversold_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Neutral</td>
-                                <td>{RSI_9_Neutral_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bearish Divergence</td>
-                                <td>{RSI_9_Bearish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bullish Divergence</td>
-                                <td>{RSI_9_Bullish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Swing Failure (Buy)</td>
-                                <td>{RSI_9_Swing_Failure_Buy_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Swing Failure (Sell)</td>
-                                <td>{RSI_9_Swing_Failure_Sell_Flag}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <article class="description-box">
-                    <h3>Overbought & Oversold Description:</h3>
-                    <p>{RSI_9_Overbought_Oversold_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Divergence Description:</h3>
-                    <p>{RSI_9_Divergence_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Swings Description:</h3>
-                    <p>{RSI_9_Swings_Desc}</p>
-                </article>
-            </div>
+        <!-- Description Boxes for CMF_20 -->
+        <article class="description-box">
+          <h3>OBV Value Description:</h3>
+          <p>{OBV_Value_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>OBV Trend Description:</h3>
+          <p>{OBV_Trend_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>OBV RoC Description:</h3>
+          <p>{OBV_RoC_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>OBV Divergence Description:</h3>
+          <p>{OBV_Divergence_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>OBV RSI_14 Description:</h3>
+          <p>{OBV_RSI_14_Desc}</p>
+        </article>
+        <article class="description-box">
+          <h3>OBV Stoch Description:</h3>
+          <p>{OBV_Stoch_Desc}</p>
+        </article>
+      </div>
+    </section>
+  </main>
+  <a href="#">Back to Top</a>
+  <footer>&copy; 2023 The Iraqi Investor. All Rights Reserved.</footer>
 
-            <button id="rsi14Button" class="collapsible">RSI_14 Indicator and Description</button>
-            <div class="collapsible-content">
-                <div class="indicator-values">
-                    <p><strong>RSI_14 Value:</strong> {RSI_14}</p>
-                </div>
-                <button class="collapsible">Stock Table _ RSI_14</button>
-                <div class="collapsible-content"> 
-                    <div class="table-container">
-                        <div class="rsi_14_ScrollableTable">
-
-                                {table_rsi_14}
-
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table class="rsi_14_rec_count">
-                        <thead>
-                            <tr>
-                                <th scope="col">Buy</th>
-                                <th scope="col">Neutral</th>
-                                <th scope="col">Sell</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><span class="green">{RSI_14_buy_count}</span></td>
-                            <td><span class="green">{RSI_14_neutral_count}</span></td>
-                            <td><span class="green">{RSI_14_sell_count}</span></td>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="candlestick-chart_rsi_14" data-name="rsi_14_Chart" style="width: 100%; height: 600px;"></div>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Flag Name</th>
-                                <th scope="col">Flag Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Overbought</td>
-                                <td>{RSI_14_Overbought_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Oversold</td>
-                                <td>{RSI_14_Oversold_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Neutral</td>
-                                <td>{RSI_14_Neutral_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bearish Divergence</td>
-                                <td>{RSI_14_Bearish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bullish Divergence</td>
-                                <td>{RSI_14_Bullish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Swing Failure (Buy)</td>
-                                <td>{RSI_14_Swing_Failure_Buy_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Swing Failure (Sell)</td>
-                                <td>{RSI_14_Swing_Failure_Sell_Flag}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <article class="description-box">
-                    <h3>Overbought & Oversold Description:</h3>
-                    <p>{RSI_14_Overbought_Oversold_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Divergence Description:</h3>
-                    <p>{RSI_14_Divergence_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Swings Description:</h3>
-                    <p>{RSI_14_Swings_Desc}</p>
-                </article>
-            </div>
-       
-            <button id="rsi25Button" class="collapsible">RSI_25 Indicator and Description</button>
-            <div class="collapsible-content">
-                <div class="indicator-values">
-                    <p><strong>RSI_25 Value:</strong> {RSI_25}</p>
-                </div>
-                <button class="collapsible">Stock Table _ RSI_25</button>
-                <div class="collapsible-content"> 
-                    <div class="table-container">
-                        <div class="rsi_25_ScrollableTable">
-
-                                {table_rsi_25}
-
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table class="rsi_25_rec_count">
-                        <thead>
-                            <tr>
-                                <th scope="col">Buy</th>
-                                <th scope="col">Neutral</th>
-                                <th scope="col">Sell</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><span class="green">{RSI_25_buy_count}</span></td>
-                            <td><span class="green">{RSI_25_neutral_count}</span></td>
-                            <td><span class="green">{RSI_25_sell_count}</span></td>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="candlestick-chart_rsi_25" data-name="rsi_25_Chart" style="width: 100%; height: 600px;"></div>
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Flag Name</th>
-                                <th scope="col">Flag Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Overbought</td>
-                                <td>{RSI_25_Overbought_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Oversold</td>
-                                <td>{RSI_25_Oversold_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Neutral</td>
-                                <td>{RSI_25_Neutral_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bearish Divergence</td>
-                                <td>{RSI_25_Bearish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bullish Divergence</td>
-                                <td>{RSI_25_Bullish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Swing Failure (Buy)</td>
-                                <td>{RSI_25_Swing_Failure_Buy_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Swing Failure (Sell)</td>
-                                <td>{RSI_25_Swing_Failure_Sell_Flag}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <article class="description-box">
-                    <h3>Overbought & Oversold Description:</h3>
-                    <p>{RSI_25_Overbought_Oversold_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Divergence Description:</h3>
-                    <p>{RSI_25_Divergence_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Swings Description:</h3>
-                    <p>{RSI_25_Swings_Desc}</p>
-                </article>
-            </div>
-            
-            <button id="STOCH_9_6_3Button" class="collapsible">STOCHk_9_6_3 Indicator and Description</button>
-            <div class="collapsible-content">
-
-                <!-- Indicator Values -->
-                <div class="indicator-values">
-                    <p><strong>STOCHk_9_6_3 Value:</strong> {STOCHk_9_6_3}</p>
-                    <p><strong>STOCHd_9_6_3 Value:</strong> {STOCHd_9_6_3}</p>
-                </div>
-                <button class="collapsible">Stock Table _ STOCH_9_6_3</button>
-                <div class="collapsible-content"> 
-                    <div class="table-container">
-                        <div class="stoch_9_6_3_ScrollableTable">
-
-                                {table_stoch_9_6_3}
-
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table class="STOCH_9_6_3_rec_count">
-                        <thead>
-                            <tr>
-                                <th scope="col">Buy</th>
-                                <th scope="col">Neutral</th>
-                                <th scope="col">Sell</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><span class="green">{STOCH_9_6_3_buy_count}</span></td>
-                            <td><span class="green">{STOCH_9_6_3_neutral_count}</span></td>
-                            <td><span class="green">{STOCH_9_6_3_sell_count}</span></td>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="candlestick-chart_stoch_9_6_3" data-name="stoch_9_6_3_Chart" style="width: 100%; height: 600px;"></div>
-                <!-- Table for Flags -->
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Flag Name</th>
-                                <th scope="col">Flag Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Overbought</td>
-                                <td>{STOCH_9_6_3_Overbought_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Oversold</td>
-                                <td>{STOCH_9_6_3_Oversold_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bullish Crossover</td>
-                                <td>{STOCH_9_6_3_Bullish_Crossover_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bearish Crossover</td>
-                                <td>{STOCH_9_6_3_Bearish_Crossover_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bullish Divergence</td>
-                                <td>{STOCH_9_6_3_Bullish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Bearish Divergence</td>
-                                <td>{STOCH_9_6_3_Bearish_Divergence_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Midpoint Cross Up</td>
-                                <td>{STOCH_9_6_3_Midpoint_Cross_Up_Flag}</td>
-                            </tr>
-                            <tr>
-                                <td>Midpoint Cross Down</td>
-                                <td>{STOCH_9_6_3_Midpoint_Cross_Down_Flag}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- Description Articles -->
-                <article class="description-box">
-                    <h3>Overbought & Oversold Description:</h3>
-                    <p>{STOCH_9_6_3_Overbought/Oversold_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Divergence Description:</h3>
-                    <p>{STOCH_9_6_3_Divergence_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>Swings Description:</h3>
-                    <p>{STOCH_9_6_3_Swings_Desc}</p>
-                </article>
-            </div>
-            <button id="cmf20Button" class="collapsible">CMF_20 Indicators and Description</button>
-            <div class="collapsible-content">                
-                <!-- CMF_20 Value -->
-                <div class="cmf-values">
-                    <p><strong>CMF_20:</strong>{CMF_20}</p>
-                </div>
-                <button class="collapsible">Stock Table _ CMF_20</button>
-                <div class="collapsible-content"> 
-                    <div class="table-container">
-                        <div class="cmf_20_ScrollableTable">
-                                {table_cmf_20}
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table class="cmf_20_rec_count">
-                        <thead>
-                            <tr>
-                                <th scope="col">Buy</th>
-                                <th scope="col">Neutral</th>
-                                <th scope="col">Sell</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><span class="green">{CMF_buy_count}</span></td>
-                            <td><span class="green">{CMF_neutral_count}</span></td>
-                            <td><span class="green">{CMF_sell_count}</span></td>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="candlestick-chart_cmf_20" data-name="cmf_20_Chart" style="width: 100%; height: 600px;"></div>
-                <!-- Flag Indicators Table for CMF_20 -->
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Flag Name</th>
-                                <th scope="col">Flag Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>CMF Positive</td><td>{CMF_Positive_Flag}</td></tr>
-                            <tr><td>CMF Negative</td><td>{CMF_Negative_Flag}</td></tr>
-                            <tr><td>CMF Neutral</td><td>{CMF_Neutral_Flag}</td></tr>
-                            <tr><td>CMF Zero Crossover Up</td><td>{CMF_Zero_Crossover_Up_Flag}</td></tr>
-                            <tr><td>CMF Zero Crossover Down</td><td>{CMF_Zero_Crossover_Down_Flag}</td></tr>
-                            <tr><td>CMF Above SMA50</td><td>{CMF_Above_SMA50_Flag}</td></tr>
-                            <tr><td>CMF Below SMA50</td><td>{CMF_Below_SMA50_Flag}</td></tr>
-                            <tr><td>CMF Overbought</td><td>{CMF_Overbought_Flag}</td></tr>
-                            <tr><td>CMF Oversold</td><td>{CMF_Oversold_Flag}</td></tr>
-                            <tr><td>CMF Bullish Divergence</td><td>{CMF_Bullish_Divergence_Flag}</td></tr>
-                            <tr><td>CMF Bearish Divergence</td><td>{CMF_Bearish_Divergence_Flag}</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Description Boxes for CMF_20 -->
-                <article class="description-box">
-                    <h3>CMF Value Range Description:</h3>
-                    <p>{CMF_Value_Range_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>CMF Zero Crossover Description:</h3>
-                    <p>{CMF_Zero_Crossover_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>CMF SMA Comparison Description:</h3>
-                    <p>{CMF_SMA_Comparison_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>CMF Overbought/Oversold Description:</h3>
-                    <p>{CMF_Overbought_Oversold_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>CMF Divergence Description:</h3>
-                    <p>{CMF_Divergence_Desc}</p>
-                </article>                
-            </div>
-            <button id="MACD_12_26_9Button" class="collapsible">MACD_12_26_9 Indicators and Description</button>
-            <div class="collapsible-content">
-                
-                <!-- CMF_20 Value -->
-                <div class="macd-values">
-                    <p><strong>MACD Value:</strong> {MACD_12_26_9}</p>
-                    <p><strong>MACD Signal:</strong> {MACDs_12_26_9}</p>
-                    <p><strong>MACD Histogram:</strong> {MACDh_12_26_9}</p>
-                </div>
-                <button class="collapsible">Stock Table _ MACD_12_26_9</button>
-                <div class="collapsible-content"> 
-                    <div class="table-container">
-                        <div class="macd_12_26_9_ScrollableTable">
-
-                                {table_macd_12_26_9}
-
-                        </div>
-                    </div>
-                </div>
-                <div class="table-container">
-                    <table class="macd_rec_count">
-                        <thead>
-                            <tr>
-                                <th scope="col">Buy</th>
-                                <th scope="col">Neutral</th>
-                                <th scope="col">Sell</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><span class="green">{MACD_buy_count}</span></td>
-                            <td><span class="green">{MACD_sell_count}</span></td>
-                            <td><span class="green">{MACD_neutral_count}</span></td>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="candlestick-chart_macd_12_26_9" data-name="macd_12_26_9_Chart" style="width: 100%; height: 600px;"></div>
-                <!-- Flag Indicators Table for CMF_20 -->
-                <div class="table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Flag Name</th>
-                                <th scope="col">Flag Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>MACD Bullish Crossover</td><td>{MACD_Bullish_Crossover_Flag}</td></tr>
-                            <tr><td>MACD Bearish Crossover</td><td>{MACD_Bearish_Crossover_Flag}</td></tr>
-                            <tr><td>MACD Above Zero</td><td>{MACD_Above_Zero_Flag}</td></tr>
-                            <tr><td>MACD Below Zero</td><td>{MACD_Below_Zero_Flag}</td></tr>
-                            <tr><td>MACD Bullish Divergence</td><td>{MACD_Bullish_Divergence_Flag}</td></tr>
-                            <tr><td>MACD Bearish Divergence</td><td>{MACD_Bearish_Divergence_Flag}</td></tr>
-                            <tr><td>MACD Histogram Positive</td><td>{MACD_Histogram_Positive_Flag}</td></tr>
-                            <tr><td>MACD Histogram Negative</td><td>{MACD_Histogram_Negative_Flag}</td></tr>
-                            <tr><td>MACD Histogram Reversal Positive</td><td>{MACD_Histogram_Reversal_Positive_Flag}</td></tr>
-                            <tr><td>MACD Histogram Reversal Negative</td><td>{MACD_Histogram_Reversal_Negative_Flag}</td></tr>
-                            <tr><td>MACD Trending Up</td><td>{MACD_Trending_Up_Flag}</td></tr>
-                            <tr><td>MACD Trending Down</td><td>{MACD_Trending_Down_Flag}</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Description Boxes for CMF_20 -->
-                <article class="description-box">
-                    <h3>MACD Crossover Desc Description:</h3>
-                    <p>{MACD_Crossover_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>MACD Zero Line Description:</h3>
-                    <p>{MACD_Zero_Line_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>MACD Divergence Description:</h3>
-                    <p>{MACD_Divergence_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>MACD Histogram Description:</h3>
-                    <p>{MACD_Histogram_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>MACD Histogram Reversal Description:</h3>
-                    <p>{MACD_Histogram_Reversal_Desc}</p>
-                </article>
-                <article class="description-box">
-                    <h3>MACD Trend Description:</h3>
-                    <p>{MACD_Trend_Desc}</p>
-                </article>
-            </div>
-        </section>
-</main>
-<a href="#">Back to Top</a>
-<footer>&copy; 2023 The Iraqi Investor. All Rights Reserved.</footer>
-
-<script src="chart_Main.js"></script>
-<script src="chart_SMA.js"></script>
-<script src="chart_rsi_9.js"></script>
-<script src="chart_rsi_14.js"></script>
-<script src="chart_rsi_25.js"></script>
-<script src="chart_stoch_9_6_3.js"></script>
-<script src="chart_macd_12_26_9.js"></script>
-<script src="chart_cmf_20.js"></script>
-<script src="collapsible_handler.js"></script>
-
+  <script src="chart_Main.js"></script>
+  <script src="chart_SMA.js"></script>
+  <script src="chart_rsi_9.js"></script>
+  <script src="chart_rsi_14.js"></script>
+  <script src="chart_rsi_25.js"></script>
+  <script src="chart_stoch_9_6_3.js"></script>
+  <script src="chart_macd_12_26_9.js"></script>
+  <script src="chart_cmf_20.js"></script>
+  <script src="chart_obv.js"></script>
+  <script src="collapsible_handler.js"></script>
 </body>
+
 </html>

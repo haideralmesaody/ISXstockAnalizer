@@ -1,230 +1,227 @@
 /* BASE STYLES */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 1rem;
-    background-color: #d2d6bc;
-    max-width: 794px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 1rem;
+  background-color: #d2d6bc;
+  max-width: 794px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 /* HEADER STYLES */
 .report-header {
-    background-color: #3b5940;
-    color: #fff;
-    text-align: left;
-    padding: 1rem;
-    display: flex;
-    margin-bottom: 1rem;
-    border-radius: 5px; 
-    justify-content: space-between;
-    align-items: center;
+  background-color: #3b5940;
+  color: #fff;
+  text-align: left;
+  padding: 1rem;
+  display: flex;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header-logo {
-    max-width: 25%;    
-    height: 70%;       
-    margin-left: auto; 
+  max-width: 25%;
+  height: 70%;
+  margin-left: auto;
 }
 
 /* TABLE STYLES */
 table {
-    width: 100%;
-    margin: 0 auto;
-    border: 1px solid #657860;
-    border-radius: 5px;
-    overflow: hidden;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #657860;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-table th, table td {
-    border: 1px solid #657860;
-    padding: 0.5rem;
-    text-align: left;
+table th,
+table td {
+  border: 1px solid #657860;
+  padding: 0.5rem;
+  text-align: left;
 }
 
 table thead {
-    background-color: #3b5940;
-    color: #fff;
+  background-color: #3b5940;
+  color: #fff;
 }
 
 table tbody tr:nth-child(odd) {
-    background-color: #b1b99f;
+  background-color: #b1b99f;
 }
 
 table tbody tr:nth-child(even) {
-    background-color: #88987e;
+  background-color: #88987e;
 }
 
 table tbody tr:hover {
-    background-color: #ddd;
+  background-color: #ddd;
 }
 
 .table-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1rem;
-    width: 100%;
-    max-height: 400px; /* Set the maximum height as needed */
-    overflow-x: auto; 
-    position: relative; /* Position relative for absolute header */
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-height: 400px; /* Set the maximum height as needed */
+  overflow-x: auto;
+  position: relative; /* Position relative for absolute header */
 }
 .scrollable-table {
-    width: 100%; /* Optional: Set the width of the scrollable table */
+  width: 100%; /* Optional: Set the width of the scrollable table */
 }
 /* Sticky table header */
 .scrollable-table table {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    background-color: white; /* Optional: Add a background color to the header */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: white; /* Optional: Add a background color to the header */
 }
 /* INDICATOR & DESCRIPTION SECTIONS */
-.stock-data, .indicator-section {
-    background-color: #fff;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid #88987e;
-    border-radius: 5px;
+.stock-data,
+.indicator-section {
+  background-color: #fff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #88987e;
+  border-radius: 5px;
 }
 
 .description-box {
-    background-color: #b1b99f;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s, box-shadow 0.3s;
+  background-color: #b1b99f;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .description-box:hover {
-    background-color: #d2d6bc;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    color: #202715;
+  background-color: #d2d6bc;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  color: #202715;
 }
 
 .description-box h3 {
-    border-bottom: 1px solid #657860;
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
+  border-bottom: 1px solid #657860;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 /* FOOTER STYLES */
 footer {
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding: 10px 0;
-    text-align: center;
-    background-color: #3b5940;
-    color: #fff;
-    border-top: 2px solid #88987e;
+  font-size: 0.9rem;
+  font-weight: bold;
+  padding: 10px 0;
+  text-align: center;
+  background-color: #3b5940;
+  color: #fff;
+  border-top: 2px solid #88987e;
 }
 
 /* COLLAPSIBLE STYLES */
 .collapsible {
-    background-color: #3b5940;
-    color: white;
-    cursor: pointer;
-    padding: 14px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-    transition: 0.4s;
-    border-radius: 5px;
+  background-color: #3b5940;
+  color: white;
+  cursor: pointer;
+  padding: 14px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+  border-radius: 5px;
 }
 
 .collapsible:hover {
-    background-color: #4a6a50;
+  background-color: #4a6a50;
 }
 
 .collapsible:after {
-    content: '+';
-    font-size: 24px;
-    font-weight: bold;
-    margin-left: 10px;
+  content: "+";
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 .collapsible.active:after {
-    content: '-';
+  content: "-";
 }
 
 .collapsible-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-    background-color: #f1f1f1;
-    padding: 0 18px;
-    transition: max-height 0.6s ease-in-out; /* This line creates a smooth transition */
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
+  padding: 0 18px;
+  transition: max-height 0.6s ease-in-out; /* This line creates a smooth transition */
 }
 
 .header-logo {
-    height: 80%;
-    width: auto;   
-    margin-left: 1rem;
+  height: 80%;
+  width: auto;
+  margin-left: 1rem;
 }
 
 /* RESPONSIVE STYLES */
 @media (max-width: 768px) {
-    .collapsible {
-        font-size: 20px;  
-    }
+  .collapsible {
+    font-size: 20px;
+  }
 
-    table {
-        font-size: 14px; 
-    }
+  table {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
-    .collapsible {
-        font-size: 16px;  
-    }
+  .collapsible {
+    font-size: 16px;
+  }
 
-    table {
-        font-size: 12px;
-    }
+  table {
+    font-size: 12px;
+  }
 }
 
 /* PRINT STYLES */
 @media print {
-    body {
-        margin: 0;
-        padding: 0;
-        box-shadow: none;
-    }
+  body {
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+  }
 
-    .page-break {
-        display: block;
-        page-break-before: always;
-    }
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
 }
 .report-date {
-    font-size: 1rem;  /* Adjusts the size */
-    color: #e8f5e4c5;     /* Gives it a subtle color */
-    margin-top: 0.5rem; /* Adds some spacing on top */
-    margin-bottom: 1rem; /* Adds some spacing below */
+  font-size: 1rem; /* Adjusts the size */
+  color: #e8f5e4c5; /* Gives it a subtle color */
+  margin-top: 0.5rem; /* Adds some spacing on top */
+  margin-bottom: 1rem; /* Adds some spacing below */
 }
 .table-container table {
-    font-size: 0.8rem; /* Adjust this value to make the font size as per your preference */
+  font-size: 0.8rem; /* Adjust this value to make the font size as per your preference */
 }
 
 .collapsible {
-    margin-bottom: 3px;  /* Adds space below each collapsible button */
+  margin-bottom: 3px; /* Adds space below each collapsible button */
 }
 
 .collapsible-content {
-    margin-bottom: 5px;  /* Adds space below each collapsible content */
+  margin-bottom: 5px; /* Adds space below each collapsible content */
 }
 
 .negative {
-    color: red;
+  color: red;
 }
 .positive {
-    color: green;
+  color: green;
 }
-
-
-
-
-
