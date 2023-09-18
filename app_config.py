@@ -7,7 +7,7 @@ DEBUG = True  # Debug flag to control logging and printing
 
 # Configure the logging settings
 LOGGING_CONFIG = {
-    'filename': 'app.log',
+    'filename': 'stock_analysis.log',
     'level': logging.DEBUG if DEBUG else logging.ERROR,
     'format': '%(asctime)s - %(levelname)s - %(message)s'
 }

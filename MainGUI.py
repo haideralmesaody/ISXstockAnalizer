@@ -44,17 +44,19 @@ current_directory = os.path.dirname(os.path.abspath(__file__))
 
 class MainGUI(QMainWindow):
 
-    start_data_fetching_signal = pyqtSignal(str,int)
+    start_data_fetching_signal = pyqtSignal(str, int)
     save_data_signal = pyqtSignal()
     indicator_checkbox_changed_signal = pyqtSignal(list)
     indicator_values_updated_signal = pyqtSignal(dict)
     generate_report_signal = pyqtSignal()
+
     def __init__(self, data_processing=None):
         super(MainGUI, self).__init__()
 
         self.logger = Logger(DEBUG)  # Initialize the logger FIRST
         try:
-            self.logger.log_or_print("MainGUI: Initializing...", level="DEBUG", module="MainGUI")
+            self.logger.log_or_print(
+                "MainGUI: Initializing...", level="DEBUG", module="MainGUI")
 
             self.data_processing = data_processing
             self.some_var = None  # Initialize all class variables here
@@ -66,41 +68,51 @@ class MainGUI(QMainWindow):
             # Connect signals
             self.start_button.clicked.connect(self.emit_fetch_data_signal)
             self.save_button.clicked.connect(self.emit_save_data_signal)
-            self.generate_report_button.clicked.connect(self.emit_generate_report_signal)
-            
-            self.sma_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
-            self.rsi_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
-            self.rsi_9_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
-            self.rsi_25_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
-            self.stoch_checkbox.stateChanged.connect(self.on_indicator_checkbox_changed)
-            #self.sma_checkbox.stateChanged.connect() - to be used later
+            self.generate_report_button.clicked.connect(
+                self.emit_generate_report_signal)
+
+            self.sma_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            self.rsi_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            self.rsi_9_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            self.rsi_25_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            self.stoch_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            self.cmf_20_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            self.macd_12_26_9_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            self.obv_checkbox.stateChanged.connect(
+                self.on_indicator_checkbox_changed)
+            # self.sma_checkbox.stateChanged.connect() - to be used later
             # ... (rest of your signal connections)
 
-            self.logger.log_or_print("MainGUI: Initialized.", level="DEBUG", module="MainGUI")
-            
+            self.logger.log_or_print(
+                "MainGUI: Initialized.", level="DEBUG", module="MainGUI")
+
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in MainGUI.__init__: {str(e)}. Stack Trace: {traceback.format_exc()}", level="ERROR", module="MainGUI")
+            self.logger.log_or_print(
+                f"An unexpected error occurred in MainGUI.__init__: {str(e)}. Stack Trace: {traceback.format_exc()}", level="ERROR", module="MainGUI")
             raise  # re-raise the exception for higher-level handling
 
     def initialize(self):
-        self.logger.log_or_print("MainGUI: Initializing...", level="INFO", module="MainGUI")
-        self.logger.log_or_print("MainGUI: About to initialize UI.", level="DEBUG", module="MainGUI")
+
         try:
-            self.logger.log_or_print("About to call setup_ui...", level="DEBUG", module="MainGUI")
-            #self.setup_ui()
-            self.logger.log_or_print("Successfully called setup_ui.", level="DEBUG", module="MainGUI")
-            self.logger.log_or_print("About to call connect_buttons...", level="DEBUG", module="MainGUI")
+
             self.connect_buttons()
-            self.logger.log_or_print("Successfully called connect_buttons.", level="DEBUG", module="MainGUI")
-            self.logger.log_or_print("MainGUI: UI Initialized.", level="INFO", module="MainGUI")
+
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in initialize: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in initialize: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
     # rest of your code...
-            self.statusBar().showMessage("An unexpected error occurred. Check the log for details.")
+            self.statusBar().showMessage(
+                "An unexpected error occurred. Check the log for details.")
 
     def setup_ui(self):
-        self.logger.log_or_print("MainGUI: Creating UI...", level="INFO", module="MainGUI")
-        self.logger.log_or_print("MainGUI: Starting UI setup.", level="DEBUG", module="MainGUI")
+
         try:
             # Initialize Widgets
             self.initialize_widgets()
@@ -110,27 +122,31 @@ class MainGUI(QMainWindow):
 
             # Assemble Final UI
             if not hasattr(self, 'splitter'):
-                raise AttributeError("MainGUI object has no attribute 'splitter'")
+                raise AttributeError(
+                    "MainGUI object has no attribute 'splitter'")
             screen_width = self.width()
-            self.splitter.setSizes([int(0.05 * screen_width), int(0.80 * screen_width), int(0.15 * screen_width)])
+            self.splitter.setSizes(
+                [int(0.05 * screen_width), int(0.80 * screen_width), int(0.15 * screen_width)])
 
-            self.logger.log_or_print("MainGUI: UI created successfully.", level="INFO", module="MainGUI")
-            self.logger.log_or_print("MainGUI: Completed UI setup.", level="DEBUG", module="MainGUI")
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in create_ui: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in create_ui: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
     # rest of your code...
-            raise    
-
+            raise
 
     def initialize_widgets(self):
         try:
-            self.logger.log_or_print("MainGUI: Initializing RSI Details Tab widget.", level="DEBUG", module="MainGUI")
+
             self.rsi_details_tab = QTabWidget()
             self.rsi_interpretation_text = QTextEdit()
             self.rsi_divergence_text = QTextEdit()
             self.rsi_swing_text = QTextEdit()
             self.status_label = QLabel(self)
             self.ticker_input = QLineEdit()
+            # Set properties for QLineEdit
+            # A stands for an alphabetic character (A-Z, a-z)
+            self.ticker_input.setInputMask('>AAAAAAAAAA; ')
+            self.ticker_input.setMaxLength(4)  # Allow up to 4 characters
             self.rows_label = QLabel("Number of rows:")
             self.row_spin_box = QSpinBox()
             self.row_spin_box.setMinimum(1)
@@ -141,6 +157,9 @@ class MainGUI(QMainWindow):
             self.rsi_9_checkbox = QCheckBox("Show RSI_9")
             self.rsi_25_checkbox = QCheckBox("Show RSI_25")
             self.stoch_checkbox = QCheckBox("Show Stoch(9,6)")
+            self.cmf_20_checkbox = QCheckBox("Show CMF_20")
+            self.macd_12_26_9_checkbox = QCheckBox("Show MACD_12_26_9")
+            self.obv_checkbox = QCheckBox("Show OBV")
             self.sma_period_spinbox = QSpinBox()
             self.sma_period_spinbox.setMinimum(1)
             self.sma_period_spinbox.setMaximum(200)
@@ -149,6 +168,9 @@ class MainGUI(QMainWindow):
             self.rsi_14_label = QLabel("RSI_14: -")
             self.rsi_25_label = QLabel("RSI_25: -")
             self.stoch_label = QLabel("Stoch: -")
+            self.cmf_20_label = QLabel("CMF_20: -")
+            self.macd_12_26_9_label = QLabel("MACD_12_26_9: -")
+            self.OBV_label = QLabel("OBV: -")
             self.start_button = QPushButton("Start")
             self.save_button = QPushButton("Save")
             self.generate_report_button = QPushButton("Generate Report")
@@ -159,12 +181,14 @@ class MainGUI(QMainWindow):
             self.rsi_divergence_text.setReadOnly(True)
             self.rsi_swing_text.setReadOnly(True)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in initialize_widgets: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in initialize_widgets: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
     # rest of your code...
             raise
+
     def setup_layouts(self):
         try:
-            self.logger.log_or_print("MainGUI: Setting up layouts.", level="DEBUG", module="MainGUI")
+
             main_layout = QHBoxLayout()
             self.splitter = QSplitter()
 
@@ -181,7 +205,10 @@ class MainGUI(QMainWindow):
             left_layout.addWidget(self.rsi_checkbox)
             left_layout.addWidget(self.rsi_25_checkbox)
             left_layout.addWidget(self.stoch_checkbox)
-            left_layout.addWidget(self.start_button)               
+            left_layout.addWidget(self.cmf_20_checkbox)
+            left_layout.addWidget(self.macd_12_26_9_checkbox)
+            left_layout.addWidget(self.obv_checkbox)
+            left_layout.addWidget(self.start_button)
             left_layout.addWidget(self.save_button)
             left_layout.addWidget(self.generate_report_button)
             self.splitter.addWidget(self.left_widget)
@@ -201,9 +228,14 @@ class MainGUI(QMainWindow):
             right_layout.addWidget(self.rsi_14_label)
             right_layout.addWidget(self.rsi_25_label)
             right_layout.addWidget(self.stoch_label)
+            right_layout.addWidget(self.cmf_20_label)
+            right_layout.addWidget(self.macd_12_26_9_label)
+            right_layout.addWidget(self.OBV_label)
             self.splitter.addWidget(self.right_widget)
-            self.rsi_details_tab.addTab(self.rsi_interpretation_text, "RSI_Interpretation")
-            self.rsi_details_tab.addTab(self.rsi_divergence_text, "RSI_Divergence")
+            self.rsi_details_tab.addTab(
+                self.rsi_interpretation_text, "RSI_Interpretation")
+            self.rsi_details_tab.addTab(
+                self.rsi_divergence_text, "RSI_Divergence")
             self.rsi_details_tab.addTab(self.rsi_swing_text, "RSI_Swing")
             right_layout.addWidget(self.rsi_details_tab)
 
@@ -212,9 +244,11 @@ class MainGUI(QMainWindow):
             central_widget.setLayout(main_layout)
             self.setCentralWidget(central_widget)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in setup_layouts: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in setup_layouts: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
     # rest of your code...
             raise
+
     def update_RSI_tabs(self):
         try:
             # Clear the tabs
@@ -224,7 +258,8 @@ class MainGUI(QMainWindow):
 
             # Ensure the dataframe is available
             if self.df is None or self.df.empty:
-                raise ValueError("DataFrame is either None or empty. Cannot update RSI tabs.")
+                raise ValueError(
+                    "DataFrame is either None or empty. Cannot update RSI tabs.")
 
             # Get the last row of the dataframe which contains the latest data
             latest_data = self.df.iloc[-1]
@@ -243,27 +278,38 @@ class MainGUI(QMainWindow):
                 rsi_value = latest_data.get(f'RSI_{rsi_period}', None)
                 if rsi_value:
                     # Update Interpretation Tab
-                    self.rsi_interpretation_text.append(f"RSI {rsi_period}: {get_rsi_recommendation(rsi_value)}")
+                    self.rsi_interpretation_text.append(
+                        f"RSI {rsi_period}: {get_rsi_recommendation(rsi_value)}")
 
                     # Divergence Tab
-                    bullish_divergence_flag = latest_data.get(f'RSI_{rsi_period}_Bullish Divergence_Flag', False)
-                    bearish_divergence_flag = latest_data.get(f'RSI_{rsi_period}_Bearish Divergence_Flag', False)
+                    bullish_divergence_flag = latest_data.get(
+                        f'RSI_{rsi_period}_Bullish Divergence_Flag', False)
+                    bearish_divergence_flag = latest_data.get(
+                        f'RSI_{rsi_period}_Bearish Divergence_Flag', False)
                     if bullish_divergence_flag:
-                        self.rsi_divergence_text.append(f"RSI {rsi_period}: Bullish Divergence detected. Might indicate a potential upward reversal.")
+                        self.rsi_divergence_text.append(
+                            f"RSI {rsi_period}: Bullish Divergence detected. Might indicate a potential upward reversal.")
                     elif bearish_divergence_flag:
-                        self.rsi_divergence_text.append(f"RSI {rsi_period}: Bearish Divergence detected. Might indicate a potential downward reversal.")
+                        self.rsi_divergence_text.append(
+                            f"RSI {rsi_period}: Bearish Divergence detected. Might indicate a potential downward reversal.")
                     else:
-                        self.rsi_divergence_text.append(f"RSI {rsi_period}: No divergence detected. The current price trend is confirmed by RSI. Continue monitoring for potential future divergences.")
+                        self.rsi_divergence_text.append(
+                            f"RSI {rsi_period}: No divergence detected. The current price trend is confirmed by RSI. Continue monitoring for potential future divergences.")
 
                     # Swing Tab
-                    swing_buy_flag = latest_data.get(f'RSI_{rsi_period}_Swing Failure Buy_Flag', False)
-                    swing_sell_flag = latest_data.get(f'RSI_{rsi_period}_Swing Failure Sell_Flag', False)
+                    swing_buy_flag = latest_data.get(
+                        f'RSI_{rsi_period}_Swing Failure Buy_Flag', False)
+                    swing_sell_flag = latest_data.get(
+                        f'RSI_{rsi_period}_Swing Failure Sell_Flag', False)
                     if swing_buy_flag:
-                        self.rsi_swing_text.append(f"RSI {rsi_period}: Swing Failure Buy detected. Might indicate a potential buy signal.")
+                        self.rsi_swing_text.append(
+                            f"RSI {rsi_period}: Swing Failure Buy detected. Might indicate a potential buy signal.")
                     elif swing_sell_flag:
-                        self.rsi_swing_text.append(f"RSI {rsi_period}: Swing Failure Sell detected. Might indicate a potential sell signal.")
+                        self.rsi_swing_text.append(
+                            f"RSI {rsi_period}: Swing Failure Sell detected. Might indicate a potential sell signal.")
                     else:
-                        self.rsi_swing_text.append(f"RSI {rsi_period}: No swing failures detected. The asset's momentum is consistent with its current trend. Stay alert for potential shifts in momentum in the future.")
+                        self.rsi_swing_text.append(
+                            f"RSI {rsi_period}: No swing failures detected. The asset's momentum is consistent with its current trend. Stay alert for potential shifts in momentum in the future.")
 
                     # Update RSI Labels
                     label = getattr(self, f"rsi_{rsi_period}_label", None)
@@ -271,31 +317,28 @@ class MainGUI(QMainWindow):
                         label.setText(f"RSI_{rsi_period}: {rsi_value:.2f}")
 
         except KeyError as ke:
-            self.logger.log_or_print(f"KeyError while updating RSI tabs: {str(ke)}", level="ERROR", exc_info=True)
+            self.logger.log_or_print(
+                f"KeyError while updating RSI tabs: {str(ke)}", level="ERROR", exc_info=True)
             self.statusBar().showMessage(f"KeyError: {str(ke)}")
 
         except ValueError as ve:
-            self.logger.log_or_print(f"ValueError while updating RSI tabs: {str(ve)}", level="ERROR", exc_info=True)
+            self.logger.log_or_print(
+                f"ValueError while updating RSI tabs: {str(ve)}", level="ERROR", exc_info=True)
             self.statusBar().showMessage(f"ValueError: {str(ve)}")
 
         except Exception as e:
-            self.logger.log_or_print(f"Unexpected error while updating RSI tabs: {str(e)}", level="ERROR", exc_info=True)
+            self.logger.log_or_print(
+                f"Unexpected error while updating RSI tabs: {str(e)}", level="ERROR", exc_info=True)
             self.statusBar().showMessage(f"Unexpected error: {str(e)}")
 
-
-
-    
-    #def update_rsi_details(self):
+    # def update_rsi_details(self):
     #    rsi_value = self.df['RSI_14'].iloc[-1]
     #    #rsi_status, rsi_description = self.gui.data_processing.interpret_rsi(rsi_value)
         #   self.gui.rsi_interpretation_text.setPlainText(f"RSI Value: {rsi_value}\nStatus: {rsi_status}\nDescription: {rsi_description}")
 
     def connect_buttons(self):
         try:
-            self.logger.log_or_print("MainGUI: Connecting buttons...", level="DEBUG", module="MainGUI")
 
-            # Connect start_button to its slot
-            self.logger.log_or_print("MainGUI: Starting button-signal connections.", level="DEBUG", module="MainGUI")
             self.start_button.clicked.connect(self.emit_fetch_data_signal)
 
             # Connect save_button to its slot
@@ -304,42 +347,45 @@ class MainGUI(QMainWindow):
             # Connect checkboxes
             checkboxes = [
                 self.sma_checkbox, self.rsi_checkbox, self.rsi_9_checkbox,
-                self.rsi_25_checkbox, self.stoch_checkbox
+                self.rsi_25_checkbox, self.stoch_checkbox, self.cmf_20_checkbox, self.macd_12_26_9_checkbox, self.obv_checkbox
             ]
             for checkbox in checkboxes:
                 checkbox.stateChanged.connect(self.emit_plot_chart_signal)
 
             # Connect SpinBox
-            self.sma_period_spinbox.valueChanged.connect(self.emit_recalculate_and_plot_signal)
+            self.sma_period_spinbox.valueChanged.connect(
+                self.emit_recalculate_and_plot_signal)
 
-            self.logger.log_or_print("MainGUI: Buttons connected.", level="DEBUG", module="MainGUI")
-            self.logger.log_or_print("MainGUI: Completed button-signal connections.", level="DEBUG", module="MainGUI")
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in connect_buttons: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in connect_buttons: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
             raise
-
 
     def emit_fetch_data_signal(self):
         try:
-            self.logger.log_or_print("emit_fetch_data_signal called", level="DEBUG", module="MainGUI")
+
             ticker = self.ticker_input.text().strip()
             if not ticker:
                 raise ValueError("Ticker cannot be empty.")
             desired_rows = self.row_spin_box.value()
-            self.start_data_fetching_signal.emit(ticker,desired_rows)
-            self.logger.log_or_print("self.start_data_fetching_signal.emit(ticker, desired_rows) done", level="DEBUG", module="MainGUI")
+            self.start_data_fetching_signal.emit(ticker, desired_rows)
+
         except ValueError as ve:
             self.on_data_fetch_error(str(ve), exc_info=True)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in emit_fetch_data_signal: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
-            self.on_data_fetch_error("An unexpected error occurred. Check the log for details.")
+            self.logger.log_or_print(
+                f"An unexpected error occurred in emit_fetch_data_signal: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.on_data_fetch_error(
+                "An unexpected error occurred. Check the log for details.")
+
     def trigger_plot(self):
         try:
-            self.logger.log_or_print("MainGUI: Triggering plot...", level="DEBUG", module="MainGUI")
+
             self.main_logic.plot_chart()  # Delegate to MainLogic
-            self.logger.log_or_print("MainGUI: Plot triggered.", level="DEBUG", module="MainGUI")
+
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in trigger_plot: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in trigger_plot: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
             raise
 
     # ------- UI Component Setup Methods --------
@@ -366,7 +412,7 @@ class MainGUI(QMainWindow):
 
             self.sma_period_label = QLabel("SMA Period:")
             top_layout.addWidget(self.sma_period_label)
-            
+
             self.sma_period_spinbox = QSpinBox()
             self.sma_period_spinbox.setMinimum(1)
             self.sma_period_spinbox.setMaximum(100)
@@ -383,8 +429,9 @@ class MainGUI(QMainWindow):
 
             main_layout.addLayout(top_layout)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in setup_top_layout: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
-            raise 
+            self.logger.log_or_print(
+                f"An unexpected error occurred in setup_top_layout: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            raise
 
     def setup_buttons_layout(self, main_layout):
         try:
@@ -401,8 +448,10 @@ class MainGUI(QMainWindow):
 
             main_layout.addLayout(buttons_layout)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in setup_buttons_layout: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in setup_buttons_layout: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
             raise
+
     def setup_web_view(self, main_layout):
         try:
             """Set up the web view for displaying charts."""
@@ -410,8 +459,10 @@ class MainGUI(QMainWindow):
             print("Web view initialized.")
             main_layout.addWidget(self.web_view, 1)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in setup_web_view: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in setup_web_view: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
             raise
+
     def setup_status_label(self, main_layout):
         try:
             """Set up the status label."""
@@ -419,21 +470,25 @@ class MainGUI(QMainWindow):
             self.status_label.setFixedHeight(25)
             main_layout.addWidget(self.status_label)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in setup_status_label: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            self.logger.log_or_print(
+                f"An unexpected error occurred in setup_status_label: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
             raise
+
     def setup_customize_button(self, main_layout):
         try:
             """Set up the "Customize Appearance" button."""
             customize_button = QPushButton("Customize Appearance")
-            customize_button.clicked.connect(self.data_processing.update_chart_appearance)
+            customize_button.clicked.connect(
+                self.data_processing.update_chart_appearance)
             main_layout.addWidget(customize_button)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in setup_customize_button: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
-            raise            
+            self.logger.log_or_print(
+                f"An unexpected error occurred in setup_customize_button: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            raise
     # ------- Data Fetching and Processing Methods --------
 
     def on_data_fetched(self, dataframe):
-        self.logger.log_or_print(f"on_data_fetched called.", level="DEBUG", module="MainGUI")
+
         try:
             """
             Slot to handle data fetched signal from MainLogic.
@@ -442,43 +497,50 @@ class MainGUI(QMainWindow):
             self.df = dataframe
             # You can add more UI updates based on the fetched data here
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in on_data_fetched: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
-            raise     
- 
+            self.logger.log_or_print(
+                f"An unexpected error occurred in on_data_fetched: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            raise
+
     def update_dataframe_slot(self, df):
-        self.logger.log_or_print(f"update_dataframe_slot called.", level="DEBUG", module="MainGUI")
+
         try:
-            
+
             self.df = df
             self.plot_chart_slot(df)
         except Exception as e:
-            self.logger.log_or_print(f"An unexpected error occurred in update_dataframe_slot: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
-            raise 
-             
+            self.logger.log_or_print(
+                f"An unexpected error occurred in update_dataframe_slot: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
+            raise
 
     def plot_chart(self):
-                try:
-                    if self.df is not None:  # Instead of checking the GUI's df directly, check the logic's df
-                        self.logger.log_or_print("MainLogic: DataFrame is not None. Plotting chart.", level="DEBUG", module="MainLogic")
-                        self.plotChartRequested.emit(self.df)
-                    else:
-                        self.logger.log_or_print("MainLogic: DataFrame is None. Skipping plot.", level="WARNING", module="MainLogic")
-                except Exception as e:
-                    self.logger.log_or_print(f"An unexpected error occurred in plot_chart: {str(e)}", level="ERROR", module="MainLogic")
-                    raise            
+        try:
+            if self.df is not None:  # Instead of checking the GUI's df directly, check the logic's df
+
+                self.plotChartRequested.emit(self.df)
+            else:
+                self.logger.log_or_print(
+                    "MainLogic: DataFrame is None. Skipping plot.", level="WARNING", module="MainLogic")
+        except Exception as e:
+            self.logger.log_or_print(
+                f"An unexpected error occurred in plot_chart: {str(e)}", level="ERROR", module="MainLogic")
+            raise
+
     def enable_chart_interactions(self):
         try:
             fig = go.Figure(data=[go.Candlestick(x=self.df['Date'],
-                                                open=self.df['Open'],
-                                                high=self.df['High'],
-                                                low=self.df['Low'],
-                                                close=self.df['Close'])])
+                                                 open=self.df['Open'],
+                                                 high=self.df['High'],
+                                                 low=self.df['Low'],
+                                                 close=self.df['Close'])])
 
             # Enable chart interactions
             fig.update_layout(
-                xaxis=dict(rangeslider=dict(visible=False)),  # Disable range slider
-                xaxis_rangeslider=dict(visible=True),  # Enable separate x-axis slider
-                yaxis=dict(autorange=True, fixedrange=False),  # Allow y-axis zooming
+                # Disable range slider
+                xaxis=dict(rangeslider=dict(visible=False)),
+                # Enable separate x-axis slider
+                xaxis_rangeslider=dict(visible=True),
+                # Allow y-axis zooming
+                yaxis=dict(autorange=True, fixedrange=False),
                 dragmode="zoom",  # Enable zooming
                 showlegend=False  # Disable legend for simplicity
             )
@@ -486,16 +548,17 @@ class MainGUI(QMainWindow):
             raw_html = fig.to_html(include_plotlyjs='cdn')
             self.web_view.setHtml(raw_html)
         except Exception as e:
-            
-            self.logger.log_or_print(f"An error occurred in enable_chart_interactions: {str(e)}", level="ERROR", module="MainLogic")
+
+            self.logger.log_or_print(
+                f"An error occurred in enable_chart_interactions: {str(e)}", level="ERROR", module="MainLogic")
 
     def enable_data_point_highlight(self):
         try:
             fig = go.Figure(data=[go.Candlestick(x=self.df['Date'],
-                                                open=self.df['Open'],
-                                                high=self.df['High'],
-                                                low=self.df['Low'],
-                                                close=self.df['Close'])])
+                                                 open=self.df['Open'],
+                                                 high=self.df['High'],
+                                                 low=self.df['Low'],
+                                                 close=self.df['Close'])])
 
             # Enable data point highlight
             fig.update_layout(
@@ -505,36 +568,43 @@ class MainGUI(QMainWindow):
                 dragmode="zoom",
                 showlegend=False,
                 hovermode="x unified",  # Highlight data points on hover across all subplots
-                hovertemplate="%{x}<br>Open: %{open}<br>Close: %{close}<extra></extra>",  # Custom hover template
+                # Custom hover template
+                hovertemplate="%{x}<br>Open: %{open}<br>Close: %{close}<extra></extra>",
             )
 
             raw_html = fig.to_html(include_plotlyjs='cdn')
             self.web_view.setHtml(raw_html)
         except Exception as e:
-            
-            self.logger.log_or_print(f"An error occurred in enable_data_point_highlight: {str(e)}", level="ERROR", module="MainLogic")
-    def update_chart(self, fig ):
+
+            self.logger.log_or_print(
+                f"An error occurred in enable_data_point_highlight: {str(e)}", level="ERROR", module="MainLogic")
+
+    def update_chart(self, fig):
         # Here, you'll use the data (df) to plot/update the chart in the GUI.
         # This might use some built-in Qt plotting or another library you have in mind.
         try:
-            self.logger.log_or_print("Update_chart in MainGUI is called .", level="DEBUG", module="MainLogic")
+
             if fig is not None:
                 raw_html = fig.to_html(include_plotlyjs='cdn')
             else:
-                self.logger.log_or_print("fig is None, cannot convert to HTML", level="ERROR")
+                self.logger.log_or_print(
+                    "fig is None, cannot convert to HTML", level="ERROR")
             self.web_view.setHtml(raw_html)
         except Exception as e:
-            
-            self.logger.log_or_print(f"An error occurred in update_chart: {str(e)}", level="ERROR", module="MainLogic")
+
+            self.logger.log_or_print(
+                f"An error occurred in update_chart: {str(e)}", level="ERROR", module="MainLogic")
+
     def emit_save_data_signal(self):
         try:
-            self.logger.log_or_print("MainGUI: emit_save_data_signal triggered.", level="DEBUG", module="MainGUI")    
+
             self.save_data_signal.emit()
-            self.logger.log_or_print("MainGUI: save_data_signal emitted.", level="DEBUG", module="MainGUI")
 
         except Exception as e:
-            
-            self.logger.log_or_print(f"An error occurred in emit_save_data_signal: {str(e)}", level="ERROR", module="MainLogic")
+
+            self.logger.log_or_print(
+                f"An error occurred in emit_save_data_signal: {str(e)}", level="ERROR", module="MainLogic")
+
     def on_indicator_checkbox_changed(self):
         try:
             active_indicators = []
@@ -549,22 +619,39 @@ class MainGUI(QMainWindow):
                 active_indicators.append("RSI_25")
             if self.stoch_checkbox.isChecked():
                 active_indicators.append("STOCH")
-
+            if self.cmf_20_checkbox.isChecked():
+                active_indicators.append("CMF_20")
+            if self.macd_12_26_9_checkbox.isChecked():
+                active_indicators.append("MACD_12_26_9")
+                active_indicators.append("MACDs_12_26_9")
+                active_indicators.append("MACDh_12_26_9")
+            if self.obv_checkbox.isChecked():
+                active_indicators.append("OBV")
             self.indicator_checkbox_changed_signal.emit(active_indicators)
         except Exception as e:
-            
-            self.logger.log_or_print(f"An error occurred in on_indicator_checkbox_changed: {str(e)}", level="ERROR", module="MainLogic")
+
+            self.logger.log_or_print(
+                f"An error occurred in on_indicator_checkbox_changed: {str(e)}", level="ERROR", module="MainLogic")
+
     @pyqtSlot(dict)
     def update_indicator_labels(self, values):
         self.rsi_9_label.setText(f"RSI_9: {values.get('RSI_9', '-')}")
         self.rsi_14_label.setText(f"RSI_14: {values.get('RSI_14', '-')}")
         self.rsi_25_label.setText(f"RSI_25: {values.get('RSI_25', '-')}")
+        self.cmf_20_label.setText(f"CMF_20: {values.get('CMF_20', '-')}")
         if 'StochK' in values and 'StochD' in values:
-            self.stoch_label.setText(f"Stoch(K): {values['StochK']:.2f}, Stoch(D): {values['StochD']:.2f}")
+            self.stoch_label.setText(
+                f"Stoch(K): {values['StochK']:.2f}, Stoch(D): {values['StochD']:.2f}")
+        if 'MACD_12_26_9' in values and 'MACDs_12_26_9' in values:
+            self.macd_12_26_9_label.setText(
+                f"MACD_12_26_9): {values['MACD_12_26_9']:.2f}, MACDs_12_26_9: {values['MACDs_12_26_9']:.2f}")
+        self.OBV_label.setText(f"OBV: {values.get('OBV', '-')}")
+
     def emit_generate_report_signal(self):
         try:
-            self.logger.log_or_print("MainGUI: generate_report_signal triggered.", level="DEBUG", module="MainGUI")    
+
             self.generate_report_signal.emit()
-            self.logger.log_or_print("MainGUI: generate_report_signal emitted.", level="DEBUG", module="MainGUI")
+
         except Exception as e:
-            self.logger.log_or_print(f"An error occurred in generate_report_signal: {str(e)}", level="ERROR", module="MainLogic")
+            self.logger.log_or_print(
+                f"An error occurred in generate_report_signal: {str(e)}", level="ERROR", module="MainLogic")
