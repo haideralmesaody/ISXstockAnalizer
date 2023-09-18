@@ -57,14 +57,10 @@ class MainLogic(QObject):
         self.data_fetcher = DataFetcher(EDGE_DRIVER_PATH)
         self.data_fetcher.data_frame_ready_signal.connect(
             self.process_fetched_data)
-        self.logger.log_or_print(
-            "MainLogic: DataFetcher initialized and connected.", level="DEBUG", module="MainLogic")
 
         # Initialize and setup DataVisualizer
         self.data_visualizer = DataVisualizer()
         self.data_visualizer.chart_ready_signal.connect(self.gui.update_chart)
-        self.logger.log_or_print(
-            "MainLogic: DataVisualizer initialized and connected.", level="DEBUG", module="MainLogic")
 
         # If a MainGUI instance is provided, connect its signals
         if main_gui:
@@ -76,17 +72,13 @@ class MainLogic(QObject):
             "MainLogic: Initialized.", level="DEBUG", module="MainLogic")
 
     def fetch_data_slot(self, ticker, desired_rows):
-        self.logger.log_or_print(
-            f"MainLogic: Fetching data for {ticker} with {desired_rows} rows...", level="DEBUG", module="MainLogic")
+
         try:
             df = self.data_fetcher.fetch_data(ticker, desired_rows)
-            self.logger.log_or_print(
-                f"MainLogic: Fetched DataFrame: {df.head()}", level="DEBUG", module="MainLogic")
 
             if df is not None:
                 self.df = df  # Update the centralized DataFrame storage
-                self.logger.log_or_print(
-                    f"MainLogic: Central DataFrame updated with fetched data. First few rows:\n{self.df.head()}", level="DEBUG", module="MainLogic")
+
                 self.current_ticker = ticker  # Update the centralized ticker storage
 
                 # Step 2: Handle the calculations directly after fetching
@@ -116,8 +108,7 @@ class MainLogic(QObject):
     def handle_data_calculations(self):
         try:
             if self.df is None:
-                self.logger.log_or_print(
-                    "MainLogic: Central DataFrame (self.df) is None in handle_data_calculations.", level="ERROR", module="MainLogic")
+
                 return
 
             self.logger.log_or_print(
@@ -137,10 +128,7 @@ class MainLogic(QObject):
             self.data_calculator.calculate_rsi(self.df)
             self.logger.log_or_print(
                 "MainLogic: RSI calculation initiated.", level="INFO", module="MainLogic")
-            # self.data_calculator.calculate_rsi(self.df,9)  # This will emit the rsi_calculated_signal
-            # self.logger.log_or_print("MainLogic: RSI9 calculation initiated.", level="INFO", module="MainLogic")
-            # self.data_calculator.calculate_rsi(self.df,25)  # This will emit the rsi_calculated_signal
-            # self.logger.log_or_print("MainLogic: RSI25 calculation initiated.", level="INFO", module="MainLogic")
+
             # Start Stochastic Oscillator calculation
             self.data_calculator.calculate_stochastic_oscillator(
                 self.df)  # This will emit the stochastic_calculated_signal
@@ -183,10 +171,7 @@ class MainLogic(QObject):
                 f"MainLogic: Error occurred during data calculations: {str(e)}", level="ERROR", module="MainLogic", exc_info=True)
 
     def save_data_slot(self):
-        self.logger.log_or_print(
-            "MainLogic: save_data_slot triggered.", level="DEBUG", module="MainLogic")
-        self.logger.log_or_print(
-            f"MainLogic: save_data_slot called. Current df shape: {self.df.shape if self.df is not None else 'None'}", level="DEBUG", module="MainLogic")
+
         try:
             self.logger.log_or_print(
                 f"MainLogic: Current ticker before check: {self.current_ticker}", level="DEBUG", module="MainLogic")
@@ -212,11 +197,7 @@ class MainLogic(QObject):
 
     def get_latest_dataframe(self):
         try:
-            """Return the latest DataFrame."""
-            self.logger.log_or_print(
-                "MainLogic: get_latest_dataframe method triggered.", level="DEBUG", module="MainLogic")
-            self.logger.log_or_print(
-                f"MainLogic: DataFrame fetched in get_latest_dataframe: {self.df.head()}", level="DEBUG", module="MainLogic")
+
             return self.df
 
         except Exception as e:
@@ -227,34 +208,28 @@ class MainLogic(QObject):
         """
         Slot to handle the emitted DataFrame from the calculate_sma function.
         """
-        self.logger.log_or_print(
-            "MainLogic: Receiving SMA calculated DataFrame...", level="DEBUG", module="MainLogic")
+
         if df is not None:
             self.df = df  # Update the centralized DataFrame storage
-            self.logger.log_or_print(
-                f"MainLogic: Central DataFrame updated with SMA data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
+
         else:
             self.logger.log_or_print(
                 "MainLogic: Received None DataFrame from SMA calculation.", level="ERROR", module="MainLogic")
 
     def on_rsi_calculated(self, df):
-        self.logger.log_or_print(
-            "MainLogic: Receiving RSI calculated DataFrame...", level="DEBUG", module="MainLogic")
+
         if df is not None:
             self.df = df
-            self.logger.log_or_print(
-                f"MainLogic: Central DataFrame updated with RSI data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
+
         else:
             self.logger.log_or_print(
                 "MainLogic: Received None DataFrame from RSI calculation.", level="ERROR", module="MainLogic")
 
     def on_stochastic_calculated(self, df):
-        self.logger.log_or_print(
-            "MainLogic: Receiving Stochastic Oscillator calculated DataFrame...", level="DEBUG", module="MainLogic")
+
         if df is not None:
             self.df = df
-            self.logger.log_or_print(
-                f"MainLogic: Central DataFrame updated with Stochastic Oscillator data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
+
         else:
             self.logger.log_or_print(
                 "MainLogic: Received None DataFrame from Stochastic Oscillator calculation.", level="ERROR", module="MainLogic")
@@ -263,8 +238,7 @@ class MainLogic(QObject):
         if self.df is not None:
             fig = self.data_visualizer.plot_candlestick_chart(
                 self.df, indicators=active_indicators)
-            print(self.df['OBV'].head())
-            print(self.df['OBV'].describe())
+
             self.gui.update_chart(fig)
         else:
             self.logger.log_or_print(
@@ -275,32 +249,29 @@ class MainLogic(QObject):
             "MainLogic: Receiving CMF calculated DataFrame...", level="DEBUG", module="MainLogic")
         if df is not None:
             self.df = df
-            self.logger.log_or_print(
-                f"MainLogic: Central DataFrame updated with CMF data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
+
         else:
             self.logger.log_or_print(
                 "MainLogic: Received None DataFrame from CMF calculation.", level="ERROR", module="MainLogic")
 
     def on_macd_calculated(self, df):
-        self.logger.log_or_print(
-            "MainLogic: Receiving MACD calculated DataFrame...", level="DEBUG", module="MainLogic")
+
         if df is not None:
             self.df = df
-            self.logger.log_or_print(
-                f"MainLogic: Central DataFrame updated with MACD data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
+
         else:
             self.logger.log_or_print(
                 "MainLogic: Received None DataFrame from MACD calculation.", level="ERROR", module="MainLogic")
+
     def on_obv_calculated(self, df):
-        self.logger.log_or_print(
-            "MainLogic: Receiving OBV calculated DataFrame...", level="DEBUG", module="MainLogic")
+
         if df is not None:
             self.df = df
-            self.logger.log_or_print(
-                f"MainLogic: Central DataFrame updated with OBV data.\nColumns: {self.df.columns.tolist()}\nLast 3 rows:\n{self.df.tail(3)}", level="DEBUG", module="MainLogic")
+
         else:
             self.logger.log_or_print(
                 "MainLogic: Received None DataFrame from OBV calculation.", level="ERROR", module="MainLogic")
+
     def update_gui_labels_with_indicator_values(self, latest_values):
         self.gui.update_indicator_labels(latest_values)
 

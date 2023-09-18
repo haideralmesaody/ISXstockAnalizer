@@ -44,9 +44,6 @@ class DataFetcher(QObject):
         current_datetime = datetime.now(gmt3)
         current_date = current_datetime.date()
 
-        self.logger.log_or_print(
-            f"Starting data fetch for ticker {ticker} on {current_date}. Desired rows: {desired_rows}", level="INFO")
-
         driver = None  # Initialize driver to None
         filename = f"raw_{ticker}.csv"
         df = self.initialize_dataframe()
@@ -57,10 +54,7 @@ class DataFetcher(QObject):
 
                 df_existing = pd.read_csv(filename)
                 number_of_rows = df_existing.shape[0]
-                self.logger.log_or_print(
-                    f"{filename} exists with {number_of_rows} rows.", level="INFO")
-                self.logger.log_or_print(f"{filename}  exist!", level="INFO")
-                self.logger.log_or_print(df.head(), level="INFO")
+
                 # Ensure the 'Date' column is of datetime type
                 df_existing['Date'] = pd.to_datetime(df_existing['Date'])
                 # Get the maximum date
@@ -68,23 +62,18 @@ class DataFetcher(QObject):
                 max_date = df_existing['Date'].max().date()
                 # Calculate the difference in days
                 difference_in_days = (current_date - max_date).days
-                self.logger.log_or_print(
-                    f"Max date from existing CSV: {max_date}. Difference in days: {difference_in_days}.", level="INFO")
+
                 # if the CSV is older than 10day the CSV or the number of rows are less than the desired rows be deleted and the to proceed normally to fetch the desired trading days
                 if difference_in_days > 20 or number_of_rows < desired_rows-20:
-                    self.logger.log_or_print(
-                        "Conditions met: Either the CSV is older than 10 days or number of rows is less than desired.", level="INFO")
+
                     os.remove(filename)
                     # Initialization and existing code
-                    self.logger.log_or_print(
-                        "Attempting to allocate Selenium WebDriver resource...", level="INFO")
+
                     URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
 
                     # Initialize Edge driver
                     driver_service = Service(EDGE_DRIVER_PATH)
                     driver = EdgeDriver(service=driver_service)
-                    self.logger.log_or_print(
-                        "Successfully allocated Selenium WebDriver resource.", level="INFO")
 
                     driver.get(URL)
                     self.dismiss_alert_if_present(driver)
@@ -109,8 +98,7 @@ class DataFetcher(QObject):
                     page_num = 1
 
                     while len(df) < desired_rows:
-                        self.logger.log_or_print(
-                            f"Scraping page {page_num}...", level="INFO")
+
                         df = self.extract_data_from_page(df, driver)
                         df['Date'] = pd.to_datetime(df['Date'])
                         df = df.drop_duplicates(subset='Date', keep='first')
@@ -123,19 +111,15 @@ class DataFetcher(QObject):
                     df = df.sort_values(by='Date', ascending=True)
 
                 else:  # if the CSV is freash fetch only the first page, to be modified to check for the number of rows
-                    self.logger.log_or_print(
-                        "Fetching only the first page since the CSV is fresh.", level="INFO")
+
                     os.remove(filename)
                     # Initialization and existing code
-                    self.logger.log_or_print(
-                        "Attempting to allocate Selenium WebDriver resource...", level="INFO")
+
                     URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
 
                     # Initialize Edge driver
                     driver_service = Service(EDGE_DRIVER_PATH)
                     driver = EdgeDriver(service=driver_service)
-                    self.logger.log_or_print(
-                        "Successfully allocated Selenium WebDriver resource.", level="INFO")
 
                     driver.get(URL)
                     self.dismiss_alert_if_present(driver)
@@ -160,35 +144,27 @@ class DataFetcher(QObject):
                     df = self.extract_data_from_page(df, driver)
                     df_temp = pd.concat([df, df_existing],
                                         axis=0, ignore_index=True)
-                    self.logger.log_or_print(
-                        f"After concatenation: {df_temp.shape[0]} rows.", level="INFO")
+
                     df = df_temp
                     df['Date'] = pd.to_datetime(df['Date'])
                     duplicate_dates = df[df.duplicated(
                         subset='Date', keep='first')]['Date']
-                    self.logger.log_or_print(
-                        f"Duplicate dates: {duplicate_dates.tolist()}", level="INFO")
+
                     df = df.drop_duplicates(subset='Date', keep='first')
-                    self.logger.log_or_print(
-                        f"After dropping duplicates: {df.shape[0]} rows.", level="INFO")
+
                     df = df.sort_values(by='Date', ascending=False)
                     df = df.head(desired_rows)
                     df = df.sort_values(by='Date', ascending=True)
-                    self.logger.log_or_print(
-                        f"After selecting top {desired_rows} rows: {df.shape[0]} rows.", level="INFO")
+
             else:
-                self.logger.log_or_print(
-                    f"{filename} does not exist. Fetching new data...", level="INFO")
+
                 # Initialization and existing code
-                self.logger.log_or_print(
-                    "Attempting to allocate Selenium WebDriver resource...", level="INFO")
+
                 URL = f'{BASE_URL}?currLanguage=en&companyCode={ticker}&activeTab=0'
 
                 # Initialize Edge driver
                 driver_service = Service(EDGE_DRIVER_PATH)
                 driver = EdgeDriver(service=driver_service)
-                self.logger.log_or_print(
-                    "Successfully allocated Selenium WebDriver resource.", level="INFO")
 
                 driver.get(URL)
                 self.dismiss_alert_if_present(driver)
@@ -213,8 +189,7 @@ class DataFetcher(QObject):
                 page_num = 1
 
             while len(df) < desired_rows:
-                self.logger.log_or_print(
-                    f"Scraping page {page_num}...", level="INFO")
+
                 # Extract data into a temporary DataFrame
                 df_temp = self.extract_data_from_page(df, driver)
 
@@ -241,8 +216,6 @@ class DataFetcher(QObject):
             df['Change'] = df['Change'].round(2)
             df['Change%'] = df['Change%'].round(2)
 
-            self.logger.log_or_print(
-                f"Data fetching completed. {len(df)} rows fetched.", level="INFO")
             self.data_frame_ready_signal.emit(df)
             filename = f"raw_{ticker}.csv"
             df.to_csv(filename, index=False)
@@ -259,7 +232,6 @@ class DataFetcher(QObject):
                 f"WebDriver state at error: Current URL = {current_url}", level="DEBUG")
             # Optional: Save a screenshot to see where the browser is when the error occurs
             # driver.save_screenshot('error_screenshot.png')
-            # self.logger.log_or_print("Saved a screenshot as error_screenshot.png for debugging.", level="DEBUG")
 
             return None
 
@@ -286,8 +258,6 @@ class DataFetcher(QObject):
     def extract_data_from_page(self, df, driver):
         """Extract data from the current web page and append to DataFrame."""
         try:
-            self.logger.log_or_print(
-                "Extracting data from current page...", level="INFO")
 
             table_html = driver.execute_script(
                 'return document.querySelector("#dispTable").outerHTML;')
@@ -314,8 +284,6 @@ class DataFetcher(QObject):
                             change, change_percent, t_shares, volume, no_trades]
                 df.loc[len(df)] = row_data
 
-            self.logger.log_or_print(
-                "Data extraction successful.", level="INFO")
             return df
 
         except Exception as e:
@@ -326,8 +294,6 @@ class DataFetcher(QObject):
     def navigate_to_next_page(self, driver):
         """Navigate to the next page of data."""
         try:
-            self.logger.log_or_print(
-                "Navigating to the next page...", level="INFO")
 
             next_page_btn_selector = "#ajxDspId > div > span.pagelinks > a:nth-child(11)"
             next_page_btn = driver.find_element(
@@ -337,8 +303,7 @@ class DataFetcher(QObject):
                 next_page_btn.click()
                 WebDriverWait(driver, WEBDRIVER_WAIT_TIME).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, "#dispTable")))
-                self.logger.log_or_print(
-                    "Successfully navigated to the next page.", level="INFO")
+
             else:
                 self.logger.log_or_print(
                     "Next page button not found.", level="WARNING")
@@ -348,17 +313,13 @@ class DataFetcher(QObject):
                 f"An error occurred while navigating to the next page: {str(e)}", level="ERROR", exc_info=True)
 
     def release_webdriver_resource(self, driver):
-        self.logger.log_or_print(
-            "Attempting to release Selenium WebDriver resource...", level="INFO")
+
         driver.quit()
-        self.logger.log_or_print(
-            "Successfully released Selenium WebDriver resource.", level="INFO")
 
     def dismiss_alert_if_present(self, driver):
         try:
             alert = driver.switch_to.alert
             alert.dismiss()
-            self.logger.log_or_print(
-                "Alert found and dismissed.", level="INFO")
+
         except NoAlertPresentException:
             self.logger.log_or_print("No alert was present.", level="INFO")

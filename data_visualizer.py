@@ -17,14 +17,9 @@ class DataVisualizer(QObject):
 
     def plot_candlestick_chart(self, df=None, indicators=None):
         try:
-            self.logger.log_or_print(
-                "plot_candlestick_chart: Function called. Attempting to process DataFrame...", level='DEBUG')
 
             if df is None:
                 raise ValueError("No DataFrame provided for plotting.")
-
-            self.logger.log_or_print(
-                "plot_candlestick_chart: DataFrame is available.", level='DEBUG')
 
             # Colors
             primary_color = "#2E86C1"  # Blueish for primary traces like candlesticks
@@ -105,10 +100,10 @@ class DataVisualizer(QObject):
                     if 'MACDh_12_26_9' in df.columns:
                         fig.add_trace(go.Scatter(x=df['Date'], y=df['MACDh_12_26_9'], mode='lines',
                                       name='MACDh_12_26_9', yaxis='y2', line=dict(color=quinary_color, width=2.5)))
-                #OBV
+                # OBV
                 if 'OBV' in indicators and 'OBV' in df.columns:
-                    fig.add_trace(go.Scatter(x=df['Date'], y=df['OBV'], mode='lines', name='OBV', yaxis='y2', line=dict(color=quaternary_color, width=2.5)))
-
+                    fig.add_trace(go.Scatter(x=df['Date'], y=df['OBV'], mode='lines', name='OBV', yaxis='y2', line=dict(
+                        color=quaternary_color, width=2.5)))
 
             fig.update_layout(
                 hovermode="x unified",
@@ -224,8 +219,6 @@ class DataVisualizer(QObject):
                 ax=0,
                 ay=-40
             ))
-            self.logger.log_or_print(
-                "annotate_sma_events: Successfully annotated significant SMA related events.", level='DEBUG')
 
         except KeyError as ke:
             self.logger.log_or_print(

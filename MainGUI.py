@@ -99,23 +99,11 @@ class MainGUI(QMainWindow):
             raise  # re-raise the exception for higher-level handling
 
     def initialize(self):
-        self.logger.log_or_print(
-            "MainGUI: Initializing...", level="INFO", module="MainGUI")
-        self.logger.log_or_print(
-            "MainGUI: About to initialize UI.", level="DEBUG", module="MainGUI")
+
         try:
-            self.logger.log_or_print(
-                "About to call setup_ui...", level="DEBUG", module="MainGUI")
-            # self.setup_ui()
-            self.logger.log_or_print(
-                "Successfully called setup_ui.", level="DEBUG", module="MainGUI")
-            self.logger.log_or_print(
-                "About to call connect_buttons...", level="DEBUG", module="MainGUI")
+
             self.connect_buttons()
-            self.logger.log_or_print(
-                "Successfully called connect_buttons.", level="DEBUG", module="MainGUI")
-            self.logger.log_or_print(
-                "MainGUI: UI Initialized.", level="INFO", module="MainGUI")
+
         except Exception as e:
             self.logger.log_or_print(
                 f"An unexpected error occurred in initialize: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
@@ -124,10 +112,7 @@ class MainGUI(QMainWindow):
                 "An unexpected error occurred. Check the log for details.")
 
     def setup_ui(self):
-        self.logger.log_or_print(
-            "MainGUI: Creating UI...", level="INFO", module="MainGUI")
-        self.logger.log_or_print(
-            "MainGUI: Starting UI setup.", level="DEBUG", module="MainGUI")
+
         try:
             # Initialize Widgets
             self.initialize_widgets()
@@ -143,10 +128,6 @@ class MainGUI(QMainWindow):
             self.splitter.setSizes(
                 [int(0.05 * screen_width), int(0.80 * screen_width), int(0.15 * screen_width)])
 
-            self.logger.log_or_print(
-                "MainGUI: UI created successfully.", level="INFO", module="MainGUI")
-            self.logger.log_or_print(
-                "MainGUI: Completed UI setup.", level="DEBUG", module="MainGUI")
         except Exception as e:
             self.logger.log_or_print(
                 f"An unexpected error occurred in create_ui: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
@@ -155,8 +136,7 @@ class MainGUI(QMainWindow):
 
     def initialize_widgets(self):
         try:
-            self.logger.log_or_print(
-                "MainGUI: Initializing RSI Details Tab widget.", level="DEBUG", module="MainGUI")
+
             self.rsi_details_tab = QTabWidget()
             self.rsi_interpretation_text = QTextEdit()
             self.rsi_divergence_text = QTextEdit()
@@ -208,8 +188,7 @@ class MainGUI(QMainWindow):
 
     def setup_layouts(self):
         try:
-            self.logger.log_or_print(
-                "MainGUI: Setting up layouts.", level="DEBUG", module="MainGUI")
+
             main_layout = QHBoxLayout()
             self.splitter = QSplitter()
 
@@ -359,12 +338,7 @@ class MainGUI(QMainWindow):
 
     def connect_buttons(self):
         try:
-            self.logger.log_or_print(
-                "MainGUI: Connecting buttons...", level="DEBUG", module="MainGUI")
 
-            # Connect start_button to its slot
-            self.logger.log_or_print(
-                "MainGUI: Starting button-signal connections.", level="DEBUG", module="MainGUI")
             self.start_button.clicked.connect(self.emit_fetch_data_signal)
 
             # Connect save_button to its slot
@@ -382,10 +356,6 @@ class MainGUI(QMainWindow):
             self.sma_period_spinbox.valueChanged.connect(
                 self.emit_recalculate_and_plot_signal)
 
-            self.logger.log_or_print(
-                "MainGUI: Buttons connected.", level="DEBUG", module="MainGUI")
-            self.logger.log_or_print(
-                "MainGUI: Completed button-signal connections.", level="DEBUG", module="MainGUI")
         except Exception as e:
             self.logger.log_or_print(
                 f"An unexpected error occurred in connect_buttons: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
@@ -393,15 +363,13 @@ class MainGUI(QMainWindow):
 
     def emit_fetch_data_signal(self):
         try:
-            self.logger.log_or_print(
-                "emit_fetch_data_signal called", level="DEBUG", module="MainGUI")
+
             ticker = self.ticker_input.text().strip()
             if not ticker:
                 raise ValueError("Ticker cannot be empty.")
             desired_rows = self.row_spin_box.value()
             self.start_data_fetching_signal.emit(ticker, desired_rows)
-            self.logger.log_or_print(
-                "self.start_data_fetching_signal.emit(ticker, desired_rows) done", level="DEBUG", module="MainGUI")
+
         except ValueError as ve:
             self.on_data_fetch_error(str(ve), exc_info=True)
         except Exception as e:
@@ -412,11 +380,9 @@ class MainGUI(QMainWindow):
 
     def trigger_plot(self):
         try:
-            self.logger.log_or_print(
-                "MainGUI: Triggering plot...", level="DEBUG", module="MainGUI")
+
             self.main_logic.plot_chart()  # Delegate to MainLogic
-            self.logger.log_or_print(
-                "MainGUI: Plot triggered.", level="DEBUG", module="MainGUI")
+
         except Exception as e:
             self.logger.log_or_print(
                 f"An unexpected error occurred in trigger_plot: {str(e)}", level="ERROR", module="MainGUI", exc_info=True)
@@ -522,8 +488,7 @@ class MainGUI(QMainWindow):
     # ------- Data Fetching and Processing Methods --------
 
     def on_data_fetched(self, dataframe):
-        self.logger.log_or_print(
-            f"on_data_fetched called.", level="DEBUG", module="MainGUI")
+
         try:
             """
             Slot to handle data fetched signal from MainLogic.
@@ -537,8 +502,7 @@ class MainGUI(QMainWindow):
             raise
 
     def update_dataframe_slot(self, df):
-        self.logger.log_or_print(
-            f"update_dataframe_slot called.", level="DEBUG", module="MainGUI")
+
         try:
 
             self.df = df
@@ -551,8 +515,7 @@ class MainGUI(QMainWindow):
     def plot_chart(self):
         try:
             if self.df is not None:  # Instead of checking the GUI's df directly, check the logic's df
-                self.logger.log_or_print(
-                    "MainLogic: DataFrame is not None. Plotting chart.", level="DEBUG", module="MainLogic")
+
                 self.plotChartRequested.emit(self.df)
             else:
                 self.logger.log_or_print(
@@ -620,8 +583,7 @@ class MainGUI(QMainWindow):
         # Here, you'll use the data (df) to plot/update the chart in the GUI.
         # This might use some built-in Qt plotting or another library you have in mind.
         try:
-            self.logger.log_or_print(
-                "Update_chart in MainGUI is called .", level="DEBUG", module="MainLogic")
+
             if fig is not None:
                 raw_html = fig.to_html(include_plotlyjs='cdn')
             else:
@@ -635,11 +597,8 @@ class MainGUI(QMainWindow):
 
     def emit_save_data_signal(self):
         try:
-            self.logger.log_or_print(
-                "MainGUI: emit_save_data_signal triggered.", level="DEBUG", module="MainGUI")
+
             self.save_data_signal.emit()
-            self.logger.log_or_print(
-                "MainGUI: save_data_signal emitted.", level="DEBUG", module="MainGUI")
 
         except Exception as e:
 
@@ -690,11 +649,9 @@ class MainGUI(QMainWindow):
 
     def emit_generate_report_signal(self):
         try:
-            self.logger.log_or_print(
-                "MainGUI: generate_report_signal triggered.", level="DEBUG", module="MainGUI")
+
             self.generate_report_signal.emit()
-            self.logger.log_or_print(
-                "MainGUI: generate_report_signal emitted.", level="DEBUG", module="MainGUI")
+
         except Exception as e:
             self.logger.log_or_print(
                 f"An error occurred in generate_report_signal: {str(e)}", level="ERROR", module="MainLogic")

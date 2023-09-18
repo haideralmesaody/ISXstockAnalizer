@@ -39,8 +39,6 @@ class DataCalculator(QObject):
             if df is None:
                 self.logger.log_or_print(
                     "data calculatro: recieved dataframes SMA calculation is None.", level="ERROR", module="MainLogic")
-            self.logger.log_or_print(
-                "Starting SMA calculation...", level="INFO")
 
             df['SMA'] = ta.sma(df['Close'], length=sma_period).round(2)
             df['SMA10'] = ta.sma(df['Close'], length=10).round(2)
@@ -296,8 +294,6 @@ class DataCalculator(QObject):
                 df['SMA_Neutral_Count'] += df[column].str.startswith(
                     "Neutral").astype(int)
 
-            self.logger.log_or_print(
-                "SMA calculation completed successfully.", level="INFO")
             if df is None:
                 self.logger.log_or_print(
                     "data calculatro: Returned DataFrame from SMA calculation is None.", level="ERROR", module="MainLogic")
@@ -311,20 +307,16 @@ class DataCalculator(QObject):
     def calculate_rsi(self, df):
         # Preliminary checks
         if df is None:
-            self.logger.log_or_print(
-                "DataFrame is None in calculate_rsi", level="ERROR")
+
             self.rsi_calculated_signal.emit(df)
             return
         for period in [9, 14, 25]:
             try:
-                self.logger.log_or_print(
-                    f"\n\n---------Starting RSI {period} Calculation---------", level="INFO")
 
                 # Calculate RSI
                 column_name = f"RSI_{period}"
                 df[column_name] = ta.rsi(df["Close"], length=period).round(2)
-                self.logger.log_or_print(
-                    f"\nDataFrame columns before flag creation: {df.columns}", level="INFO")
+
                 # Boolean Interpretations
                 df[f"{column_name}_Overbought_Flag"] = df[column_name] > 70
                 df[f"{column_name}_Oversold_Flag"] = df[column_name] < 30
@@ -338,12 +330,7 @@ class DataCalculator(QObject):
                     df[column_name] > 30) & (df[column_name].shift(1) < 30)
                 df[f"{column_name}_Swing_Failure_Sell_Flag"] = (
                     df[column_name] < 70) & (df[column_name].shift(1) > 70)
-                self.logger.log_or_print(
-                    f"\nDataFrame columns after flag creation: {df.columns}", level="INFO")
-                self.logger.log_or_print(
-                    f"\nColumn {column_name}_Bullish_Divergence_Flag values:", level="INFO")
-                self.logger.log_or_print(str(df[f"{column_name}_Bullish_Divergence_Flag"].head(
-                    10)), level="INFO")  # log first 10 rows for this column
+
                 # Descriptive Interpretations
                 problem_rows = df[df[f"{column_name}_Bullish_Divergence_Flag"].isnull(
                 )]
@@ -423,8 +410,6 @@ class DataCalculator(QObject):
                 df[f"{column_name}_Neutral_Count"] += df[f"{column_name}_Swings_Desc"].str.startswith(
                     "Neutral").astype(int)
 
-                self.logger.log_or_print(
-                    f"RSI {period} calculation and interpretation completed successfully.", level="INFO")
                 self.rsi_calculated_signal.emit(df)
             except Exception as e:
                 self.logger.log_or_print(
@@ -441,21 +426,11 @@ class DataCalculator(QObject):
                 return
 
             # Log initial DataFrame headers
-            self.logger.log_or_print(
-                f"Initial DataFrame columns: {df.columns.tolist()}", level="DEBUG")
-            self.logger.log_or_print(
-                "Starting Stochastic Oscillator calculation...", level="INFO")
 
             stoch_df = ta.stoch(df['High'], df['Low'],
                                 df['Close'], k=k_period, d=d_period).round(2)
             for col in stoch_df.columns:
                 df[col] = stoch_df[col]
-
-            # Log headers and last column after stochastic calculation
-            self.logger.log_or_print(
-                f"Columns after stochastic calculation: {df.columns.tolist()}", level="DEBUG")
-            self.logger.log_or_print(
-                f"Last column after stochastic calculation:\n{df[df.columns[-1]].tail()}", level="DEBUG")
 
             # Column identifiers based on periods
             stoch_id = f"STOCH_{k_period}_{d_period}_3"
@@ -475,12 +450,6 @@ class DataCalculator(QObject):
                 df[f'STOCHk_{k_period}_{d_period}_3'].shift(1) <= 50)
             df[f'{stoch_id}_Midpoint_Cross_Down_Flag'] = (df[f'STOCHk_{k_period}_{d_period}_3'] < 50) & (
                 df[f'STOCHk_{k_period}_{d_period}_3'].shift(1) >= 50)
-
-            # Log headers and last column after setting flags
-            self.logger.log_or_print(
-                f"Columns after flag setting: {df.columns.tolist()}", level="DEBUG")
-            self.logger.log_or_print(
-                f"Last column after flag setting:\n{df[df.columns[-1]].tail()}", level="DEBUG")
 
             # Overbought/Oversold Descriptions for Stochastic Oscillator
             df[f'{stoch_id}_Overbought/Oversold_Desc'] = df.apply(
@@ -561,14 +530,6 @@ class DataCalculator(QObject):
                 df[f'{stoch_id}_Neutral_Count'] += df[column].str.startswith(
                     "Neutral").astype(int)
 
-            # Log headers and last column after setting descriptions
-            self.logger.log_or_print(
-                f"Columns after setting descriptions: {df.columns.tolist()}", level="DEBUG")
-            self.logger.log_or_print(
-                f"Last column after setting descriptions:\n{df[df.columns[-1]].tail()}", level="DEBUG")
-
-            self.logger.log_or_print(
-                "Stochastic Oscillator calculation and interpretation completed successfully.", level="INFO")
             self.stochastic_calculated_signal.emit(df)
         except Exception as e:
             self.logger.log_or_print(
@@ -578,16 +539,9 @@ class DataCalculator(QObject):
     def calculate_cmf(self, df, window=20):
         try:
             if df is None:
-                self.logger.log_or_print(
-                    "DataFrame is None in calculate_cmf", level="ERROR")
+
                 self.cmf_calculated_signal.emit(None)
                 return
-
-            # Log initial DataFrame headers
-            self.logger.log_or_print(
-                f"Initial DataFrame columns: {df.columns.tolist()}", level="DEBUG")
-            self.logger.log_or_print(
-                "Starting CMF calculation...", level="INFO")
 
             # Ensure data is sorted by date in ascending order
             # df = df.sort_values(by='Date')
@@ -726,8 +680,6 @@ class DataCalculator(QObject):
                 df['CMF_Neutral_Count'] += df[column].str.startswith(
                     "Neutral").astype(int)
 
-            self.logger.log_or_print(
-                "CMF calculation completed successfully.", level="INFO")
             self.cmf_calculated_signal.emit(df)
 
         except Exception as e:
@@ -738,17 +690,9 @@ class DataCalculator(QObject):
     def calculate_macd(self, df, short_period=12, long_period=26, signal_period=9):
         try:
             if df is None:
-                self.logger.log_or_print(
-                    "DataFrame is None in calculate_macd", level="ERROR")
-                # Assuming you have a signal for MACD like for stochastic
+
                 self.macd_calculated_signal.emit(None)
                 return
-
-            # Log initial DataFrame headers
-            self.logger.log_or_print(
-                f"Initial DataFrame columns: {df.columns.tolist()}", level="DEBUG")
-            self.logger.log_or_print(
-                "Starting MACD calculation using pandas-ta...", level="INFO")
 
             # Compute MACD using pandas-ta
             macd_df = ta.macd(df['Close'], fast=short_period,
@@ -762,11 +706,6 @@ class DataCalculator(QObject):
             df['MACDh_12_26_9'] = macd_df[f'MACDh_{short_period}_{long_period}_{signal_period}'].round(
                 2)
 
-            # Log headers and last column after MACD calculation
-            self.logger.log_or_print(
-                f"Columns after MACD calculation with pandas-ta: {df.columns.tolist()}", level="DEBUG")
-            self.logger.log_or_print(
-                f"Last column after MACD calculation with pandas-ta:\n{df[df.columns[-1]].tail()}", level="DEBUG")
             # 1. MACD Line and Signal Line Crossover Flags
             df[f'MACD_Bullish_Crossover_Flag'] = df['MACD_12_26_9'] > df['MACDs_12_26_9']
             df[f'MACD_Bearish_Crossover_Flag'] = df['MACD_12_26_9'] < df['MACDs_12_26_9']
@@ -917,8 +856,6 @@ class DataCalculator(QObject):
                 df['MACD_Neutral_Count'] += df[column].str.startswith(
                     "Neutral").astype(int)
 
-            self.logger.log_or_print(
-                "MACD calculation with pandas-ta completed successfully.", level="INFO")
             # Assuming you have a signal for MACD like for stochastic
             self.macd_calculated_signal.emit(df)
 
@@ -931,13 +868,9 @@ class DataCalculator(QObject):
     def calculate_obv(self, df):
         try:
             if df is None:
-                self.logger.log_or_print(
-                    "DataFrame is None in calculate_obv", level="ERROR")
+
                 self.obv_calculated_signal.emit(None)
                 return
-
-            self.logger.log_or_print(
-                "Starting OBV calculation...", level="INFO")
 
             # Rename column for OBV calculation
             df_temp = df.rename(columns={'T.Shares': 'Volume'})
@@ -1087,11 +1020,11 @@ class DataCalculator(QObject):
 
             # List of MACD Description Columns
             desc_columns_obv = [f'OBV_Value_Desc',
-                                 f'OBV_Trend_Desc',
-                                 f'OBV_RoC_Desc',
-                                 f'OBV_Divergence_Desc',
-                                 f'OBV_RSI_14_Desc',
-                                 f'OBV_Stoch_Desc']
+                                f'OBV_Trend_Desc',
+                                f'OBV_RoC_Desc',
+                                f'OBV_Divergence_Desc',
+                                f'OBV_RSI_14_Desc',
+                                f'OBV_Stoch_Desc']
 
             # Iterate Over Each Column and aggregate counts
             for column in desc_columns_obv:
@@ -1102,10 +1035,7 @@ class DataCalculator(QObject):
                 df['OBV_Neutral_Count'] += df[column].str.startswith(
                     "Neutral").astype(int)
 
-            self.logger.log_or_print(
-                "OBV calculation and interpretation completed successfully.", level="INFO")
             self.obv_calculated_signal.emit(df)
-
 
         except Exception as e:
             self.logger.log_or_print(

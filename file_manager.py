@@ -128,7 +128,7 @@ class FileManager:
             if base64_css and base64_img:
                 # Replace CSS link with embedded Base64 CSS
                 html_content = html_content.replace(
-                    '<link href="report_style.css" rel="stylesheet"/>', base64_css
+                    '<link href="report_style.css" rel="stylesheet" />', base64_css
                 )
 
                 # Replace image src with Base64 image data
@@ -174,20 +174,8 @@ class FileManager:
         Logic to generate and save the report based on the provided structure.
         """
         try:
-            if self.logger:
-                self.logger.log_or_print(
-                    "generate_report: Method invoked.",
-                    level="INFO",
-                    module="FileManager",
-                )
 
             if df is not None:
-                if self.logger:
-                    self.logger.log_or_print(
-                        "generate_report: DataFrame is not None.",
-                        level="INFO",
-                        module="FileManager",
-                    )
 
                 # Extract the first 10 columns for standard candle chart
                 subset_df = df.iloc[:, :10]
@@ -719,6 +707,7 @@ class FileManager:
                         "chart_rsi_25.js",
                         "chart_SMA.js",
                         "chart_stoch_9_6_3.js",
+                        "chart_obv.js",
                         "collapsible_handler.js",
                     ]
 
@@ -741,12 +730,6 @@ class FileManager:
                     return False
 
                 # Now you should have the MHTML saved in the current directory
-                if self.logger:
-                    self.logger.log_or_print(
-                        "Report successfully generated.",
-                        level="INFO",
-                        module="FileManager",
-                    )
 
                 return True
             else:
@@ -779,12 +762,7 @@ class FileManager:
             ]
         except IndexError:
             # Handle case where ticker is not found
-            if self.logger:
-                self.logger.log_or_print(
-                    f"get_company_name: Ticker '{ticker}' not found in the dataset.",
-                    level="ERROR",
-                    module="TickerLookup",
-                )
+
             return "Ticker not found in the dataset."
         except Exception as e:
             # Handle other exceptions

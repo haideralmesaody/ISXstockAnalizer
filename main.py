@@ -10,8 +10,6 @@ def main():
     try:
         # Initialize logging
         logger = Logger(DEBUG)
-        logger.log_or_print("Main: Starting application...",
-                            level="DEBUG", module="Main")
 
         # Initialize the Qt Application
         app = QtWidgets.QApplication(sys.argv)
@@ -25,15 +23,12 @@ def main():
 
         # Show the GUI
         main_gui.show()
-        logger.log_or_print("Main: Displayed GUI.",
-                            level="DEBUG", module="Main")
 
         # Start the Qt event loop
         sys.exit(app.exec_())
 
     except Exception as e:
-        logger.log_or_print(
-            f"An unexpected error occurred in main: {str(e)}", level="ERROR", module="Main")
+
         sys.exit(1)
 
 
